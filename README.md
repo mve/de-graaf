@@ -1,2 +1,4 @@
-# de-graaf
-De Graaf - Graafschap College
+## Development
+
+1. npm install
+2. php artisan serve
