@@ -10,6 +10,11 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public function reservations(){
+
+        return $this->hasMany('app/Reservation');
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,7 +41,5 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function reservations(){
-        return $this->hasMany('app/Reservation');
-    }
+
 }
