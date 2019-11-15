@@ -48,16 +48,16 @@ Route::get('/reserveringen', function () {
 //TODO check of een gebruiker een admin is
 Route::get('/beheer', function () {
     return view('admin.home');
-})->middleware('auth');
+})->middleware('admin');
 
 Route::get('/beheer/bestellingen', function () {
     return view('admin.orders');
-})->middleware('auth');
+})->middleware('admin');
 
 Route::get('/beheer/reserveringen', function () {
     return view('admin.reservations');
-})->middleware('auth');
+})->middleware('admin');
 
 Route::get('/beheer/gebruikers', function () {
     return view('admin.users');
-})->middleware('auth');
+})->middleware('admin');
