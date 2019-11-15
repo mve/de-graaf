@@ -17,7 +17,6 @@ class CreateReservationsTable extends Migration
 
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('table_id')->nullable();
             $table->integer('people')->nullable();
             $table->boolean('used_reservation')->nullable();
             $table->date('date')->nullable();
@@ -27,7 +26,6 @@ class CreateReservationsTable extends Migration
 
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('table_id')->references('id')->on('tables');
 
         });
 

@@ -17,7 +17,6 @@ class CreateTablesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('min_capacity')->nullable();
             $table->integer('max_capacity')->nullable();
-
             $table->timestamps();
         });
     }
