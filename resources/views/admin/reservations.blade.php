@@ -3,20 +3,29 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <h1>Admin Bestellingen</h1>
+            <h1>Admin reserveringen</h1>
         </div>
-        <ul>
+        <table class="table">
+            <tr><th>Datum</th><th>Tijd</th><th>Aantal personen</th><th>Opmerking</th>
             @foreach($reservations as $reservation)
-                <li>
+               <tr>
+                   <td>
                     {{$reservation->date}}
-                </li>
-                <li>
+                   </td>
+                   <td>
                     {{$reservation->time}}
-                </li>
-                <li>
+                   </td>
+                   <td>
+                       {{$reservation->people}}
+                   </td>
+                   <td>
                     {{$reservation->comment}}
-                </li>
+                   </td>
+               </tr>
             @endforeach
-        </ul>
+        </table>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">    {!! $reservations->links() !!}</div>
+        </div>
     </div>
 @endsection
