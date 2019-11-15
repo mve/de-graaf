@@ -45,7 +45,6 @@ Route::get('/reserveringen', function () {
 
 
 // Admin routes
-//TODO check of een gebruiker een admin is
 Route::get('/beheer', function () {
     return view('admin.home');
 })->middleware('admin');
