@@ -1,5 +1,36 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
+/*FOOTER*/
+
+footer {
+  background: #16222A;
+  color: white;
+  margin-top: 100px;
+}
+
+footer a {
+  color: #fff;
+  font-size: 14px;
+  -webkit-transition-duration: 0.2s;
+          transition-duration: 0.2s;
+}
+
+footer a:hover {
+  color: #FA944B;
+  text-decoration: none;
+}
+
+.copy {
+  font-size: 12px;
+  padding: 10px;
+  border-top: 1px solid #FFFFFF;
+}
+
+.footer-middle {
+  padding-top: 2em;
+  color: white;
+}
+
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
