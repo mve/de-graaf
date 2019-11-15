@@ -14,6 +14,22 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/') }}">Home</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/menu') }}">Menu</a>
+                </li>
+
+                <!-- User is logged in -->
+                @auth
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/reservering') }}">Nieuwe reservering</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/reserveringen') }}">Mijn reserveringen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/beheer') }}">Beheer</a>
+                    </li>
+                @endauth
             </ul>
 
             <!-- Right Side Of Navbar -->
