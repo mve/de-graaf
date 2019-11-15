@@ -31,11 +31,11 @@ Route::get('/reserveringen', function () {
     return view('reservations');
 })->middleware('auth');
 
-Route::get('/account', function () {
-    return view('account');
-})->middleware('auth');
+Route::get('/account',   'HomeController@edit')->middleware('auth');
 
-Route::get('/reservering', function () {
+Route::get('/account/{user}',   ['as' => 'account.edit', 'uses' => 'HomeController@edit'])->middleware('auth');
+Route::patch('/account/{user}', 'HomeController@update')->middleware('auth');
+    Route::get('/reservering', function () {
     return view('reservation');
 })->middleware('auth');
 
