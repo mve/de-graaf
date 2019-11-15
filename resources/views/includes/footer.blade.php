@@ -49,9 +49,9 @@
                 <div class="col-md-3">
                     <h4>Volg ons</h4>
                     <ul>
-                        <li><a href="https://www.instagram.com/" target="_blank" title="Facebook"><i
-                                    class="fab fa-facebook-square"></i></a></li>
                         <li><a href="https://www.facebook.com/" target="_blank" title="Facebook"><i
+                                    class="fab fa-facebook-square"></i></a></li>
+                        <li><a href="https://www.instagram.com/" target="_blank" title="Facebook"><i
                                     class="fab fa-instagram"></i></a></li>
                         <li><a href="https://twitter.com/" target="_blank" title="Twitter"><i
                                     class="fab fa-twitter-square"></i></a></li>
