@@ -6,27 +6,35 @@
             <h1>Admin reserveringen</h1>
         </div>
         <table class="table">
-            <tr><th>Datum</th><th>Tijd</th><th>Aantal personen</th><th>Opmerking</th>
+            <tr><th class="d-lg-none" colspan="2">Reserveringen</th><th class="d-none d-lg-table-cell">Datum</th><th class="d-none d-lg-table-cell">Tijd</th><th class="d-none d-lg-table-cell">Aantal personen</th><th class="d-none d-lg-table-cell">Opmerking</th><th class="d-none d-lg-table-cell">Tafel</th>
             @foreach($reservations as $reservation)
-               <tr>
-                   <td>
-                    {{$reservation->date}}
-                   </td>
-                   <td>
-                    {{$reservation->time}}
-                   </td>
-                   <td>
-                       {{$reservation->people}}
-                   </td>
-                   <td>
-                    {{$reservation->comment}}
-                   </td>
-                   <td>
-                       @foreach($reservation->tables as $table)
-                           {{$table->id}}
-                           @endforeach
-                   </td>
-               </tr>
+                <tr>
+
+                    <td  class="d-none d-lg-table-cell">{{$reservation->date}}</td>
+                    <td class="d-none d-lg-table-cell">
+                        {{$reservation->time}}
+                    </td>
+                    <td class="d-lg-none"><b>Datum:<br></b>{{$reservation->date}}<br> <b>Tijd<br></b>{{$reservation->time}}</td>
+
+                    <td class="d-lg-none"> <b>Aantal personen:<br></b>{{$reservation->people}}<b><br>Tafels:<br></b>@foreach($reservation->tables as $table)
+                            {{$table->id}}<br>
+                        @endforeach
+                    </td>
+
+
+                    <td class="d-none d-lg-table-cell">
+                        {{$reservation->people}}
+                    </td>
+                    <td class="d-none d-lg-table-cell">
+                        {{$reservation->comment}}
+                    </td>
+                    <td class="d-none d-lg-table-cell">
+                        @foreach($reservation->tables as $table)
+                            {{$table->id}}<br>
+                        @endforeach
+
+                    </td>
+                </tr>
             @endforeach
         </table>
         <div class="row d-flex justify-content-center">
