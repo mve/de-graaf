@@ -5,29 +5,22 @@
         <div class="row">
             <h1>Reserveringen</h1>
             <table class="table">
-                <tr><th class="d-lg-none" colspan="2">Reserveringen</th><th class="d-none d-lg-table-cell">Datum</th><th class="d-none d-lg-table-cell">Tijd</th><th class="d-none d-lg-table-cell">Aantal personen</th><th class="d-none d-lg-table-cell">Opmerking</th><th class="d-none d-lg-table-cell">Tafel</th>
+                <tr><th>Datum</th><th>Tijd</th><th>Aantal personen</th><th>Opmerking</th><th>Tafel</th>
                 @foreach($user->reservations as $reservation)
                     <tr>
-
-                        <td  class="d-none d-lg-table-cell">{{$reservation->date}}</td>
-                        <td class="d-none d-lg-table-cell">
+                        <td>
+                            {{$reservation->date}}
+                        </td>
+                        <td>
                             {{$reservation->time}}
                         </td>
-                        <td class="d-lg-none"><b>Datum:<br></b>{{$reservation->date}}<br> <b>Tijd<br></b>{{$reservation->time}}</td>
-
-                        <td class="d-lg-none"> <b>Aantal personen:<br></b>{{$reservation->people}}<b><br>Tafels:<br></b>@foreach($reservation->tables as $table)
-                                {{$table->id}}<br>
-                            @endforeach
-                        </td>
-
-
-                        <td class="d-none d-lg-table-cell">
+                        <td>
                             {{$reservation->people}}
                         </td>
-                        <td class="d-none d-lg-table-cell">
+                        <td>
                             {{$reservation->comment}}
                         </td>
-                        <td class="d-none d-lg-table-cell">
+                        <td>
                             @foreach($reservation->tables as $table)
                                 {{$table->id}}<br>
                             @endforeach
