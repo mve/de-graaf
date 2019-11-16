@@ -27,9 +27,7 @@ Route::get('/menu', function () {
 
 
 // User routes
-Route::get('/reserveringen', function () {
-    return view('reservations');
-})->middleware('auth');
+Route::get('/reserveringen', 'ReservationController@userGet')->name('home')->middleware('auth');
 
 Route::get('/account',   'HomeController@edit')->middleware('auth');
 
@@ -39,9 +37,7 @@ Route::patch('/account/{user}', 'HomeController@update')->middleware('auth');
     return view('reservation');
 })->middleware('auth');
 
-Route::get('/reserveringen', function () {
-    return view('reservations');
-})->middleware('auth');
+
 
 //Route::get('/', 'HomeController@index')->name('home');
 

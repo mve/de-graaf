@@ -3,14 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Reservation extends Model
 {
+    use Notifiable;
+
     public function user(){
         return $this->belongsTo('app/User');
     }
-    public function table(){
-        return $this->hasManyThrough('app/Table', 'app/reservation_table');
+    public function tables(){
+        return $this->belongsToMany('App\Table', 'reservation_tables', 'table_id', 'reservation_id');
     }
     public function receipt(){
         return $this->hasOne('app/Receipt');

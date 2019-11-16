@@ -18,7 +18,7 @@ class ReservationTableSeeder extends Seeder
             factory(App\Reservation::class, 3)->create(['user_id'=>$u->id]);
 
         });
-        factory(App\registration_table::class, 60)->create();
+        factory(App\Reservation_table::class, 60)->create();
 
         factory(App\Receipt::class, 60)->create();
 

@@ -12,7 +12,7 @@ class User extends Authenticatable
 
     public function reservations(){
 
-        return $this->hasMany('app/Reservation');
+        return $this->hasMany(Reservation::class, 'user_id', 'id');
     }
 
     /**

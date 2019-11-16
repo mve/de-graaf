@@ -5,8 +5,8 @@
 use App\Order;
 use App\Product;
 use App\Receipt;
-use App\registration_table;
 use App\Reservation;
+use App\Reservation_table;
 use App\Table;
 use App\User;
 use Faker\Generator as Faker;
@@ -53,11 +53,10 @@ $factory->define(Reservation::class, function (Faker $faker) {
 
     ];
 });
-$factory->define(registration_table::class, function (Faker $faker) {
+$factory->define(Reservation_table::class, function (Faker $faker) {
     return [
         'table_id' =>  Table::all()->random()->id,
         'reservation_id' =>  Reservation::all()->random()->id,
-
     ];
 });
 
