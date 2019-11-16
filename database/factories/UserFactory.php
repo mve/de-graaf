@@ -54,9 +54,10 @@ $factory->define(Reservation::class, function (Faker $faker) {
     ];
 });
 $factory->define(Reservation_table::class, function (Faker $faker) {
+    static $order = 1;
     return [
         'table_id' =>  Table::all()->random()->id,
-        'reservation_id' =>  Reservation::all()->random()->id,
+        'reservation_id' =>  $order++,
     ];
 });
 

@@ -13,7 +13,7 @@ class Reservation extends Model
         return $this->belongsTo('app/User');
     }
     public function tables(){
-        return $this->belongsToMany('App\Table', 'reservation_tables', 'table_id', 'reservation_id');
+        return $this->belongsToMany('App\Table', 'reservation_tables', 'reservation_id', 'table_id');
     }
     public function receipt(){
         return $this->hasOne('app/Receipt');
