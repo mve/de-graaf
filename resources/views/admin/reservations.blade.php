@@ -21,6 +21,11 @@
                    <td>
                     {{$reservation->comment}}
                    </td>
+                   <td>
+                       @foreach($reservation->tables as $table)
+                           {{$table->id}}
+                           @endforeach
+                   </td>
                </tr>
             @endforeach
         </table>

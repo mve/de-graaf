@@ -13,7 +13,7 @@ class CreateRegistrationTablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('registration_tables', function (Blueprint $table) {
+        Schema::create('reservation_tables', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('reservation_id')->nullable();
             $table->unsignedBigInteger('table_id')->nullable();
@@ -31,6 +31,6 @@ class CreateRegistrationTablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('registration_tables');
+        Schema::dropIfExists('reservation_table');
     }
 }
