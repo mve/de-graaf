@@ -10,6 +10,6 @@ class Receipt extends Model
         return $this->belongsTo('app/Reservation');
     }
     public function orders(){
-        return $this->hasMany('app/Order');
+        return $this->hasMany(Order::class, 'receipt_id', 'id');
     }
 }
