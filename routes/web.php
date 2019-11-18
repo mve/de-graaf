@@ -42,7 +42,6 @@ Route::patch('/account/{user}', 'HomeController@update')->middleware('auth');
 //Route::get('/', 'HomeController@index')->name('home');
 
 // Admin routes
-//TODO check of een gebruiker een admin is
 Route::get('/beheer', function () {
     return view('admin.home');
 })->middleware('admin');
