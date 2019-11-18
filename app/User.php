@@ -12,7 +12,7 @@ class User extends Authenticatable
 
     public function reservations(){
 
-        return $this->hasMany('app/Reservation');
+        return $this->hasMany(Reservation::class, 'user_id', 'id');
     }
 
     /**
@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'surname','password', 'infix', 'telephone','adress', 'city', 'zipcode',
     ];
 
     /**

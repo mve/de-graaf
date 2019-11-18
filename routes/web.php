@@ -27,37 +27,33 @@ Route::get('/menu', function () {
 
 
 // User routes
-Route::get('/reserveringen', function () {
-    return view('reservations');
-})->middleware('auth');
+Route::get('/reserveringen', 'ReservationController@userGet')->name('home')->middleware('auth');
 
-Route::get('/account', function () {
-    return view('account');
-})->middleware('auth');
+Route::get('/account',   'HomeController@edit')->middleware('auth');
 
-Route::get('/reservering', function () {
+Route::get('/account/{user}',   ['as' => 'account.edit', 'uses' => 'HomeController@edit'])->middleware('auth');
+Route::patch('/account/{user}', 'HomeController@update')->middleware('auth');
+    Route::get('/reservering', function () {
     return view('reservation');
 })->middleware('auth');
 
-Route::get('/reserveringen', function () {
-    return view('reservations');
-})->middleware('auth');
 
+
+//Route::get('/', 'HomeController@index')->name('home');
 
 // Admin routes
 //TODO check of een gebruiker een admin is
 Route::get('/beheer', function () {
     return view('admin.home');
-})->middleware('auth');
+})->middleware('admin');
 
 Route::get('/beheer/bestellingen', function () {
     return view('admin.orders');
-})->middleware('auth');
+})->middleware('admin');
 
-Route::get('/beheer/reserveringen', function () {
-    return view('admin.reservations');
-})->middleware('auth');
+Route::get('/beheer/reserveringen', 'ReservationController@adminGet')->name('home')->middleware('admin');
+
 
 Route::get('/beheer/gebruikers', function () {
     return view('admin.users');
-})->middleware('auth');
+})->middleware('admin');
