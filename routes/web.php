@@ -29,6 +29,7 @@ Route::get('/menu', function () {
 // User routes
 Route::get('/reserveringen', 'ReservationController@userGet')->name('home')->middleware('auth');
 
+
 Route::get('/account',   'HomeController@edit')->middleware('auth');
 
 Route::get('/account/{user}',   ['as' => 'account.edit', 'uses' => 'HomeController@edit'])->middleware('auth');
@@ -52,7 +53,7 @@ Route::get('/beheer/bestellingen', function () {
 })->middleware('admin');
 
 Route::get('/beheer/reserveringen', 'ReservationController@adminGet')->name('home')->middleware('admin');
-
+Route::post('beheer/reserveringen', 'ReservationController@searchData')->name('home')->middleware('admin');
 
 Route::get('/beheer/gebruikers', function () {
     return view('admin.users');

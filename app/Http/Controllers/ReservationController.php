@@ -13,6 +13,7 @@ class ReservationController extends Controller
     {
         $this->middleware('auth');
     }
+
     public function adminGet()
     {
         $unsortedreservations = Reservation::with('tables')->where('people', '>', 0);
@@ -20,6 +21,11 @@ class ReservationController extends Controller
         $reservations = $sorted->paginate(6);
 
         return view('admin.reservations', compact('reservations'));
+    }
+
+    public function searchData(Request $request){
+        $searchTerm = request('searchInput');
+
     }
 
 

@@ -4,9 +4,19 @@
     <div class="container">
         <div class="row">
             <h1>Admin reserveringen</h1>
+            <form method="POST" id="searchBar" class="ml-auto col-sm-3 ml-5 d-flex justify-content-end">
+                @csrf
+            <input class="form-control" type="text" name="searchInput" id="searchInput" placeholder="Zoeken...">
+            </form>
         </div>
         <table class="table">
-            <tr><th class="d-lg-none" colspan="2">Reserveringen</th><th class="d-none d-lg-table-cell">Datum</th><th class="d-none d-lg-table-cell">Tijd</th><th class="d-none d-lg-table-cell">Aantal personen</th><th class="d-none d-lg-table-cell">Opmerking</th><th class="d-none d-lg-table-cell">Tafel</th>
+            <tr><th class="d-lg-none" colspan="2">Reserveringen</th>
+                <th class="d-none d-lg-table-cell">Datum</th>
+                <th class="d-none d-lg-table-cell">Tijd</th>
+                <th class="d-none d-lg-table-cell">Aantal personen</th>
+                <th class="d-none d-lg-table-cell">Opmerking</th>
+                <th class="d-none d-lg-table-cell">Tafel</th>
+            </tr>
             @foreach($reservations as $reservation)
                 <tr>
 
