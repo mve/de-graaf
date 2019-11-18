@@ -1941,68 +1941,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: "ReservationComponent",
+  props: ['tables'],
   mounted: function mounted() {
     console.log('Component mounted.');
   },
@@ -2013,6 +1954,16 @@ __webpack_require__.r(__webpack_exports__);
       selectorTime: '',
       checkedTable: []
     };
+  },
+  methods: {
+    getTables: function getTables() {},
+    create: function create() {}
+  },
+  computed: {
+    minDateValue: function minDateValue() {
+      var today = new Date().toISOString();
+      return today.substr(0, today.indexOf('T'));
+    }
   }
 });
 
@@ -37439,7 +37390,7 @@ var render = function() {
                         expression: "datePicker"
                       }
                     ],
-                    attrs: { type: "date" },
+                    attrs: { type: "date", min: _vm.minDateValue },
                     domProps: { value: _vm.datePicker },
                     on: {
                       input: function($event) {
@@ -37483,15 +37434,16 @@ var render = function() {
                             }
                           }
                         },
-                        [
-                          _c("option", { attrs: { value: "Lunch" } }, [
-                            _vm._v("Lunch")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "Diner" } }, [
-                            _vm._v("Diner")
+                        _vm._l(["Lunch", "Diner"], function(selectorType) {
+                          return _c("option", [
+                            _vm._v(
+                              "\n                                        " +
+                                _vm._s(selectorType) +
+                                "\n                                    "
+                            )
                           ])
-                        ]
+                        }),
+                        0
                       )
                     ])
                   ])
@@ -37620,608 +37572,81 @@ var render = function() {
               _vm._v(" "),
               _vm.selectorTime
                 ? _c("div", { staticClass: "tableGrid" }, [
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col" }, [
-                        _c("label", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkedTable,
-                                expression: "checkedTable"
-                              }
-                            ],
-                            attrs: { type: "checkbox", value: "1" },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, "1") > -1
-                                : _vm.checkedTable
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkedTable,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = "1",
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      (_vm.checkedTable = $$a.concat([$$v]))
-                                  } else {
-                                    $$i > -1 &&
-                                      (_vm.checkedTable = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
-                                  }
-                                } else {
-                                  _vm.checkedTable = $$c
-                                }
-                              }
-                            }
-                          }),
-                          _vm._v(
-                            " Tafel 1. 2 stoelen\n                                    "
-                          )
+                    _vm.checkedTable.length > 2
+                      ? _c("p", { staticStyle: { color: "red" } }, [
+                          _vm._v(" Er zijn te veel tafels gereserveerd")
                         ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c("label", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkedTable,
-                                expression: "checkedTable"
-                              }
-                            ],
-                            attrs: { type: "checkbox", value: "2" },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, "2") > -1
-                                : _vm.checkedTable
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkedTable,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = "2",
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      (_vm.checkedTable = $$a.concat([$$v]))
-                                  } else {
-                                    $$i > -1 &&
-                                      (_vm.checkedTable = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
-                                  }
-                                } else {
-                                  _vm.checkedTable = $$c
-                                }
-                              }
-                            }
-                          }),
-                          _vm._v(
-                            " Tafel 2. 2 stoelen\n                                    "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c("label", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkedTable,
-                                expression: "checkedTable"
-                              }
-                            ],
-                            attrs: { type: "checkbox", value: "3" },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, "3") > -1
-                                : _vm.checkedTable
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkedTable,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = "3",
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      (_vm.checkedTable = $$a.concat([$$v]))
-                                  } else {
-                                    $$i > -1 &&
-                                      (_vm.checkedTable = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
-                                  }
-                                } else {
-                                  _vm.checkedTable = $$c
-                                }
-                              }
-                            }
-                          }),
-                          _vm._v(
-                            " Tafel 3. 2 stoelen\n                                    "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c("label", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkedTable,
-                                expression: "checkedTable"
-                              }
-                            ],
-                            attrs: { type: "checkbox", value: "4" },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, "4") > -1
-                                : _vm.checkedTable
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkedTable,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = "4",
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      (_vm.checkedTable = $$a.concat([$$v]))
-                                  } else {
-                                    $$i > -1 &&
-                                      (_vm.checkedTable = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
-                                  }
-                                } else {
-                                  _vm.checkedTable = $$c
-                                }
-                              }
-                            }
-                          }),
-                          _vm._v(
-                            " Tafel 4. 4 stoelen\n                                    "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c("label", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkedTable,
-                                expression: "checkedTable"
-                              }
-                            ],
-                            attrs: { type: "checkbox", value: "5" },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, "5") > -1
-                                : _vm.checkedTable
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkedTable,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = "5",
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      (_vm.checkedTable = $$a.concat([$$v]))
-                                  } else {
-                                    $$i > -1 &&
-                                      (_vm.checkedTable = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
-                                  }
-                                } else {
-                                  _vm.checkedTable = $$c
-                                }
-                              }
-                            }
-                          }),
-                          _vm._v(
-                            " Tafel 5. 4 stoelen\n                                    "
-                          )
-                        ])
-                      ])
-                    ]),
+                      : _vm._e(),
                     _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col" }, [
-                        _c("label", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkedTable,
-                                expression: "checkedTable"
-                              }
-                            ],
-                            attrs: { type: "checkbox", value: "6" },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, "6") > -1
-                                : _vm.checkedTable
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkedTable,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = "6",
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      (_vm.checkedTable = $$a.concat([$$v]))
+                    _c(
+                      "div",
+                      { staticClass: "row" },
+                      _vm._l(_vm.tables, function(table) {
+                        return _c("div", { staticClass: "col-md-3" }, [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(table.id) +
+                              "\n                                    "
+                          ),
+                          _c("label", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.checkedTable,
+                                  expression: "checkedTable"
+                                }
+                              ],
+                              attrs: { type: "checkbox" },
+                              domProps: {
+                                value: table.id,
+                                checked: Array.isArray(_vm.checkedTable)
+                                  ? _vm._i(_vm.checkedTable, table.id) > -1
+                                  : _vm.checkedTable
+                              },
+                              on: {
+                                change: function($event) {
+                                  var $$a = _vm.checkedTable,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = table.id,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        (_vm.checkedTable = $$a.concat([$$v]))
+                                    } else {
+                                      $$i > -1 &&
+                                        (_vm.checkedTable = $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1)))
+                                    }
                                   } else {
-                                    $$i > -1 &&
-                                      (_vm.checkedTable = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
+                                    _vm.checkedTable = $$c
                                   }
-                                } else {
-                                  _vm.checkedTable = $$c
                                 }
                               }
-                            }
-                          }),
-                          _vm._v(
-                            " Tafel 6. 4 stoelen\n                                    "
-                          )
+                            }),
+                            _vm._v(
+                              " Tafel\n                                        " +
+                                _vm._s(table.id) +
+                                ". " +
+                                _vm._s(table.max_capacity) +
+                                " stoelen\n                                    "
+                            )
+                          ])
                         ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c("label", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkedTable,
-                                expression: "checkedTable"
-                              }
-                            ],
-                            attrs: { type: "checkbox", value: "7" },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, "7") > -1
-                                : _vm.checkedTable
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkedTable,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = "7",
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      (_vm.checkedTable = $$a.concat([$$v]))
-                                  } else {
-                                    $$i > -1 &&
-                                      (_vm.checkedTable = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
-                                  }
-                                } else {
-                                  _vm.checkedTable = $$c
-                                }
-                              }
-                            }
-                          }),
-                          _vm._v(
-                            " Tafel 7. 4 stoelen\n                                    "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c("label", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkedTable,
-                                expression: "checkedTable"
-                              }
-                            ],
-                            attrs: { type: "checkbox", value: "8" },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, "8") > -1
-                                : _vm.checkedTable
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkedTable,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = "8",
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      (_vm.checkedTable = $$a.concat([$$v]))
-                                  } else {
-                                    $$i > -1 &&
-                                      (_vm.checkedTable = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
-                                  }
-                                } else {
-                                  _vm.checkedTable = $$c
-                                }
-                              }
-                            }
-                          }),
-                          _vm._v(
-                            " Tafel 8. 4 stoelen\n                                    "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c("label", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkedTable,
-                                expression: "checkedTable"
-                              }
-                            ],
-                            attrs: { type: "checkbox", value: "9" },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, "9") > -1
-                                : _vm.checkedTable
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkedTable,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = "9",
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      (_vm.checkedTable = $$a.concat([$$v]))
-                                  } else {
-                                    $$i > -1 &&
-                                      (_vm.checkedTable = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
-                                  }
-                                } else {
-                                  _vm.checkedTable = $$c
-                                }
-                              }
-                            }
-                          }),
-                          _vm._v(
-                            " Tafel 9. 4 stoelen\n                                    "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c("label", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkedTable,
-                                expression: "checkedTable"
-                              }
-                            ],
-                            attrs: { type: "checkbox", value: "10" },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, "10") > -1
-                                : _vm.checkedTable
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkedTable,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = "10",
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      (_vm.checkedTable = $$a.concat([$$v]))
-                                  } else {
-                                    $$i > -1 &&
-                                      (_vm.checkedTable = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
-                                  }
-                                } else {
-                                  _vm.checkedTable = $$c
-                                }
-                              }
-                            }
-                          }),
-                          _vm._v(
-                            " Tafel 10. 4\n                                        stoelen\n                                    "
-                          )
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col" }, [
-                        _c("label", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkedTable,
-                                expression: "checkedTable"
-                              }
-                            ],
-                            attrs: { type: "checkbox", value: "11" },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, "11") > -1
-                                : _vm.checkedTable
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkedTable,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = "11",
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      (_vm.checkedTable = $$a.concat([$$v]))
-                                  } else {
-                                    $$i > -1 &&
-                                      (_vm.checkedTable = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
-                                  }
-                                } else {
-                                  _vm.checkedTable = $$c
-                                }
-                              }
-                            }
-                          }),
-                          _vm._v(
-                            " Tafel 11. 8\n                                        stoelen\n                                    "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c("label", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkedTable,
-                                expression: "checkedTable"
-                              }
-                            ],
-                            attrs: { type: "checkbox", value: "12" },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, "12") > -1
-                                : _vm.checkedTable
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkedTable,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = "12",
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      (_vm.checkedTable = $$a.concat([$$v]))
-                                  } else {
-                                    $$i > -1 &&
-                                      (_vm.checkedTable = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
-                                  }
-                                } else {
-                                  _vm.checkedTable = $$c
-                                }
-                              }
-                            }
-                          }),
-                          _vm._v(
-                            " Tafel 12. 8\n                                        stoelen\n                                    "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c("label", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkedTable,
-                                expression: "checkedTable"
-                              }
-                            ],
-                            attrs: { type: "checkbox", value: "13" },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, "13") > -1
-                                : _vm.checkedTable
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkedTable,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = "13",
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      (_vm.checkedTable = $$a.concat([$$v]))
-                                  } else {
-                                    $$i > -1 &&
-                                      (_vm.checkedTable = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
-                                  }
-                                } else {
-                                  _vm.checkedTable = $$c
-                                }
-                              }
-                            }
-                          }),
-                          _vm._v(
-                            " Tafel 13. 8\n                                        stoelen\n                                    "
-                          )
-                        ])
-                      ])
+                      }),
+                      0
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.checkedTable.length > 0
+                ? _c("div", [
+                    _c("button", { staticClass: "btn btn-primary" }, [
+                      _vm._v("Reserveren")
                     ])
                   ])
                 : _vm._e()
@@ -38236,7 +37661,10 @@ var render = function() {
                   " Time:" +
                   _vm._s(_vm.selectorTime) +
                   " selected table:\n                        " +
-                  _vm._s(_vm.checkedTable)
+                  _vm._s(_vm.checkedTable) +
+                  " er zijn: " +
+                  _vm._s(_vm.checkedTable.length) +
+                  " geselecteerd"
               )
             ])
           ])

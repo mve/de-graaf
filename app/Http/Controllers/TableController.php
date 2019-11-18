@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Table;
 use Illuminate\Http\Request;
-use Symfony\Component\Console\Helper\Table;
 
 class TableController extends Controller
 {
@@ -16,5 +16,9 @@ class TableController extends Controller
     {
         $tables = Table::all();
         return view('reservation', compact('tables'));
+    }
+
+    public function getSingleTable(){
+
     }
 }
