@@ -29,15 +29,13 @@ Route::get('/menu', function () {
 // User routes
 Route::get('/reserveringen', 'ReservationController@userGet')->name('home')->middleware('auth');
 
-Route::get('/account',   'HomeController@edit')->middleware('auth');
+Route::get('/account', 'HomeController@edit')->middleware('auth');
 
-Route::get('/account/{user}',   ['as' => 'account.edit', 'uses' => 'HomeController@edit'])->middleware('auth');
+Route::get('/account/{user}', ['as' => 'account.edit', 'uses' => 'HomeController@edit'])->middleware('auth');
 Route::patch('/account/{user}', 'HomeController@update')->middleware('auth');
-    Route::get('/reservering', function () {
+Route::get('/reservering', function () {
     return view('reservation');
 })->middleware('auth');
-
-
 
 //Route::get('/', 'HomeController@index')->name('home');
 
@@ -50,9 +48,13 @@ Route::get('/beheer/bestellingen', function () {
     return view('admin.orders');
 })->middleware('admin');
 
-Route::get('/beheer/reserveringen', 'ReservationController@adminGet')->name('home')->middleware('admin');
+Route::get('/beheer/reserveringen', 'ReservationController@adminGet')->middleware('admin');
+
+Route::get('/beheer/gebruikers', 'UserController@index')->middleware('admin');
+
+Route::patch('/beheer/gebruikers', 'UserController@update')->middleware('admin');
 
 
-Route::get('/beheer/gebruikers', function () {
-    return view('admin.users');
-})->middleware('admin');
+Route::get('/beheer/gebruikers/{user}', ['as' => 'users.adminEdit', 'uses' => 'UserController@adminEdit']);
+
+Route::patch('/beheer/gebruikers/{user}', ['as' => 'users.update', 'uses' => 'UserController@update']);
