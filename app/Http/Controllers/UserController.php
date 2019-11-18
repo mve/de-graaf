@@ -68,7 +68,7 @@ class UserController extends Controller
             'telephone' => ['sometimes', 'nullable', 'numeric'],
             'zipcode'   => ['sometimes', 'nullable', 'string', 'min:4'],
             'city'      => ['sometimes', 'nullable', 'string', 'max:191'],
-            'adress'    => ['sometimes', 'nullable', 'string', 'max:191'],
+            'address'    => ['sometimes', 'nullable', 'string', 'max:191'],
 
             'email'    => [
                 'sometimes',
@@ -88,7 +88,7 @@ class UserController extends Controller
         $user->telephone = (isset($request->telephone) > 0) ? $request->telephone : $user->telephone;
         $user->zipcode   = (isset($request->zipcode) > 0) ? $request->zipcode : $user->zipcode;
         $user->city      = (isset($request->city) > 0) ? $request->city : $user->city;
-        $user->adress    = (isset($request->adress) > 0) ? $request->adress : $user->adress;
+        $user->address    = (isset($request->address) > 0) ? $request->address : $user->address;
         $user->email     = (isset($request->email) > 0) ? $request->email : $user->email;
         $user->password  = (isset($request->password) > 0) ? bcrypt(request('password')) : $user->password;
         $user->isadmin   = (isset($request->isadmin) > 0) ? $request->isadmin : $user->isadmin;

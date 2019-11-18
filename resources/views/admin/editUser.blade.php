@@ -54,8 +54,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="adress">adress</label>
-                    <input class="form-control" id="adress" name="adress" type="text" placeholder="{{$user->adress}}">
+                    <label for="address">address</label>
+                    <input class="form-control" id="address" name="address" type="text" placeholder="{{$user->address}}">
 
                 </div>
 
