@@ -14,7 +14,7 @@
                                     <input type="date" v-model="datePicker">
                                 </label>
                             </div>
-                            <div class="typepicker">
+                            <div class="typepicker" v-if="datePicker">
                                 <label>
                                     <select v-model="selectorType">
                                         <option value="Lunch">Lunch</option>
@@ -22,7 +22,7 @@
                                     </select>
                                 </label>
                             </div>
-                            <div class="timepicker">
+                            <div class="timepicker" v-if="selectorType">
                                 <label>Tijd
                                     <select v-if="selectorType == 'Lunch'" v-model="selectorTime">
                                         <option value="10">10:00</option>
@@ -42,54 +42,86 @@
                                     </select>
                                 </label>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    Tafel 1. 2 stoelen
-                                    <br>
+                            <div class="tableGrid" v-if="selectorTime">
+                                <div class="row">
+                                    <div class="col">
+                                        <label>
+                                            <input type="checkbox" value="1" v-model="checkedTable"> Tafel 1. 2 stoelen
+                                        </label>
+                                    </div>
+                                    <div class="col">
+                                        <label>
+                                            <input type="checkbox" value="2" v-model="checkedTable"> Tafel 2. 2 stoelen
+                                        </label>
+                                    </div>
+                                    <div class="col">
+                                        <label>
+                                            <input type="checkbox" value="3" v-model="checkedTable"> Tafel 3. 2 stoelen
+                                        </label>
+                                    </div>
+                                    <div class="col">
+                                        <label>
+                                            <input type="checkbox" value="4" v-model="checkedTable"> Tafel 4. 4 stoelen
+                                        </label>
+                                    </div>
+                                    <div class="col">
+                                        <label>
+                                            <input type="checkbox" value="5" v-model="checkedTable"> Tafel 5. 4 stoelen
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    Tafel 2. 2 stoelen
+                                <div class="row">
+                                    <div class="col">
+                                        <label>
+                                            <input type="checkbox" value="6" v-model="checkedTable"> Tafel 6. 4 stoelen
+                                        </label>
+                                    </div>
+                                    <div class="col">
+                                        <label>
+                                            <input type="checkbox" value="7" v-model="checkedTable"> Tafel 7. 4 stoelen
+                                        </label>
+                                    </div>
+                                    <div class="col">
+                                        <label>
+                                            <input type="checkbox" value="8" v-model="checkedTable"> Tafel 8. 4 stoelen
+                                        </label>
+                                    </div>
+                                    <div class="col">
+                                        <label>
+                                            <input type="checkbox" value="9" v-model="checkedTable"> Tafel 9. 4 stoelen
+                                        </label>
+                                    </div>
+                                    <div class="col">
+                                        <label>
+                                            <input type="checkbox" value="10" v-model="checkedTable"> Tafel 10. 4
+                                            stoelen
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    Tafel 3. 2 stoelen
-                                </div>
-                                <div class="col">
-                                    Tafel 4. 4 stoelen
-                                </div>
-                                <div class="col">
-                                    Tafel 5. 4 stoelen
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    Tafel 6. 4 stoelen
-                                </div>
-                                <div class="col">
-                                    Tafel 7. 4 stoelen
-                                </div>
-                                <div class="col">
-                                    Tafel 8. 4 stoelen
-                                </div>
-                                <div class="col">
-                                    Tafel 9. 4 stoelen
-                                </div>
-                                <div class="col">
-                                    Tafel 10. 4 stoelen
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    Tafel 11. 8 stoelen
-                                </div>
-                                <div class="col">
-                                    Tafel 12. 8 stoelen
-                                </div>
-                                <div class="col">
-                                    Tafel 13. 8 stoelen
+                                <div class="row">
+                                    <div class="col">
+                                        <label>
+                                            <input type="checkbox" value="11" v-model="checkedTable"> Tafel 11. 8
+                                            stoelen
+                                        </label>
+                                    </div>
+                                    <div class="col">
+                                        <label>
+                                            <input type="checkbox" value="12" v-model="checkedTable"> Tafel 12. 8
+                                            stoelen
+                                        </label>
+                                    </div>
+                                    <div class="col">
+                                        <label>
+                                            <input type="checkbox" value="13" v-model="checkedTable"> Tafel 13. 8
+                                            stoelen
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </form>
-                        <p>Message is: Datum:{{datePicker}} Type:{{selectorType}} Time:{{selectorTime}}</p>
+                        <p>Message is: Datum:{{datePicker}} Type:{{selectorType}} Time:{{selectorTime}} selected table:
+                            {{checkedTable}}</p>
                     </div>
                 </div>
             </div>
@@ -106,7 +138,8 @@
             return {
                 datePicker: '',
                 selectorType: '',
-                selectorTime: ''
+                selectorTime: '',
+                checkedTable: []
             }
         }
     }
