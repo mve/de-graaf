@@ -20,8 +20,10 @@ class ReservationTableSeeder extends Seeder
         });
         factory(App\Reservation_table::class, 60)->create();
 
-        factory(App\Receipt::class, 60)->create();
+        factory(App\Receipt::class, 60)->create()->each(function ($r) {
+            factory(App\Order::class, 3)->create(['receipt_id'=>$r->id]);
 
+        });
 
     }
 }
