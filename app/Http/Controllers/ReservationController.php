@@ -33,4 +33,16 @@ class ReservationController extends Controller
         return view('reservations', compact('user'));
 
     }
+
+    public function createReservation(array $data){
+        return Reservation::create([
+            'user_id' => $data['user_id'],
+            'people' => $data['people'],
+            'used_reservation' => $data['used_reservation'],
+            'date' => $data['date'],
+            'time' => $data['time'],
+            'comment' => $data['comment'],
+            'reservation_typ' => $data['reservation_type']
+        ]);
+    }
 }

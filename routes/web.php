@@ -33,7 +33,8 @@ Route::get('/account',   'HomeController@edit')->middleware('auth');
 
 Route::get('/account/{user}',   ['as' => 'account.edit', 'uses' => 'HomeController@edit'])->middleware('auth');
 Route::patch('/account/{user}', 'HomeController@update')->middleware('auth');
-    Route::get('/reservering',   'TableController@getTables')->middleware('auth');
+Route::get('/reservering',   'TableController@getTables')->middleware('auth');
+Route::post('/reservering',   'ReservationController@createReservation')->middleware('auth');
 
 
 
