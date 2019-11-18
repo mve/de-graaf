@@ -46,9 +46,9 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-6">
                     <h4>Volg ons</h4>
-                    <ul>
+                    <ul style="list-style: none">
                         <li><a href="https://www.facebook.com/" target="_blank" title="Facebook"><i
                                     class="fab fa-facebook-square"></i></a></li>
                         <li><a href="https://www.instagram.com/" target="_blank" title="Facebook"><i

@@ -62,10 +62,11 @@ $factory->define(Reservation_table::class, function (Faker $faker) {
 });
 
 $factory->define(Receipt::class, function (Faker $faker) {
+    static $order = 1;
     return [
         'payment' => $faker->randomDigit,
         'amount_recieved' => $faker->randomDigit,
-        'reservation_id' => Reservation::all()->random()->id,
+        'reservation_id' => $order++,
         ];
 });
 
