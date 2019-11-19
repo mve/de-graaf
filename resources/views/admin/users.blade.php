@@ -7,7 +7,7 @@
 
             @foreach($users as $user)
                 <div class="col-md-2">
-                    <button class="btn btn-primary">Wijzigen</button>
+                    <a href="{{route('users.adminUpdate', $user)}}">Wijzigen</a>
                 </div>
                 <div class="col-md-10">
                     {{$user->name}}
