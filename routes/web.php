@@ -32,7 +32,9 @@ Route::get('/reserveringen', 'ReservationController@userGet')->name('home')->mid
 Route::get('/account', 'HomeController@edit')->middleware('auth');
 
 Route::get('/account/{user}', ['as' => 'account.edit', 'uses' => 'HomeController@edit'])->middleware('auth');
-Route::patch('/account/{user}', 'HomeController@update')->middleware('auth');
+
+Route::patch('/account/{user}', ['as' => 'users.update', 'uses' => 'UserController@update'])->middleware('auth');
+
 Route::get('/reservering', function () {
     return view('reservation');
 })->middleware('auth');
@@ -57,4 +59,4 @@ Route::patch('/beheer/gebruikers', 'UserController@update')->middleware('admin')
 
 Route::get('/beheer/gebruikers/{user}', ['as' => 'users.adminEdit', 'uses' => 'UserController@adminEdit']);
 
-Route::patch('/beheer/gebruikers/{user}', ['as' => 'users.update', 'uses' => 'UserController@update']);
+Route::patch('/beheer/gebruikers/{user}', ['as' => 'users.adminUpdate', 'uses' => 'UserController@adminUpdate']);

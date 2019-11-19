@@ -15,7 +15,7 @@
         @endif
 
         <div class="row">
-            <form class="col-md-12" method="post" action="{{ route('users.update', $user) }}">
+            <form class="col-md-12" method="post" action="{{ route('users.adminUpdate', $user) }}">
                 @csrf
                 @method('patch')
 

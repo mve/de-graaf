@@ -42,16 +42,8 @@ class UserController extends Controller
     }
 
     /**
-     * @param User $user
+     * Update for users, can't change role.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function adminEdit(User $user)
-    {
-        return view('admin.editUser', compact('user'));
-    }
-
-    /**
      * @param Request $request
      * @param User $user
      *
@@ -68,7 +60,64 @@ class UserController extends Controller
             'telephone' => ['sometimes', 'nullable', 'numeric'],
             'zipcode'   => ['sometimes', 'nullable', 'string', 'min:4'],
             'city'      => ['sometimes', 'nullable', 'string', 'max:191'],
-            'address'    => ['sometimes', 'nullable', 'string', 'max:191'],
+            'address'   => ['sometimes', 'nullable', 'string', 'max:191'],
+
+            'email'    => [
+                'sometimes',
+                'nullable',
+                'string',
+                'email',
+                'max:191',
+                Rule::unique('users')->ignore($user->id),
+            ],
+            'password' => ['sometimes', 'nullable', 'string', 'min:8']
+        ]);
+
+        $user->name      = (isset($request->name) > 0) ? $request->name : $user->name;
+        $user->infix     = (isset($request->infix) > 0) ? $request->infix : $user->infix;
+        $user->surname   = (isset($request->surname) > 0) ? $request->surname : $user->surname;
+        $user->telephone = (isset($request->telephone) > 0) ? $request->telephone : $user->telephone;
+        $user->zipcode   = (isset($request->zipcode) > 0) ? $request->zipcode : $user->zipcode;
+        $user->city      = (isset($request->city) > 0) ? $request->city : $user->city;
+        $user->address   = (isset($request->address) > 0) ? $request->address : $user->address;
+        $user->email     = (isset($request->email) > 0) ? $request->email : $user->email;
+        $user->password  = (isset($request->password) > 0) ? bcrypt(request('password')) : $user->password;
+
+        $user->save();
+
+        return back();
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function adminEdit(User $user)
+    {
+        return view('admin.editUser', compact('user'));
+    }
+
+    /**
+     * Update for admin, can change role.
+     *
+     * @param Request $request
+     * @param User $user
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function adminUpdate(Request $request, User $user)
+    {
+
+        $this->validate(request(), [
+            'name'      => ['sometimes', 'nullable', 'string', 'max:191'],
+            'infix'     => ['sometimes', 'nullable', 'string', 'max:191'],
+            'surname'   => ['sometimes', 'nullable', 'string', 'max:191'],
+            'telephone' => ['sometimes', 'nullable', 'numeric'],
+            'zipcode'   => ['sometimes', 'nullable', 'string', 'min:4'],
+            'city'      => ['sometimes', 'nullable', 'string', 'max:191'],
+            'address'   => ['sometimes', 'nullable', 'string', 'max:191'],
 
             'email'    => [
                 'sometimes',
@@ -88,7 +137,7 @@ class UserController extends Controller
         $user->telephone = (isset($request->telephone) > 0) ? $request->telephone : $user->telephone;
         $user->zipcode   = (isset($request->zipcode) > 0) ? $request->zipcode : $user->zipcode;
         $user->city      = (isset($request->city) > 0) ? $request->city : $user->city;
-        $user->address    = (isset($request->address) > 0) ? $request->address : $user->address;
+        $user->address   = (isset($request->address) > 0) ? $request->address : $user->address;
         $user->email     = (isset($request->email) > 0) ? $request->email : $user->email;
         $user->password  = (isset($request->password) > 0) ? bcrypt(request('password')) : $user->password;
         $user->isadmin   = (isset($request->isadmin) > 0) ? $request->isadmin : $user->isadmin;
