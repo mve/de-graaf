@@ -1,5 +1,5 @@
 <!-- todo edit app.js: Vue.component('component-name', require('./components/ComponentName.vue').default);-->
-<template>
+<template xmlns:v-on="http://www.w3.org/1999/xhtml">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
@@ -8,7 +8,7 @@
 
                     <div class="card-body">
                         <h1>I'm an example component.</h1>
-                        <form>
+                        <form method="POST">
                             <div class="datepicker">
                                 <label>Datum:
                                     <input type="date" v-model="datePicker" :min="minDateValue">
@@ -56,7 +56,9 @@
                                 </div>
                             </div>
                             <div v-if="checkedTable.length > 0">
-                                <button class="btn btn-primary">Reserveren</button>
+                                <button type="submit" class="btn btn-primary">
+                                    Reserveren
+                                </button>
                             </div>
                         </form>
                         <p>Message is: Datum:{{datePicker}} Type:{{selectorType}} Time:{{selectorTime}} selected table:
@@ -89,7 +91,7 @@
             getTables(){
 
             },
-            create(){
+            create: function(event){
 
             }
         },

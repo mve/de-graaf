@@ -1941,6 +1941,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
   props: ['tables'],
@@ -1957,7 +1959,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getTables: function getTables() {},
-    create: function create() {}
+    create: function create(event) {}
   },
   computed: {
     minDateValue: function minDateValue() {
@@ -37351,10 +37353,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc&":
-/*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc& ***!
-  \***********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc&xmlns%3Av-on=http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc&xmlns%3Av-on=http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -37362,319 +37364,8 @@ render._withStripped = true
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-10" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("Example Component")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("h1", [_vm._v("I'm an example component.")]),
-            _vm._v(" "),
-            _c("form", [
-              _c("div", { staticClass: "datepicker" }, [
-                _c("label", [
-                  _vm._v("Datum:\n                                "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.datePicker,
-                        expression: "datePicker"
-                      }
-                    ],
-                    attrs: { type: "date", min: _vm.minDateValue },
-                    domProps: { value: _vm.datePicker },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.datePicker = $event.target.value
-                      }
-                    }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _vm.datePicker
-                ? _c("div", { staticClass: "typepicker" }, [
-                    _c("label", [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.selectorType,
-                              expression: "selectorType"
-                            }
-                          ],
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.selectorType = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            }
-                          }
-                        },
-                        _vm._l(["Lunch", "Diner"], function(selectorType) {
-                          return _c("option", [
-                            _vm._v(
-                              "\n                                        " +
-                                _vm._s(selectorType) +
-                                "\n                                    "
-                            )
-                          ])
-                        }),
-                        0
-                      )
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.selectorType
-                ? _c("div", { staticClass: "timepicker" }, [
-                    _c("label", [
-                      _vm._v("Tijd\n                                "),
-                      _vm.selectorType == "Lunch"
-                        ? _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.selectorTime,
-                                  expression: "selectorTime"
-                                }
-                              ],
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.selectorTime = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                }
-                              }
-                            },
-                            [
-                              _c("option", { attrs: { value: "10" } }, [
-                                _vm._v("10:00")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "11" } }, [
-                                _vm._v("11:00")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "12" } }, [
-                                _vm._v("12:00")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "13" } }, [
-                                _vm._v("13:00")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "14" } }, [
-                                _vm._v("14:00")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "15" } }, [
-                                _vm._v("15:00")
-                              ])
-                            ]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.selectorType == "Diner"
-                        ? _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.selectorTime,
-                                  expression: "selectorTime"
-                                }
-                              ],
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.selectorTime = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                }
-                              }
-                            },
-                            [
-                              _c("option", { attrs: { value: "17" } }, [
-                                _vm._v("17:00")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "18" } }, [
-                                _vm._v("18:00")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "19" } }, [
-                                _vm._v("19:00")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "20" } }, [
-                                _vm._v("20:00")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "21" } }, [
-                                _vm._v("21:00")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "22" } }, [
-                                _vm._v("22:00")
-                              ])
-                            ]
-                          )
-                        : _vm._e()
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.selectorTime
-                ? _c("div", { staticClass: "tableGrid" }, [
-                    _vm.checkedTable.length > 2
-                      ? _c("p", { staticStyle: { color: "red" } }, [
-                          _vm._v(" Er zijn te veel tafels gereserveerd")
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "row" },
-                      _vm._l(_vm.tables, function(table) {
-                        return _c("div", { staticClass: "col-md-3" }, [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(table.id) +
-                              "\n                                    "
-                          ),
-                          _c("label", [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.checkedTable,
-                                  expression: "checkedTable"
-                                }
-                              ],
-                              attrs: { type: "checkbox" },
-                              domProps: {
-                                value: table.id,
-                                checked: Array.isArray(_vm.checkedTable)
-                                  ? _vm._i(_vm.checkedTable, table.id) > -1
-                                  : _vm.checkedTable
-                              },
-                              on: {
-                                change: function($event) {
-                                  var $$a = _vm.checkedTable,
-                                    $$el = $event.target,
-                                    $$c = $$el.checked ? true : false
-                                  if (Array.isArray($$a)) {
-                                    var $$v = table.id,
-                                      $$i = _vm._i($$a, $$v)
-                                    if ($$el.checked) {
-                                      $$i < 0 &&
-                                        (_vm.checkedTable = $$a.concat([$$v]))
-                                    } else {
-                                      $$i > -1 &&
-                                        (_vm.checkedTable = $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1)))
-                                    }
-                                  } else {
-                                    _vm.checkedTable = $$c
-                                  }
-                                }
-                              }
-                            }),
-                            _vm._v(
-                              " Tafel\n                                        " +
-                                _vm._s(table.id) +
-                                ". " +
-                                _vm._s(table.max_capacity) +
-                                " stoelen\n                                    "
-                            )
-                          ])
-                        ])
-                      }),
-                      0
-                    )
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.checkedTable.length > 0
-                ? _c("div", [
-                    _c("button", { staticClass: "btn btn-primary" }, [
-                      _vm._v("Reserveren")
-                    ])
-                  ])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "Message is: Datum:" +
-                  _vm._s(_vm.datePicker) +
-                  " Type:" +
-                  _vm._s(_vm.selectorType) +
-                  " Time:" +
-                  _vm._s(_vm.selectorTime) +
-                  " selected table:\n                        " +
-                  _vm._s(_vm.checkedTable) +
-                  " er zijn: " +
-                  _vm._s(_vm.checkedTable.length) +
-                  " geselecteerd"
-              )
-            ])
-          ])
-        ])
-      ])
-    ])
-  ])
-}
+var render = function () {}
 var staticRenderFns = []
-render._withStripped = true
 
 
 
@@ -50052,7 +49743,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ReservationComponent_vue_vue_type_template_id_75cc3efc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReservationComponent.vue?vue&type=template&id=75cc3efc& */ "./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc&");
+/* harmony import */ var _ReservationComponent_vue_vue_type_template_id_75cc3efc_xmlns_3Av_on_http_3A_2F_2Fwww_w3_org_2F1999_2Fxhtml___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReservationComponent.vue?vue&type=template&id=75cc3efc&xmlns%3Av-on=http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml& */ "./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc&xmlns%3Av-on=http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml&");
 /* harmony import */ var _ReservationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReservationComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ReservationComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -50064,8 +49755,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _ReservationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ReservationComponent_vue_vue_type_template_id_75cc3efc___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ReservationComponent_vue_vue_type_template_id_75cc3efc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _ReservationComponent_vue_vue_type_template_id_75cc3efc_xmlns_3Av_on_http_3A_2F_2Fwww_w3_org_2F1999_2Fxhtml___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ReservationComponent_vue_vue_type_template_id_75cc3efc_xmlns_3Av_on_http_3A_2F_2Fwww_w3_org_2F1999_2Fxhtml___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -50094,19 +49785,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc&":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc& ***!
-  \*****************************************************************************************/
+/***/ "./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc&xmlns%3Av-on=http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml&":
+/*!*********************************************************************************************************************************************!*\
+  !*** ./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc&xmlns%3Av-on=http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml& ***!
+  \*********************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReservationComponent_vue_vue_type_template_id_75cc3efc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ReservationComponent.vue?vue&type=template&id=75cc3efc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReservationComponent_vue_vue_type_template_id_75cc3efc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReservationComponent_vue_vue_type_template_id_75cc3efc_xmlns_3Av_on_http_3A_2F_2Fwww_w3_org_2F1999_2Fxhtml___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ReservationComponent.vue?vue&type=template&id=75cc3efc&xmlns%3Av-on=http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc&xmlns%3Av-on=http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReservationComponent_vue_vue_type_template_id_75cc3efc_xmlns_3Av_on_http_3A_2F_2Fwww_w3_org_2F1999_2Fxhtml___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReservationComponent_vue_vue_type_template_id_75cc3efc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReservationComponent_vue_vue_type_template_id_75cc3efc_xmlns_3Av_on_http_3A_2F_2Fwww_w3_org_2F1999_2Fxhtml___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -35,14 +35,17 @@ class ReservationController extends Controller
     }
 
     public function createReservation(array $data){
+        $user = Auth::user();
+        $user->id;
+
         return Reservation::create([
-            'user_id' => $data['user_id'],
+            'user_id' => $user,
             'people' => $data['people'],
             'used_reservation' => $data['used_reservation'],
             'date' => $data['date'],
-            'time' => $data['time'],
+            'time' => $data['selectorTime'],
             'comment' => $data['comment'],
-            'reservation_typ' => $data['reservation_type']
+            'reservation_typ' => $data['selectorType']
         ]);
     }
 }
