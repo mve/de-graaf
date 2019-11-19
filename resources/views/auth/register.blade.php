@@ -144,15 +144,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                            <label for="captcha">Captcha</label>
-                            {!! NoCaptcha::renderJs() !!}
-                            {!! NoCaptcha::display() !!}
-                            <span class="text-danger">{{ $errors->first('g-recaptcha-response') }}</span>
-                            </div>
 
-                        </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
