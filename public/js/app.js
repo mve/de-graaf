@@ -1943,6 +1943,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
   props: ['tables'],
@@ -1954,12 +1959,13 @@ __webpack_require__.r(__webpack_exports__);
       datePicker: '',
       selectorType: '',
       selectorTime: '',
-      checkedTable: []
+      checkedTable: [],
+      comment: '',
+      csrf: document.head.querySelector('meta[name="csrf-token"]').content
     };
   },
   methods: {
-    getTables: function getTables() {},
-    create: function create(event) {}
+    submit: function submit() {}
   },
   computed: {
     minDateValue: function minDateValue() {
@@ -37364,8 +37370,361 @@ render._withStripped = true
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-10" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v("Example Component")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("h1", [_vm._v("I'm an example component.")]),
+            _vm._v(" "),
+            _c("form", { attrs: { method: "POST", action: "/reservering" } }, [
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: _vm.csrf }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "datepicker" }, [
+                _c("label", [
+                  _vm._v("Datum:\n                                "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.datePicker,
+                        expression: "datePicker"
+                      }
+                    ],
+                    attrs: { type: "date", min: _vm.minDateValue },
+                    domProps: { value: _vm.datePicker },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.datePicker = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _vm.datePicker
+                ? _c("div", { staticClass: "typepicker" }, [
+                    _c("label", [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selectorType,
+                              expression: "selectorType"
+                            }
+                          ],
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.selectorType = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        _vm._l(["Lunch", "Diner"], function(selectorType) {
+                          return _c("option", [
+                            _vm._v(
+                              "\n                                        " +
+                                _vm._s(selectorType) +
+                                "\n                                    "
+                            )
+                          ])
+                        }),
+                        0
+                      )
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.selectorType
+                ? _c("div", { staticClass: "timepicker" }, [
+                    _c("label", [
+                      _vm._v("Tijd\n                                "),
+                      _vm.selectorType == "Lunch"
+                        ? _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.selectorTime,
+                                  expression: "selectorTime"
+                                }
+                              ],
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.selectorTime = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "10" } }, [
+                                _vm._v("10:00")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "11" } }, [
+                                _vm._v("11:00")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "12" } }, [
+                                _vm._v("12:00")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "13" } }, [
+                                _vm._v("13:00")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "14" } }, [
+                                _vm._v("14:00")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "15" } }, [
+                                _vm._v("15:00")
+                              ])
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.selectorType == "Diner"
+                        ? _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.selectorTime,
+                                  expression: "selectorTime"
+                                }
+                              ],
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.selectorTime = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "17" } }, [
+                                _vm._v("17:00")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "18" } }, [
+                                _vm._v("18:00")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "19" } }, [
+                                _vm._v("19:00")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "20" } }, [
+                                _vm._v("20:00")
+                              ])
+                            ]
+                          )
+                        : _vm._e()
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.selectorTime
+                ? _c("div", { staticClass: "tableGrid" }, [
+                    _vm.checkedTable.length > 2
+                      ? _c("p", { staticStyle: { color: "red" } }, [
+                          _vm._v(
+                            " Er zijn te veel tafels\n                                geselecteerd."
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            " Neem contact met ons op om meer te reserveren."
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "row" },
+                      _vm._l(_vm.tables, function(table) {
+                        return _c("div", { staticClass: "col-md-3" }, [
+                          _c("label", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.checkedTable,
+                                  expression: "checkedTable"
+                                }
+                              ],
+                              attrs: { type: "checkbox" },
+                              domProps: {
+                                value: table.id,
+                                checked: Array.isArray(_vm.checkedTable)
+                                  ? _vm._i(_vm.checkedTable, table.id) > -1
+                                  : _vm.checkedTable
+                              },
+                              on: {
+                                change: function($event) {
+                                  var $$a = _vm.checkedTable,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = table.id,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        (_vm.checkedTable = $$a.concat([$$v]))
+                                    } else {
+                                      $$i > -1 &&
+                                        (_vm.checkedTable = $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1)))
+                                    }
+                                  } else {
+                                    _vm.checkedTable = $$c
+                                  }
+                                }
+                              }
+                            }),
+                            _vm._v(
+                              " Tafel\n                                        " +
+                                _vm._s(table.id) +
+                                ". " +
+                                _vm._s(table.max_capacity) +
+                                " stoelen\n                                    "
+                            )
+                          ])
+                        ])
+                      }),
+                      0
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.checkedTable.length > 0
+                ? _c("div", [
+                    _c("label", [
+                      _vm._v(
+                        "Heeft u dingen die wij moeten weten. bv: dieet wensen"
+                      ),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.comment,
+                            expression: "comment"
+                          }
+                        ],
+                        domProps: { value: _vm.comment },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.comment = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.checkedTable.length > 0
+                ? _c("div", [
+                    _vm.checkedTable.length < 3
+                      ? _c("div", [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: { type: "submit", value: "submit" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                    Reserveren\n                                "
+                              )
+                            ]
+                          )
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "Message is: Datum:" +
+                  _vm._s(_vm.datePicker) +
+                  " Type:" +
+                  _vm._s(_vm.selectorType) +
+                  " Time:" +
+                  _vm._s(_vm.selectorTime) +
+                  " selected table:\n                        " +
+                  _vm._s(_vm.checkedTable) +
+                  " er zijn: " +
+                  _vm._s(_vm.checkedTable.length) +
+                  " geselecteerd"
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
 var staticRenderFns = []
+render._withStripped = true
 
 
 
@@ -49890,8 +50249,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Projects\de-graaf\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Projects\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\de-graaf\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

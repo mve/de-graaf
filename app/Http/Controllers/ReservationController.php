@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Table;
 use Illuminate\Support\Facades\Auth;
 
 use App\Reservation;
@@ -35,13 +36,15 @@ class ReservationController extends Controller
     }
 
     public function createReservation(array $data){
+        var_dump($data->all());
         $user = Auth::user();
         $user->id;
+        $table=Table::find($data['checkedTable']);
+        dd($table);
 
         return Reservation::create([
             'user_id' => $user,
             'people' => $data['people'],
-            'used_reservation' => $data['used_reservation'],
             'date' => $data['date'],
             'time' => $data['selectorTime'],
             'comment' => $data['comment'],

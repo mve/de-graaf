@@ -31,4 +31,5 @@ Vue.component('reservation-component', require('./components/ReservationComponen
 
 const app = new Vue({
     el: '#app',
+
 });
