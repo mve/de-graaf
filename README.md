@@ -14,5 +14,5 @@
 
 ## Seeder
 1. php artisan migrate:fresh
-2. composer dumpautoload
+2. composer dump-autoload
 3. php artisan db:seed
