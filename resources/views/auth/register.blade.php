@@ -101,11 +101,11 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="adress" class="col-md-4 col-form-label text-md-right">{{ __('Adres') }}</label>
+                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
 
                             <div class="col-md-4">
-                                <input id="adress" type="text" class="form-control  @error('adress') is-invalid @enderror" name="adress" placeholder="Straat" value="{{ old('adress') }}" required autocomplete="adress" autofocus>
-                                @error('adress')
+                                <input id="address" type="text" class="form-control  @error('address') is-invalid @enderror" name="address" placeholder="Straat" value="{{ old('address') }}"  autocomplete="address" autofocus>
+                                @error('address')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
