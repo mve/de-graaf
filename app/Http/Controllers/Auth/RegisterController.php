@@ -71,7 +71,7 @@ class RegisterController extends Controller
             'infix' => $data['infix'],
             'email' => $data['email'],
             'telephone' => $data['telephone'],
-            'adress' => $data['adress']." ".$data['number'],
+            'address' => $data['address']." ".$data['number'],
             'zipcode' => $data['zipcode'],
             'city' => $data['city'],
             'password' => Hash::make($data['password']),
