@@ -41,7 +41,6 @@ Route::post('/reservering',   'ReservationController@createReservation')->middle
 //Route::get('/', 'HomeController@index')->name('home');
 
 // Admin routes
-//TODO check of een gebruiker een admin is
 Route::get('/beheer', function () {
     return view('admin.home');
 })->middleware('admin');

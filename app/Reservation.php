@@ -10,12 +10,12 @@ class Reservation extends Model
     use Notifiable;
 
     public function user(){
-        return $this->belongsTo('app/User');
+        return $this->belongsTo(User::class);
     }
     public function tables(){
         return $this->belongsToMany('App\Table', 'reservation_tables', 'reservation_id', 'table_id');
     }
     public function receipt(){
-        return $this->hasOne('app/Receipt');
+        return $this->hasOne(Receipt::class);
     }
 }
