@@ -11,16 +11,16 @@ class LoginController extends Controller
 {
     protected function hasTooManyLoginAttempts(Request $request)
     {
-
         $this->limiter()->hit($this->throttleKey($request));
+
+
         if ($this->limiter()->attempts($this->throttleKey($request)) == 3){
-            dd('blocked');
             $user= User::where('email', $request->email)->first();
             $user->active = 0;
             $user->update();
         }
         return $this->limiter()->tooManyAttempts(
-            $this->throttleKey($request), 3 // <--- Change this
+            $this->throttleKey($request), 5 // <--- Change this
         );
     }
     /*
