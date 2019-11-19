@@ -52,7 +52,7 @@ class RegisterController extends Controller
             'name' => [ 'string', 'max:255'],
             'surname' => ['string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-
+            'g-recaptcha-response' => 'required|captcha',
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
