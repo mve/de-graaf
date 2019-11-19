@@ -35,20 +35,28 @@ class ReservationController extends Controller
 
     }
 
-    public function createReservation(array $data){
-        var_dump($data->all());
-        $user = Auth::user();
-        $user->id;
-        $table=Table::find($data['checkedTable']);
-        dd($table);
+    public function createReservation(Request $request){
 
-        return Reservation::create([
-            'user_id' => $user,
-            'people' => $data['people'],
-            'date' => $data['date'],
-            'time' => $data['selectorTime'],
-            'comment' => $data['comment'],
-            'reservation_typ' => $data['selectorType']
+        $user = Auth::user();
+        $table=Table::find($request['checkedTable']);
+
+
+        $reservation = Reservation::create([
+            'user_id' => $user->id,
+            'people' => $request['people'],
+            'date' => $request['date'],
+            'time' => $request['selectorTime'].':00:00',
+            'comment' => $request['comment'],
+            'reservation_typ' => $request['selectorType']
+
+        ]);
+
+//        $reservation->tables()->attach($table->id);
+
+
+        $reservation->tables()->sync([
+            $table->id ,
+            4
         ]);
     }
 }

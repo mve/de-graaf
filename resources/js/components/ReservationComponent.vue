@@ -7,16 +7,17 @@
                     <div class="card-header">Example Component</div>
                     <div class="card-body">
                         <h1>I'm an example component.</h1>
+
                         <form method="POST" action="/reservering">
                             <input type="hidden" name="_token" :value="csrf" />
                             <div class="datepicker">
                                 <label>Datum:
-                                    <input type="date" v-model="datePicker" :min="minDateValue">
+                                    <input type="date" v-model="datePicker" :min="minDateValue" name="date">
                                 </label>
                             </div>
                             <div class="typepicker" v-if="datePicker">
                                 <label>
-                                    <select v-model="selectorType">
+                                    <select name="selectorType" v-model="selectorType">
                                         <option v-for="selectorType in [ 'Lunch', 'Diner' ]">
                                             {{ selectorType }}
                                         </option>
@@ -25,7 +26,7 @@
                             </div>
                             <div class="timepicker" v-if="selectorType">
                                 <label>Tijd
-                                    <select v-if="selectorType == 'Lunch'" v-model="selectorTime">
+                                    <select name="selectorTime" v-if="selectorType == 'Lunch'" v-model="selectorTime">
                                         <option value="10">10:00</option>
                                         <option value="11">11:00</option>
                                         <option value="12">12:00</option>
@@ -33,7 +34,7 @@
                                         <option value="14">14:00</option>
                                         <option value="15">15:00</option>
                                     </select>
-                                    <select v-if="selectorType == 'Diner'" v-model="selectorTime">
+                                    <select v-if="selectorType == 'Diner'" name="selectorTime" v-model="selectorTime">
                                         <option value="17">17:00</option>
                                         <option value="18">18:00</option>
                                         <option value="19">19:00</option>
@@ -47,7 +48,7 @@
                                 <div class="row">
                                     <div class="col-md-3" v-for="table in tables">
                                         <label>
-                                            <input type="checkbox" :value="table.id" v-model="checkedTable"> Tafel
+                                            <input type="checkbox" :value="table.id" name="checkedTable" v-model="checkedTable"> Tafel
                                             {{table.id}}. {{table.max_capacity}} stoelen
                                         </label>
                                     </div>
@@ -55,7 +56,7 @@
                             </div>
                             <div v-if="checkedTable.length > 0">
                                 <label>Heeft u dingen die wij moeten weten. bv: dieet wensen<br>
-                                    <textarea v-model="comment"></textarea>
+                                    <textarea name="comment" v-model="comment"></textarea>
                                 </label>
                             </div>
                             <div v-if="checkedTable.length > 0">

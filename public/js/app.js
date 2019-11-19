@@ -1948,6 +1948,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
   props: ['tables'],
@@ -37403,7 +37404,11 @@ var render = function() {
                         expression: "datePicker"
                       }
                     ],
-                    attrs: { type: "date", min: _vm.minDateValue },
+                    attrs: {
+                      type: "date",
+                      min: _vm.minDateValue,
+                      name: "date"
+                    },
                     domProps: { value: _vm.datePicker },
                     on: {
                       input: function($event) {
@@ -37431,6 +37436,7 @@ var render = function() {
                               expression: "selectorType"
                             }
                           ],
+                          attrs: { name: "selectorType" },
                           on: {
                             change: function($event) {
                               var $$selectedVal = Array.prototype.filter
@@ -37478,6 +37484,7 @@ var render = function() {
                                   expression: "selectorTime"
                                 }
                               ],
+                              attrs: { name: "selectorTime" },
                               on: {
                                 change: function($event) {
                                   var $$selectedVal = Array.prototype.filter
@@ -37535,6 +37542,7 @@ var render = function() {
                                   expression: "selectorTime"
                                 }
                               ],
+                              attrs: { name: "selectorTime" },
                               on: {
                                 change: function($event) {
                                   var $$selectedVal = Array.prototype.filter
@@ -37604,7 +37612,7 @@ var render = function() {
                                   expression: "checkedTable"
                                 }
                               ],
-                              attrs: { type: "checkbox" },
+                              attrs: { type: "checkbox", name: "checkedTable" },
                               domProps: {
                                 value: table.id,
                                 checked: Array.isArray(_vm.checkedTable)
@@ -37666,6 +37674,7 @@ var render = function() {
                             expression: "comment"
                           }
                         ],
+                        attrs: { name: "comment" },
                         domProps: { value: _vm.comment },
                         on: {
                           input: function($event) {
