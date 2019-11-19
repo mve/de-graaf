@@ -53,13 +53,9 @@ Route::get('/beheer/bestellingen', function () {
 
 Route::get('/beheer/reserveringen', 'ReservationController@adminGet')->name('home')->middleware('admin')->middleware('notBlocked');
 
-Route::get('/beheer/gebruikers', 'UserController@index')->middleware('admin');
+Route::get('/beheer/gebruikers', 'UserController@index')->middleware('admin')->middleware('notBlocked');
 
-Route::get('/beheer/gebruikers', function () {
-    return view('admin.users');
-})->middleware('admin')->middleware('notBlocked');
-Route::patch('/beheer/gebruikers', 'UserController@update')->middleware('admin');
-
+Route::patch('/beheer/gebruikers', 'UserController@index')->middleware('admin');
 
 Route::get('/beheer/gebruikers/{user}', ['as' => 'users.adminEdit', 'uses' => 'UserController@adminEdit']);
 
