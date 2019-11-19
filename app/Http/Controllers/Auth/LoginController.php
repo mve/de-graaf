@@ -9,20 +9,21 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
+    public $maxAttempts = 3;
     protected function hasTooManyLoginAttempts(Request $request)
     {
-        $this->limiter()->hit($this->throttleKey($request));
-
-
-        if ($this->limiter()->attempts($this->throttleKey($request)) == 3){
-            $user= User::where('email', $request->email)->first();
+        if ($this->limiter()->tooManyAttempts($this->throttleKey($request), $this->maxAttempts())) {
+            $user = User::where('email', $request->email)->first();
             $user->active = 0;
             $user->update();
+            return $this->limiter()->tooManyAttempts($this->throttleKey($request), $this->maxAttempts());
+
         }
-        return $this->limiter()->tooManyAttempts(
-            $this->throttleKey($request), 5 // <--- Change this
+        return $this->limiter()->tooManyAttempts($this->throttleKey($request), $this->maxAttempts()
         );
     }
+
+
     /*
     |--------------------------------------------------------------------------
     | Login Controller
