@@ -55,5 +55,7 @@ class ReservationController extends Controller
         foreach($table as $t){
             $reservation->tables()->attach($t->id);
         }
+
+        return view('reservations', compact('user'));
     }
 }

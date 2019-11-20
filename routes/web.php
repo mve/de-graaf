@@ -27,12 +27,19 @@ Route::get('/menu', function () {
 
 
 // User routes
-Route::get('/reserveringen', 'ReservationController@userGet')->name('home')->middleware('auth')->middleware('notBlocked');
+Route::get('/reserveringen',
+    'ReservationController@userGet')->name('home')->middleware('auth')->middleware('notBlocked');
 
 Route::get('/account', 'HomeController@edit')->middleware('auth');
 
-Route::get('/account/{user}',   ['as' => 'account.edit', 'uses' => 'HomeController@edit'])->middleware('auth')->middleware('notBlocked');
-Route::patch('/account/{user}', 'HomeController@update')->middleware('auth')->middleware('notBlocked');
+Route::get('/account/{user}',
+    ['as' => 'users.edit', 'uses' => 'UserController@edit'])->middleware('auth')->middleware('notBlocked');
+Route::patch('/account/{user}', ['as' => 'users.update', 'uses' => 'UserController@update'])->middleware('auth')->middleware('notBlocked');
+
+Route::get('/reservering', function () {
+    return view('reservation');
+})->middleware('auth')->middleware('notBlocked');
+
 Route::post('/reservering',   'ReservationController@createReservation')->middleware('auth')->middleware('notBlocked');
 Route::get('/reservering',   'TableController@getTables')->middleware('auth')->middleware('notBlocked');
 
@@ -50,7 +57,8 @@ Route::get('/beheer/bestellingen', function () {
     return view('admin.orders');
 })->middleware('admin')->middleware('notBlocked');
 
-Route::get('/beheer/reserveringen', 'ReservationController@adminGet')->name('home')->middleware('admin')->middleware('notBlocked');
+Route::get('/beheer/reserveringen',
+    'ReservationController@adminGet')->name('home')->middleware('admin')->middleware('notBlocked');
 
 Route::get('/beheer/gebruikers', 'UserController@index')->middleware('admin')->middleware('notBlocked');
 

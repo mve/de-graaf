@@ -14,6 +14,6 @@ return [
     */
 
     'failed' => 'Deze gegevens kloppen niet.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'throttle' => 'Je account is geblokkeerd',
 
 ];
