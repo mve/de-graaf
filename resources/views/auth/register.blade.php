@@ -12,7 +12,7 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Voornaam') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Voornaam') }}*</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -37,7 +37,7 @@
                             <label for="surname" class="col-md-4 col-form-label text-md-right">{{ __('Achternaam') }}</label>
 
                             <div class="col-md-6">
-                                <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" required autocomplete="surname" autofocus>
+                                <input id="surname" type="text" class="form-control @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" autocomplete="surname" autofocus>
 
                                 @error('surname')
                                 <span class="invalid-feedback" role="alert">
@@ -87,7 +87,7 @@
 
 
                         <div class="form-group row">
-                            <label for="telephone" class="col-md-4 col-form-label text-md-right">{{ __('Telefoon nummer') }}</label>
+                            <label for="telephone" class="col-md-4 col-form-label text-md-right">{{ __('Telefoon nummer') }}*</label>
 
                             <div class="col-md-6">
                                 <input id="telephone" type="text" class="form-control  @error('telephone') is-invalid @enderror" name="telephone" value="{{ old('telephone') }}" required autocomplete="telephone" autofocus>
@@ -113,7 +113,7 @@
 
                             </div>
                             <div class="col-md-2">
-                                <input id="number" type="text" class="form-control  @error('number') is-invalid @enderror" name="number" placeholder="Nummer" value="{{ old('number') }}" required autocomplete="number" autofocus>
+                                <input id="number" type="text" class="form-control  @error('number') is-invalid @enderror" name="number" placeholder="Nummer" value="{{ old('number') }}"  autocomplete="number" autofocus>
                                 @error('number')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -126,7 +126,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Postcode en plaats') }}</label>
 
                             <div class="col-md-3">
-                                <input id="zipcode" type="text" class="form-control @error('zipcode') is-invalid @enderror" name="zipcode" placeholder="Postcode" value="{{ old('zipcode') }}" required autocomplete="city" autofocus>
+                                <input id="zipcode" type="text" class="form-control @error('zipcode') is-invalid @enderror" name="zipcode" placeholder="Postcode" value="{{ old('zipcode') }}"  autocomplete="zipcode" autofocus>
 
                                 @error('zipcode')
                                 <span class="invalid-feedback" role="alert">
@@ -135,7 +135,7 @@
                                 @enderror
                             </div>
                             <div class="col-md-3">
-                                <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city"  placeholder="plaats" value="{{ old('city') }}" required autocomplete="city" autofocus>
+                                <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city"  placeholder="plaats" value="{{ old('city') }}"  autocomplete="city" autofocus>
 
                                 @error('city')
                                 <span class="invalid-feedback" role="alert">
