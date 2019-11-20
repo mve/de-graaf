@@ -40,6 +40,9 @@ Route::get('/reservering', function () {
     return view('reservation');
 })->middleware('auth')->middleware('notBlocked');
 
+Route::post('/reservering',   'ReservationController@createReservation')->middleware('auth')->middleware('notBlocked');
+Route::get('/reservering',   'TableController@getTables')->middleware('auth')->middleware('notBlocked');
+
 
 Route::get('/blocked', function () {
     return view('blocked');
