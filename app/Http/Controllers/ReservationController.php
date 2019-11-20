@@ -40,7 +40,6 @@ class ReservationController extends Controller
         $user = Auth::user();
         $table=Table::find($request['checkedTable']);
 
-
         $reservation = Reservation::create([
             'user_id' => $user->id,
             'people' => $request['people'],
@@ -53,10 +52,8 @@ class ReservationController extends Controller
 
 //        $reservation->tables()->attach($table->id);
 
-
-        $reservation->tables()->sync([
-            $table->id ,
-            4
-        ]);
+        foreach($table as $t){
+            $reservation->tables()->attach($t->id);
+        }
     }
 }
