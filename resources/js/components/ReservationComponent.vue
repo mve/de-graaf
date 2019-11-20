@@ -48,7 +48,7 @@
                                 <div class="row">
                                     <div class="col-md-3" v-for="table in tables">
                                         <label>
-                                            <input type="checkbox" :value="table.id" name="checkedTable" v-model="checkedTable"> Tafel
+                                            <input type="checkbox" :value="table.id" name="checkedTable[]" v-model="checkedTable"> Tafel
                                             {{table.id}}. {{table.max_capacity}} stoelen
                                         </label>
                                     </div>

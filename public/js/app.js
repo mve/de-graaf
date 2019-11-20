@@ -37612,7 +37612,10 @@ var render = function() {
                                   expression: "checkedTable"
                                 }
                               ],
-                              attrs: { type: "checkbox", name: "checkedTable" },
+                              attrs: {
+                                type: "checkbox",
+                                name: "checkedTable[]"
+                              },
                               domProps: {
                                 value: table.id,
                                 checked: Array.isArray(_vm.checkedTable)
