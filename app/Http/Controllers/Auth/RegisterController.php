@@ -75,7 +75,8 @@ class RegisterController extends Controller
             'zipcode' => $data['zipcode'],
             'city' => $data['city'],
             'password' => Hash::make($data['password']),
-            'active' => 1
+            'active' => 1,
+            'blocked' => 0
         ]);
     }
 }

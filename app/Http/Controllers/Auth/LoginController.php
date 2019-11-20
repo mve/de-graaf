@@ -14,8 +14,10 @@ class LoginController extends Controller
     {
         if ($this->limiter()->tooManyAttempts($this->throttleKey($request), $this->maxAttempts())) {
             $user = User::where('email', $request->email)->first();
-            $user->active = 0;
-            $user->update();
+            if($user) {
+                $user->active = 0;
+                $user->update();
+            }
             return $this->limiter()->tooManyAttempts($this->throttleKey($request), $this->maxAttempts());
 
         }

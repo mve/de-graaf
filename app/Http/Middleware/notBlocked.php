@@ -17,7 +17,7 @@ class notBlocked
     public function handle($request, Closure $next)
     {
         if (Auth::user()) {
-            if (Auth::user()->active) {
+            if (Auth::user()->active && !Auth::user()->blocked ) {
                 return $next($request);
             }
 
