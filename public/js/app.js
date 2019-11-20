@@ -1996,6 +1996,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
   props: ['tables'],
@@ -2014,6 +2015,21 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {},
     setSelectorType: function setSelectorType(selector) {
       this.selectorType = selector;
+    },
+    getReserved: function getReserved() {
+      var _this = this;
+
+      axios.post('http://localhost:8000/get-reserved', {
+        date: this.datePicker,
+        time: this.selectorTime
+      }).then(function (response) {
+        response.data[0].tables.forEach(function (item) {
+          console.log(item);
+        }); // console.log(response.data[0].tables);
+      })["catch"](function (error) {
+        console.log(error);
+        _this.errored = true;
+      });
     }
   },
   computed: {
@@ -37551,19 +37567,22 @@ var render = function() {
                         staticClass: "form-control",
                         attrs: { name: "selectorTime" },
                         on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.selectorTime = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          }
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.selectorTime = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            },
+                            _vm.getReserved
+                          ]
                         }
                       },
                       [
@@ -37610,19 +37629,22 @@ var render = function() {
                         staticStyle: { width: "100%" },
                         attrs: { name: "selectorTime" },
                         on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.selectorTime = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          }
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.selectorTime = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            },
+                            _vm.getReserved
+                          ]
                         }
                       },
                       [
@@ -37644,7 +37666,16 @@ var render = function() {
                       ]
                     )
                   : _vm._e()
-              ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "btn btn-primary",
+                  on: { click: _vm.getReserved }
+                },
+                [_vm._v("check")]
+              )
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -50319,8 +50350,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Projects\de-graaf\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Projects\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\de-graaf\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

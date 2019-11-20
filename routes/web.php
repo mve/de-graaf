@@ -43,7 +43,6 @@ Route::get('/reservering', function () {
 Route::post('/reservering',   'ReservationController@createReservation')->middleware('auth')->middleware('notBlocked');
 Route::get('/reservering',   'TableController@getTables')->middleware('auth')->middleware('notBlocked');
 
-
 Route::get('/blocked', function () {
     return view('blocked');
 });
@@ -67,3 +66,6 @@ Route::patch('/beheer/gebruikers', 'UserController@index')->middleware('admin');
 Route::get('/beheer/gebruikers/{user}', ['as' => 'users.adminEdit', 'uses' => 'UserController@adminEdit']);
 
 Route::patch('/beheer/gebruikers/{user}', ['as' => 'users.adminUpdate', 'uses' => 'UserController@adminUpdate']);
+
+
+Route::post('/get-reserved',   'TableController@getReservedTable');

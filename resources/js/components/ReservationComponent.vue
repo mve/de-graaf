@@ -53,7 +53,7 @@
 
             <div class="timepicker col-md-4" v-if="selectorType">
                 <label style="width: 100%">Tijd
-                    <select class="form-control" name="selectorTime" v-if="selectorType == 'Lunch'"
+                    <select v-on:change="getReserved" class="form-control" name="selectorTime" v-if="selectorType == 'Lunch'"
                             v-model="selectorTime">
                         <option value="10">10:00</option>
                         <option value="11">11:00</option>
@@ -63,7 +63,7 @@
                         <option value="15">15:00</option>
                     </select>
 
-                    <select style="width: 100%" class="form-control" v-if="selectorType == 'Diner'" name="selectorTime"
+                    <select v-on:change="getReserved" style="width: 100%" class="form-control" v-if="selectorType == 'Diner'" name="selectorTime"
                             v-model="selectorTime">
                         <option value="17">17:00</option>
                         <option value="18">18:00</option>
@@ -71,6 +71,7 @@
                         <option value="20">20:00</option>
                     </select>
                 </label>
+                <div class="btn btn-primary"v-on:click="getReserved">check</div>
             </div>
 
             <div class="space space--20"></div>
@@ -89,7 +90,7 @@
 
                     </div>
                 </div>
-                
+
                 <div class="space space--10"></div>
 
                 <div v-if="checkedTable.length > 2" class="alert alert-danger" role="alert">
@@ -146,6 +147,23 @@
             },
             setSelectorType(selector) {
                 this.selectorType = selector;
+            },
+            getReserved() {
+                axios
+                    .post('http://localhost:8000/get-reserved', {
+                        date: this.datePicker,
+                        time: this.selectorTime
+                    })
+                    .then(response => {
+                        response.data[0].tables.forEach(function (item) {
+                            console.log(item);
+                        })
+                        // console.log(response.data[0].tables);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true
+                    });
             }
         },
         computed: {
