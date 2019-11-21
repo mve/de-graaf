@@ -2008,6 +2008,7 @@ __webpack_require__.r(__webpack_exports__);
       selectorTime: '',
       checkedTable: [],
       comment: '',
+      reservedTables: [],
       csrf: document.head.querySelector('meta[name="csrf-token"]').content
     };
   },
@@ -2019,13 +2020,18 @@ __webpack_require__.r(__webpack_exports__);
     getReserved: function getReserved() {
       var _this = this;
 
-      axios.post('http://localhost:8000/get-reserved', {
+      axios.post('http://127.0.0.1:8000/get-reserved', {
         date: this.datePicker,
         time: this.selectorTime
       }).then(function (response) {
-        response.data[0].tables.forEach(function (item) {
-          console.log(item);
-        }); // console.log(response.data[0].tables);
+        var i;
+
+        for (i = 0; i < response.data.length; i++) {
+          response.data[i].tables.forEach(function (item) {
+            console.log(item['id']);
+          });
+        } // console.log(response.data[0].tables);
+
       })["catch"](function (error) {
         console.log(error);
         _this.errored = true;
@@ -50350,8 +50356,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\de-graaf\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\de_graaf\de-graaf\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\de_graaf\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
