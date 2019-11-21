@@ -35,15 +35,17 @@ Route::get('/account', 'HomeController@edit')->middleware('verified');
 
 Route::get('/account/{user}',
     ['as' => 'users.edit', 'uses' => 'UserController@edit'])->middleware('verified')->middleware('notBlocked');
-Route::patch('/account/{user}', ['as' => 'users.update', 'uses' => 'UserController@update'])->middleware('verified')->middleware('notBlocked');
+Route::patch('/account/{user}',
+    ['as' => 'users.update', 'uses' => 'UserController@update'])->middleware('verified')->middleware('notBlocked');
 
 Route::get('/reservering', function () {
     return view('reservation');
 })->middleware('verified')->middleware('notBlocked');
 
-Route::post('/reservering',   'ReservationController@createReservation')->middleware('verified')->middleware('notBlocked');
-Route::get('/reservering',   'TableController@getTables')->middleware('verified')->middleware('notBlocked');
+Route::post('/reservering',
+    'ReservationController@createReservation')->middleware('verified')->middleware('notBlocked');
 
+Route::get('/get-tables', 'TableController@getTables')->middleware('verified')->middleware('notBlocked');
 
 Route::get('/blocked', function () {
     return view('blocked');
@@ -61,10 +63,16 @@ Route::get('/beheer/bestellingen', function () {
 Route::get('/beheer/reserveringen',
     'ReservationController@adminGet')->name('home')->middleware('admin')->middleware('notBlocked')->middleware('verified');
 
-Route::get('/beheer/gebruikers', 'UserController@index')->middleware('admin')->middleware('notBlocked')->middleware('verified');
+Route::get('/beheer/gebruikers',
+    'UserController@index')->middleware('admin')->middleware('notBlocked')->middleware('verified');
 
 Route::patch('/beheer/gebruikers', 'UserController@index')->middleware('admin')->middleware('verified');
 
-Route::get('/beheer/gebruikers/{user}', ['as' => 'users.adminEdit', 'uses' => 'UserController@adminEdit'])->middleware('verified');
+Route::get('/beheer/gebruikers/{user}',
+    ['as' => 'users.adminEdit', 'uses' => 'UserController@adminEdit'])->middleware('verified');
 
-Route::patch('/beheer/gebruikers/{user}', ['as' => 'users.adminUpdate', 'uses' => 'UserController@adminUpdate'])->middleware('verified');
+Route::patch('/beheer/gebruikers/{user}',
+    ['as' => 'users.adminUpdate', 'uses' => 'UserController@adminUpdate'])->middleware('verified');
+
+
+Route::post('/get-reserved', 'TableController@getReservedTable');
