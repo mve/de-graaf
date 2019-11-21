@@ -22,7 +22,13 @@ Route::get('/', function () {
     return view('home');
 })->middleware('notBlocked');
 
-Route::get('/menu', function () {
+Route::get('/contact', function () {
+    return view('contact');
+})->middleware('notBlocked');
+
+Route::post('/contact',  'UserController@sendmail');
+
+    Route::get('/menu', function () {
     return view('menu');
 })->middleware('notBlocked');
 
