@@ -4,8 +4,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <h2>{{ __('Registreer') }}</h2>
                 <div class="card">
-                    <div class="card-header">{{ __('Register') }}</div>
+
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('register') }}">
@@ -177,14 +178,15 @@
                                     @enderror
                                 </div>
                             </div>
-
+                            <div class="form-group row">
                             @if(env('GOOGLE_RECAPTCHA_KEY'))
-                                <div class="g-recaptcha"
+                                <div class="col-md-4"></div>
+                                <div class="g-recaptcha col-md-8"
                                      data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}">
                                 </div>
                                 <span class="text-danger">{{ $errors->first('g-recaptcha-response') }}</span>
                             @endif
-
+                            </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
