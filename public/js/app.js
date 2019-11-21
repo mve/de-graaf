@@ -2018,17 +2018,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
-  props: ['tables'],
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('http://127.0.0.1:8000/get-tables').then(function (response) {
+      _this.allTables = response.data;
+    })["catch"](function (error) {
+      console.log(error);
+      _this.errored = true;
+    });
+  },
   data: function data() {
     return {
       datePicker: '',
+      allTables: [],
+      availableTables: [],
       selectorType: '',
       selectorTime: '',
       checkedTable: [],
       comment: '',
+      reservedTables: [],
       csrf: document.head.querySelector('meta[name="csrf-token"]').content
     };
   },
@@ -2036,6 +2049,40 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {},
     setSelectorType: function setSelectorType(selector) {
       this.selectorType = selector;
+    },
+    getReserved: function getReserved() {
+      var _this2 = this;
+
+      var that = this;
+      axios.get('http://127.0.0.1:8000/get-tables').then(function (response) {
+        that.allTables = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+        _this2.errored = true;
+      }).then(axios.post('http://127.0.0.1:8000/get-reserved', {
+        date: this.datePicker,
+        time: this.selectorTime
+      }).then(function (response) {
+        that.reservedTables = [];
+        that.availableTables = that.allTables;
+
+        for (var i = 0; i < response.data.length; i++) {
+          response.data[i].tables.forEach(function (item) {
+            that.reservedTables.push(item);
+          });
+        }
+
+        for (var _i = that.availableTables.length - 1; _i >= 0; _i--) {
+          for (var j = 0; j < that.reservedTables.length; j++) {
+            if (that.availableTables[_i] && that.availableTables[_i].id === that.reservedTables[j].id) {
+              that.availableTables.splice(_i, 1);
+            }
+          }
+        }
+      })["catch"](function (error) {
+        console.log(error);
+        _this2.errored = true;
+      }));
     }
   },
   computed: {
@@ -37551,6 +37598,7 @@ var render = function() {
                         staticClass: "form-control",
                         attrs: { name: "selectorTime" },
                         on: {
+                          click: _vm.getReserved,
                           change: function($event) {
                             var $$selectedVal = Array.prototype.filter
                               .call($event.target.options, function(o) {
@@ -37610,19 +37658,22 @@ var render = function() {
                         staticStyle: { width: "100%" },
                         attrs: { name: "selectorTime" },
                         on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.selectorTime = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          }
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.selectorTime = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            },
+                            _vm.getReserved
+                          ]
                         }
                       },
                       [
@@ -37655,7 +37706,7 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "row" },
-                _vm._l(_vm.tables, function(table) {
+                _vm._l(this.availableTables, function(table) {
                   return _c("div", { staticClass: "col-md-3" }, [
                     _c(
                       "div",
@@ -50319,8 +50370,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\de-graaf\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\de_graaf\de-graaf\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\de_graaf\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

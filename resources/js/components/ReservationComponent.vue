@@ -53,7 +53,8 @@
 
             <div class="timepicker col-md-4" v-if="selectorType">
                 <label style="width: 100%">Tijd
-                    <select class="form-control" name="selectorTime" v-if="selectorType == 'Lunch'"
+                    <select v-on:click="getReserved" class="form-control" name="selectorTime"
+                            v-if="selectorType == 'Lunch'"
                             v-model="selectorTime">
                         <option value="10">10:00</option>
                         <option value="11">11:00</option>
@@ -63,7 +64,8 @@
                         <option value="15">15:00</option>
                     </select>
 
-                    <select style="width: 100%" class="form-control" v-if="selectorType == 'Diner'" name="selectorTime"
+                    <select v-on:change="getReserved" style="width: 100%" class="form-control"
+                            v-if="selectorType == 'Diner'" name="selectorTime"
                             v-model="selectorTime">
                         <option value="17">17:00</option>
                         <option value="18">18:00</option>
@@ -77,7 +79,7 @@
 
             <div class="tableGrid" v-if="selectorTime">
                 <div class="row">
-                    <div class="col-md-3" v-for="table in tables">
+                    <div class="col-md-3" v-for="table in this.availableTables">
 
                         <div class="form-check mb-2 mr-sm-2 mb-sm-0">
                             <label class="form-check-label">
@@ -89,7 +91,7 @@
 
                     </div>
                 </div>
-                
+
                 <div class="space space--10"></div>
 
                 <div v-if="checkedTable.length > 2" class="alert alert-danger" role="alert">
@@ -126,17 +128,29 @@
 <script>
     export default {
         name: "ReservationComponent",
-        props: ['tables'],
         mounted() {
+
+            axios
+                .get('http://127.0.0.1:8000/get-tables')
+                .then(response => {
+                    this.allTables = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.errored = true
+                })
 
         },
         data() {
             return {
                 datePicker: '',
+                allTables: [],
+                availableTables: [],
                 selectorType: '',
                 selectorTime: '',
                 checkedTable: [],
                 comment: '',
+                reservedTables: [],
                 csrf: document.head.querySelector('meta[name="csrf-token"]').content
             }
 
@@ -146,6 +160,47 @@
             },
             setSelectorType(selector) {
                 this.selectorType = selector;
+            },
+            getReserved() {
+                const that = this;
+
+                axios
+                    .get('http://127.0.0.1:8000/get-tables')
+                    .then(response => {
+                        that.allTables = response.data;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true
+                    }).then(
+                    axios
+                        .post('http://127.0.0.1:8000/get-reserved', {
+                            date: this.datePicker,
+                            time: this.selectorTime
+                        })
+                        .then(response => {
+                            that.reservedTables = [];
+                            that.availableTables = that.allTables;
+
+                            for (let i = 0; i < response.data.length; i++) {
+                                response.data[i].tables.forEach(function (item) {
+                                    that.reservedTables.push(item);
+                                })
+                            }
+
+                            for (let i = that.availableTables.length - 1; i >= 0; i--) {
+                                for (let j = 0; j < that.reservedTables.length; j++) {
+                                    if (that.availableTables[i] && (that.availableTables[i].id === that.reservedTables[j].id)) {
+                                        that.availableTables.splice(i, 1);
+                                    }
+                                }
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            this.errored = true
+                        })
+                );
             }
         },
         computed: {
