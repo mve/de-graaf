@@ -17,7 +17,7 @@
                     <div class="error-actions">
                         <a href="{{ url('/password/reset') }}" class="btn btn-primary btn-lg"><span
                                 class="glyphicon glyphicon-home"></span>
-                            Herstel wachtwoord </a><a href="{{ url('/password/reset') }}" class="btn btn-default btn-lg"><span
+                            Herstel wachtwoord </a><a href="{{ url('/contact') }}" class="btn btn-default btn-lg"><span
                                 class="glyphicon glyphicon-envelope"></span> Neem contact op </a>
                     </div>
                 </div>
