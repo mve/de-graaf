@@ -53,9 +53,11 @@ Route::get('/beheer', function () {
     return view('admin.home');
 })->middleware('admin')->middleware('notBlocked');
 
-Route::get('/beheer/bestellingen', function () {
-    return view('admin.orders');
-})->middleware('admin')->middleware('notBlocked');
+Route::get('/beheer/bestellingen',
+    'OrderController@adminGet')->name('home')->middleware('admin')->middleware('notBlocked');
+
+Route::get('/beheer/createOrder',
+    'OrderController@adminGet')->name('home')->middleware('admin')->middleware('notBlocked');
 
 Route::get('/beheer/reserveringen',
     'ReservationController@adminGet')->name('home')->middleware('admin')->middleware('notBlocked');
