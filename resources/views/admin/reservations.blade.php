@@ -14,7 +14,9 @@
                 <th class="d-none d-lg-table-cell">Opmerking</th>
                 <th class="d-none d-lg-table-cell">Tafel</th>
                 <th class="d-none d-lg-table-cell">acties</th>
-                @foreach($reservations as $reservation)
+            </tr>
+            @foreach($reservations as $reservation)
+                <tr>
                     <td class="d-none d-lg-table-cell">{{$reservation->date}}</td>
                     <td class="d-none d-lg-table-cell">
                         {{$reservation->time}}
@@ -44,7 +46,7 @@
                     <td class="d-none d-lg-table-cell">
                         <a href="{{route('reservation.adminUpdate', $reservation)}}">Wijzigen</a>
                     </td>
-            </tr>
+                </tr>
             @endforeach
         </table>
         <div class="row d-flex justify-content-center">

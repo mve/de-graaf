@@ -65,8 +65,12 @@ Route::get('/beheer/gebruikers', 'UserController@index')->middleware('admin')->m
 
 Route::patch('/beheer/gebruikers', 'UserController@index')->middleware('admin')->middleware('verified');
 
+// get user by id
 Route::get('/beheer/gebruikers/{user}', ['as' => 'users.adminEdit', 'uses' => 'UserController@adminEdit'])->middleware('verified');
-
+// update the user
 Route::patch('/beheer/gebruikers/{user}', ['as' => 'users.adminUpdate', 'uses' => 'UserController@adminUpdate'])->middleware('verified');
 
-Route::patch('/beheer/reservering/{reservering}', ['as' => 'reservation.adminUpdate', 'uses' => 'UserController@adminUpdate'])->middleware('verified');
+// Get reservation by id
+Route::get('/beheer/reserveringen/{reservering}', ['as' => 'reservation.adminEdit', 'uses' => 'ReservationController@adminEdit'])->middleware('verified');
+// Update Reservation
+Route::patch('/beheer/reserveringen/{reservering}', ['as' => 'reservation.adminUpdate', 'uses' => 'ReservationController@adminUpdate'])->middleware('verified');
