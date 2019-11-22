@@ -154,4 +154,18 @@ class UserController extends Controller
 
         return back();
     }
+
+    public function toggleBlock(User $user)
+    {
+        if ($user->blocked === 0)
+        {
+            $user->blocked = 1;
+        } else {
+            $user->blocked = 0;
+        }
+
+        $user->save();
+
+        return back();
+    }
 }

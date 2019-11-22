@@ -2,7 +2,22 @@
 
 @section('content')
     <div class="container">
-        <h1>Wijzig {{$user->name}}</h1>
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Wijzig {{$user->name}}</h1>
+            </div>
+
+            <div class="col-md-4">
+                <form method="post" action="{{url('/toggle-block', $user)}}">
+                    @csrf
+                    @if($user->blocked === 0)
+                        <button type="submit" class="btn btn-danger float-right">blokkeer</button>
+                    @else
+                        <button type="submit" class="btn btn-success float-right">deblokkeer</button>
+                    @endif
+                </form>
+            </div>
+        </div>
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -55,7 +70,8 @@
 
                 <div class="form-group">
                     <label for="address">address</label>
-                    <input class="form-control" id="address" name="address" type="text" placeholder="{{$user->address}}">
+                    <input class="form-control" id="address" name="address" type="text"
+                           placeholder="{{$user->address}}">
 
                 </div>
 
