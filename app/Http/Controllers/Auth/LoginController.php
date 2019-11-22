@@ -6,15 +6,20 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    public $maxAttempts = 3;
+    public $maxAttempts = 2;
+
     protected function hasTooManyLoginAttempts(Request $request)
     {
         if ($this->limiter()->tooManyAttempts($this->throttleKey($request), $this->maxAttempts())) {
             $user = User::where('email', $request->email)->first();
-            if($user) {
+            if ($user) {
                 $user->active = 0;
                 $user->update();
             }
@@ -23,6 +28,29 @@ class LoginController extends Controller
         }
         return $this->limiter()->tooManyAttempts($this->throttleKey($request), $this->maxAttempts()
         );
+    }
+
+    protected function incrementLoginAttempts(Request $request)
+    {
+
+
+        $this->limiter()->hit(
+            $this->throttleKey($request), $this->decayMinutes() * 60
+        );
+
+
+        throw ValidationException::withMessages([
+            $this->username() => [Lang::get('auth.attempts', [
+                'attempt' => $this->limiter()->attempts($this->throttleKey($request)),
+            ])],
+        ])->status(Response::HTTP_TOO_MANY_REQUESTS);
+
+
+    }
+
+    protected function sendLockoutResponse(Request $request)
+    {
+        return redirect('/blocked');
     }
 
 
