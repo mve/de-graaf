@@ -53,7 +53,7 @@
 
             <div class="timepicker col-md-4" v-if="selectorType">
                 <label style="width: 100%">Tijd
-                    <select v-on:change="getReserved" class="form-control" name="selectorTime"
+                    <select v-on:click="getReserved" class="form-control" name="selectorTime"
                             v-if="selectorType == 'Lunch'"
                             v-model="selectorTime">
                         <option value="10">10:00</option>

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\contact;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -97,7 +99,13 @@ class UserController extends Controller
     {
         return view('admin.editUser', compact('user'));
     }
+    public function sendmail(Request $request)
+    {
 
+        Mail::send(new contact($request));
+
+        return view('home');
+    }
     /**
      * Update for admin, can change role.
      *
