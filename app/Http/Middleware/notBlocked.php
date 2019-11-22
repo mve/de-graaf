@@ -23,7 +23,7 @@ class notBlocked
 
         Auth::logout();
 
-        return redirect('/blockedByAdmin') ;
+        return redirect('/blocked') ;
         }
         return $next($request);
 

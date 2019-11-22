@@ -2,23 +2,35 @@
     <div class="footer-middle">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-3 col-sm-6">
                     <!--Column1-->
                     <div class="footer-pad">
-                        <h4>Contact</h4>
+                        <h4>Heading 1</h4>
                         <ul class="list-unstyled">
                             <li><a href="#"></a></li>
-                            <li>Maastricht, 1234BB,</li>
-                            <li>JF-kennedylaan 32</li>
-                            <li>+ 01 234 567 89</li>
-                            <li>infomaildegraaf@gmail.com
-
-                            </li>
+                            <li><a href="#">Payment Center</a></li>
+                            <li><a href="#">Contact Directory</a></li>
+                            <li><a href="#">Forms</a></li>
+                            <li><a href="#">News and Updates</a></li>
+                            <li><a href="#">FAQs</a></li>
                         </ul>
                     </div>
                 </div>
-
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-3 col-sm-6">
+                    <!--Column1-->
+                    <div class="footer-pad">
+                        <h4>Heading 2</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="#">Website Tutorial</a></li>
+                            <li><a href="#">Accessibility</a></li>
+                            <li><a href="#">Disclaimer</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Webmaster</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
                     <!--Column1-->
                     <div class="footer-pad">
                         <h4>Heading 3</h4>
@@ -34,7 +46,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-3 col-sm-6">
                     <h4>Volg ons</h4>
                     <ul style="list-style: none">
                         <li><a href="https://www.facebook.com/" target="_blank" title="Facebook"><i
