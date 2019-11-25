@@ -15,5 +15,6 @@ return [
 
     'failed' => 'Deze gegevens kloppen niet.',
     'throttle' => 'Je account is geblokkeerd',
+    'attempts' => ':attempt van de 3 pogingen voordat je account geblokkeerd wordt'
 
 ];
