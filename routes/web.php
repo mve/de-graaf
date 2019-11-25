@@ -34,6 +34,9 @@ Route::get('/reserveringen',
 
 Route::get('/account', 'HomeController@edit')->middleware('verified');
 
+Route::get('account/delete/{id}', 'HomeController@deleteReservation')->middleware('verified');
+
+
 Route::get('/account/{user}',
     ['as' => 'users.edit', 'uses' => 'UserController@edit'])->middleware('verified')->middleware('notBlocked');
 Route::patch('/account/{user}',
