@@ -18,15 +18,17 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('infix')->nullable();
             $table->string('surname')->nullable();
-            $table->integer('telephone')->nullable();
+            $table->string('telephone')->nullable();
             $table->string('zipcode')->nullable();
             $table->string('city')->nullable();
-            $table->string('adress')->nullable();
+            $table->string('address')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('isadmin')->nullable();
+            $table->integer('isadmin')->nullable();
             $table->boolean('active')->nullable();
+            $table->boolean('blocked')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
 

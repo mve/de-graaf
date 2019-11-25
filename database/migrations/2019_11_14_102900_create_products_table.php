@@ -17,8 +17,9 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->double('price')->nullable();
-            $table->string('main_course')->nullable();
-            $table->string('sub_course')->nullable();
+
+            $table->unsignedBigInteger('sub_course_id')->nullable();
+            $table->foreign('sub_course_id')->references('id')->on('sub_courses');
 
             $table->timestamps();
         });
