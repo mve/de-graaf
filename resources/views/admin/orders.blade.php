@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row w-100 mb-3">
             <h1 class="float-left">Admin Orders</h1>
-            <button type="button" onclick="window.location='{{ url("/beheer/createOrder") }}'" class="btn btn-success ml-auto"><i class="fa fa-plus" aria-hidden="true"></i> Create Order</button>
+            <button type="button" onclick="window.location='{{ url("/beheer/createOrder") }}'" class="btn btn-success ml-auto"><i class="fa fa-plus" aria-hidden="true"></i> Bestelling aanmaken</button>
         </div>
         <table class="table">
             <tr>
@@ -14,6 +14,7 @@
                 <th class="d-none d-lg-table-cell">Hoeveelheid</th>
                 <th class="d-none d-lg-table-cell">Bon nummer</th>
                 <th class="d-none d-lg-table-cell">Tafel</th>
+                <th class="d-none d-lg-table-cell">Actie</th>
             @foreach($unsortedorders as $order)
                 <tr>
 
@@ -36,6 +37,12 @@
                             {{$table->id}}
                         @endforeach
                     </td>
+                    <td>
+                        <a><button type="button" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
+                        <a><button type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
+                    </td>
+                    {{--<a href="{{action('YourController@callMeDirectlyFromUrl')}}">Link name/Embedded Button</a>
+--}}
                 </tr>
             @endforeach
         </table>

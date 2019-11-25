@@ -62,12 +62,10 @@ Route::get('/beheer', function () {
     return view('admin.home');
 })->middleware('admin')->middleware('notBlocked')->middleware('verified');
 
-Route::get('/beheer/bestellingen', function () {
-    return view('admin.orders');
-})->middleware('admin')->middleware('notBlocked')->middleware('verified');
+Route::get('/beheer/bestellingen',
+    'OrderController@getOrders')->middleware('admin')->middleware('notBlocked')->middleware('verified');
 
-Route::get('/beheer/createOrder',
-    'OrderController@adminGet')->name('home')->middleware('admin')->middleware('notBlocked');
+Route::get('/beheer/createOrder', 'OrderController@getData')->name('home')->middleware('admin')->middleware('notBlocked');
 
 Route::get('/beheer/reserveringen',
     'ReservationController@adminGet')->name('home')->middleware('admin')->middleware('notBlocked')->middleware('verified');

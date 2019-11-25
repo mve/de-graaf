@@ -5,15 +5,31 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\Product;
 use App\Receipt;
+use App\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
 class OrderController extends Controller
 {
-    public function adminGet()
+    public function getOrders()
     {
         $unsortedorders = Order::with('product', 'receipt.reservation.tables')->paginate(6);
 
         return view('admin.orders', compact('unsortedorders'));
+    }
+
+    public function removeOrder($id){
+        dd($id);
+    }
+
+    public function getData()
+    {
+
+        $todayDate = date('Y-m-d');
+
+        $unsortedreservations = Reservation::with('tables', 'user')->where('date', '=', $todayDate)->get();
+
+        return view('admin.createOrder', compact( 'unsortedreservations'));
     }
 
     public function createOrder(){
