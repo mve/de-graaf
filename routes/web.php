@@ -77,7 +77,8 @@ Route::get('/beheer/gebruikers/{user}',
 Route::patch('/beheer/gebruikers/{user}',
     ['as' => 'users.adminUpdate', 'uses' => 'UserController@adminUpdate'])->middleware('verified')->middleware('admin');
 
-
 // API
 
 Route::post('/get-reserved', 'TableController@getReservedTable');
+
+Route::post('/toggle-block/{user}', 'UserController@toggleBlock');
