@@ -10,4 +10,10 @@ class Product extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function subCourse(){
+        return $this->belongsTo('app/SubCourse');
+    }
+
+
+
 }

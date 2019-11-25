@@ -25,10 +25,8 @@ Route::get('/contact', function () {
 
 Route::post('/contact', 'UserController@sendmail');
 
-Route::get('/menu', function () {
-    return view('menu');
-})->middleware('notBlocked');
-
+Route::get('/menu',
+    'ProductController@index');
 
 // User routes
 Route::get('/reserveringen',
