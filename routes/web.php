@@ -58,6 +58,10 @@ Route::get('/blocked',[ 'as' => 'blocked', function () {
 Route::get('/blockedByAdmin',[ 'as' => 'blocked', function () {
     return view('blockedByAdmin');
 }]);
+Route::get('beheer/reservering/nota/{id}', 'receiptController@getReceipt')->middleware('verified');
+
+Route::get('reservering/nota/{id}', 'receiptController@downloadPDFbyUser')->middleware('verified');
+
 
 // Admin routes
 Route::get('/beheer', function () {
@@ -82,6 +86,10 @@ Route::get('/beheer/gebruikers/{user}',
 
 Route::patch('/beheer/gebruikers/{user}',
     ['as' => 'users.adminUpdate', 'uses' => 'UserController@adminUpdate'])->middleware('verified')->middleware('admin');
+
+
+Route::get('beheer/reservering/nota/download/{id}', 'receiptController@downloadPDF')->middleware('verified')->middleware('admin');
+
 
 // API
 

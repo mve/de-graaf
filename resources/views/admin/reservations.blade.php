@@ -13,7 +13,7 @@
                 <th class="d-none d-lg-table-cell">Aantal personen</th>
                 <th class="d-none d-lg-table-cell">Opmerking</th>
                 <th class="d-none d-lg-table-cell">Tafel</th>
-{{--                <th class="d-none d-lg-table-cell">acties</th>--}}
+                <th class="d-none d-lg-table-cell">acties</th>
             </tr>
             @foreach($reservations as $reservation)
                 <tr>
@@ -28,6 +28,7 @@
                         <b><br>Tafels:<br></b>@foreach($reservation->tables as $table)
                             {{$table->id}}<br>
                         @endforeach
+                        <a href="reservering/nota/{{$reservation->id}}">PDF</a>
                     </td>
 
 
@@ -43,9 +44,9 @@
                         @endforeach
 
                     </td>
-{{--                    <td class="d-none d-lg-table-cell">--}}
-{{--                        <a href="{{route('reservation.adminUpdate', $reservation)}}">Wijzigen</a>--}}
-{{--                    </td>--}}
+                    <td class="d-none d-lg-table-cell">
+                        <a href="reservering/nota/{{$reservation->id}}">PDF</a>
+                    </td>
                 </tr>
             @endforeach
         </table>

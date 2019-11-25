@@ -192,6 +192,8 @@
                     <th class="d-none d-lg-table-cell">Aantal personen</th>
                     <th class="d-none d-lg-table-cell">Opmerking</th>
                     <th class="d-none d-lg-table-cell">Tafel</th>
+                    <th class="d-none d-lg-table-cell">Nota</th>
+
                     <th class="d-none d-lg-table-cell">Annuleren</th>
                 @foreach($user->reservations as $reservation)
                     <tr>
@@ -207,6 +209,8 @@
                             <b><br>Tafels:<br></b>@foreach($reservation->tables as $table)
                                 {{$table->id}}<br>
                             @endforeach<br>
+                            <a href="reservering/nota/{{$reservation->id}}">PDF</a>
+
                             <button class="btn-primary">Annuleren</button>
                         </td>
 
@@ -223,9 +227,10 @@
                             @endforeach
 
                         </td>
+                        <td class="d-none d-lg-table-cell">
+                            <a href="reservering/nota/{{$reservation->id}}">PDF</a>
 
-
-
+                        </td>
 
                         <td class="d-none d-lg-table-cell">
                             <a  href="account/delete/{{$reservation->id}}"><button onclick="return confirm('Weet je het zeker?')" class="button button__delete"><i class="fa fa-trash"></i></button></a>
