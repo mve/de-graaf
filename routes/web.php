@@ -26,12 +26,10 @@ Route::get('/contact', function () {
     return view('contact');
 })->middleware('notBlocked');
 
-Route::post('/contact',  'UserController@sendmail');
+Route::post('/contact', 'UserController@sendmail');
 
-    Route::get('/menu', function () {
-    return view('menu');
-})->middleware('notBlocked');
-
+Route::get('/menu',
+    'ProductController@index');
 
 // User routes
 Route::get('/reserveringen',
