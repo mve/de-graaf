@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Reservation;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ReservationController extends Controller
 {
@@ -57,5 +58,37 @@ class ReservationController extends Controller
         }
 
         return view('reservations', compact('user'));
+    }
+
+    public function edit(Reservation $reservation)
+    {
+
+    }
+
+    public function adminEdit(Reservation $reservation)
+    {
+        return view('reservation.adminEdit', compact('reservation'));
+    }
+
+    public function adminUpdate(Request $request, Reservation $reservation)
+    {
+
+        $this->validate(request(), [
+            'people' => ['sometimes', 'string', 'max:191'],
+            'date' => ['sometimes', 'string', 'max:191'],
+            'time' => ['sometimes', 'string', 'max:191'],
+            'comment' => ['sometimes', 'nullable', 'string', 'max:191'],
+            'reservation_typ' => ['sometimes', 'string', 'max:191'],
+
+        ]);
+        $reservation->people      = (isset($request->people) > 0) ? $request->people : $reservation->people;
+        $reservation->date     = (isset($request->date) > 0) ? $request->date : $reservation->date;
+        $reservation->time   = (isset($request->time) > 0) ? $request->time : $reservation->time;
+        $reservation->comment = (isset($request->comment) > 0) ? $request->comment : $reservation->comment;
+        $reservation->reservation_typ   = (isset($request->reservation_typ) > 0) ? $request->reservation_typ : $reservation->reservation_typ;
+         /* TODO gereserveerde tafels bewerken bij een reservering*/
+        $reservation->save();
+
+        return back();
     }
 }
