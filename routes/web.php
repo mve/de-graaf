@@ -50,9 +50,13 @@ Route::post('/reservering',
 
 Route::get('/get-tables', 'TableController@getTables')->middleware('verified')->middleware('notBlocked');
 
-Route::get('/blocked', function () {
+Route::get('/blocked',[ 'as' => 'blocked', function () {
     return view('blocked');
-});
+}]);
+
+Route::get('/blockedByAdmin',[ 'as' => 'blocked', function () {
+    return view('blockedByAdmin');
+}]);
 
 // Admin routes
 Route::get('/beheer', function () {
