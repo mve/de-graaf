@@ -2057,12 +2057,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('http://127.0.0.1:8000/get-tables').then(function (response) {
+    axios.get('http://localhost:8000/get-tables').then(function (response) {
       _this.allTables = response.data;
     })["catch"](function (error) {
       console.log(error);
@@ -2087,21 +2100,26 @@ __webpack_require__.r(__webpack_exports__);
     setSelectorType: function setSelectorType(selector) {
       this.selectorType = selector;
     },
+    log: function log() {
+      console.log("testing this shit");
+    },
     getReserved: function getReserved() {
       var _this2 = this;
 
       var that = this;
-      axios.get('http://127.0.0.1:8000/get-tables').then(function (response) {
+      console.log("test");
+      axios.get('http://localhost:8000/get-tables').then(function (response) {
         that.allTables = response.data;
       })["catch"](function (error) {
         console.log(error);
         _this2.errored = true;
-      }).then(axios.post('http://127.0.0.1:8000/get-reserved', {
+      }).then(axios.post('http://localhost:8000/get-reserved', {
         date: this.datePicker,
         time: this.selectorTime
       }).then(function (response) {
         that.reservedTables = [];
         that.availableTables = that.allTables;
+        console.log(that.reservedTables);
 
         for (var i = 0; i < response.data.length; i++) {
           response.data[i].tables.forEach(function (item) {
@@ -37618,6 +37636,7 @@ var render = function() {
               attrs: { type: "date", min: _vm.minDateValue, name: "date" },
               domProps: { value: _vm.datePicker },
               on: {
+                change: _vm.getReserved,
                 input: function($event) {
                   if ($event.target.composing) {
                     return
@@ -37633,7 +37652,7 @@ var render = function() {
         _vm._v(" "),
         _vm.datePicker
           ? _c("div", { staticClass: "typepicker col-md-4" }, [
-              _vm._v("\n            Lunch of diner?\n\n            "),
+              _vm._v("\n            Lunch of diner?\n            "),
               _c(
                 "div",
                 { staticClass: "row", staticStyle: { padding: "0 15px" } },
@@ -37696,7 +37715,7 @@ var render = function() {
           ? _c("div", { staticClass: "timepicker col-md-4" }, [
               _c("label", { staticStyle: { width: "100%" } }, [
                 _vm._v("Tijd\n                "),
-                _vm.selectorType == "Lunch"
+                _vm.selectorType === "Lunch"
                   ? _c(
                       "select",
                       {
@@ -37711,7 +37730,7 @@ var render = function() {
                         staticClass: "form-control",
                         attrs: { name: "selectorTime" },
                         on: {
-                          click: _vm.getReserved,
+                          click: _vm.log,
                           change: function($event) {
                             var $$selectedVal = Array.prototype.filter
                               .call($event.target.options, function(o) {
@@ -37728,34 +37747,90 @@ var render = function() {
                         }
                       },
                       [
-                        _c("option", { attrs: { value: "10" } }, [
-                          _vm._v("10:00")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "11" } }, [
-                          _vm._v("11:00")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "12" } }, [
+                        _c("option", { attrs: { value: "12:00:00" } }, [
                           _vm._v("12:00")
                         ]),
                         _vm._v(" "),
-                        _c("option", { attrs: { value: "13" } }, [
+                        _c("option", { attrs: { value: "12:15:00" } }, [
+                          _vm._v("12:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "12:30:00" } }, [
+                          _vm._v("12:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "12:45:00" } }, [
+                          _vm._v("12:45")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "13:00:00" } }, [
                           _vm._v("13:00")
                         ]),
                         _vm._v(" "),
-                        _c("option", { attrs: { value: "14" } }, [
+                        _c("option", { attrs: { value: "13:15:00" } }, [
+                          _vm._v("13:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "13:30:00" } }, [
+                          _vm._v("13:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "13:45:00" } }, [
+                          _vm._v("13:45")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "14:00:00" } }, [
                           _vm._v("14:00")
                         ]),
                         _vm._v(" "),
-                        _c("option", { attrs: { value: "15" } }, [
+                        _c("option", { attrs: { value: "14:15:00" } }, [
+                          _vm._v("14:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "14:30:00" } }, [
+                          _vm._v("14:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "14:45:00" } }, [
+                          _vm._v("14:45")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "15:00:00" } }, [
                           _vm._v("15:00")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "15:15:00" } }, [
+                          _vm._v("15:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "15:30:00" } }, [
+                          _vm._v("15:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "15:45:00" } }, [
+                          _vm._v("15:45")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "16:00:00" } }, [
+                          _vm._v("16:00")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "16:15:00" } }, [
+                          _vm._v("16:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "16:30:00" } }, [
+                          _vm._v("16:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "16:45:00" } }, [
+                          _vm._v("16:45")
                         ])
                       ]
                     )
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.selectorType == "Diner"
+                _vm.selectorType === "Diner"
                   ? _c(
                       "select",
                       {
@@ -37790,20 +37865,68 @@ var render = function() {
                         }
                       },
                       [
-                        _c("option", { attrs: { value: "17" } }, [
+                        _c("option", { attrs: { value: "17:00:00" } }, [
                           _vm._v("17:00")
                         ]),
                         _vm._v(" "),
-                        _c("option", { attrs: { value: "18" } }, [
+                        _c("option", { attrs: { value: "17:15:00" } }, [
+                          _vm._v("17:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "17:30:00" } }, [
+                          _vm._v("17:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "17:45:00" } }, [
+                          _vm._v("17:45")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "18:00:00" } }, [
                           _vm._v("18:00")
                         ]),
                         _vm._v(" "),
-                        _c("option", { attrs: { value: "19" } }, [
+                        _c("option", { attrs: { value: "18:15:00" } }, [
+                          _vm._v("18:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "18:30:00" } }, [
+                          _vm._v("18:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "18:45:00" } }, [
+                          _vm._v("18:45")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "19:00:00" } }, [
                           _vm._v("19:00")
                         ]),
                         _vm._v(" "),
-                        _c("option", { attrs: { value: "20" } }, [
+                        _c("option", { attrs: { value: "19:15:00" } }, [
+                          _vm._v("19:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "19:30:00" } }, [
+                          _vm._v("19:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "19:45:00" } }, [
+                          _vm._v("19:45")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "20:00:00" } }, [
                           _vm._v("20:00")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "20:15:00" } }, [
+                          _vm._v("20:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "20:30:00" } }, [
+                          _vm._v("20:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "20:45:00" } }, [
+                          _vm._v("20:45")
                         ])
                       ]
                     )

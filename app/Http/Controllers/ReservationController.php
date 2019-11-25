@@ -45,7 +45,7 @@ class ReservationController extends Controller
             'user_id' => $user->id,
             'people' => $request['people'],
             'date' => $request['date'],
-            'time' => $request['selectorTime'].':00:00',
+            'time' => $request['selectorTime'],
             'comment' => $request['comment'],
             'reservation_typ' => $request['selectorType']
 
