@@ -40,7 +40,7 @@
 
             <div class="timepicker col-md-4" v-if="selectorType">
                 <label style="width: 100%">Tijd
-                    <select v-on:click="log" class="form-control" name="selectorTime"
+                    <select v-on:click="getReserved" class="form-control" name="selectorTime"
                             v-if="selectorType === 'Lunch'"
                             v-model="selectorTime">
                         <option value="12:00:00">12:00</option>
@@ -144,7 +144,7 @@
         mounted() {
 
             axios
-                .get('http://localhost:8000/get-tables')
+                .get('http://127.0.0.1:8000/get-tables')
                 .then(response => {
                     this.allTables = response.data;
                 })
@@ -181,7 +181,7 @@
                 const that = this;
                 console.log("test");
                 axios
-                    .get('http://localhost:8000/get-tables')
+                    .get('http://127.0.0.1:8000/get-tables')
                     .then(response => {
                         that.allTables = response.data;
                     })
@@ -190,7 +190,7 @@
                         this.errored = true
                     }).then(
                     axios
-                        .post('http://localhost:8000/get-reserved', {
+                        .post('http://127.0.0.1:8000/get-reserved', {
                             date: this.datePicker,
                             time: this.selectorTime
                         })

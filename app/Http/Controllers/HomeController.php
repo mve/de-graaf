@@ -44,13 +44,14 @@ class HomeController extends Controller
         $mytimeh = Carbon::now()->format('H:i:s');
         $mytime = Carbon::now()->format('Y-m-d');
 
-        $time = Carbon::parse($mytimeh)->addHour();
-        dd($time);
+        $time = Carbon::parse($mytimeh)->addHours(4);
+
         $reservation = Reservation::with('receipt', 'tables')->find($id);
-//        dd($mytimeh, $mytime, $reservation->date ,$reservation->time);
-        dd($mytime);
-        if ($reservation->date == $mytime ){
-            return redirect('/account');
+
+        if ($reservation->date >= $mytime && $time->format('H:i:s') > $reservation->time ){
+
+//            dd("Mag niet reserveren");
+            return Redirect::back()->withErrors(['Je mag niet meer annuleren']);
         }
 
         $reservation->tables()->update(['reservation_id' => null]);
@@ -73,5 +74,19 @@ class HomeController extends Controller
         }
         $user->save();
         return back();
+    }
+    public function deleteaccount()
+    {
+        return view('deleteaccount');
+    }
+    public function deleteconfirm()
+    {
+        $usercur = Auth::user();
+        $user = User::with('reservations.tables')->find($usercur->id);
+        $user->reservations()->update(['user_id' => null]);
+
+        $user->delete();
+        return redirect('/login')->withErrors(['Je account is succesvol verwijderd']);
+
     }
 }

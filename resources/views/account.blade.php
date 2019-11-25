@@ -3,7 +3,18 @@
 @section('content')
     <div class="container">
 
-        <h1>Account</h1>
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Hallo {{$user->name}}</h1>
+            </div>
+
+            <div class="col-md-4">
+                <form method="post" action="{{url('/account/delete/account')}}">
+                    @csrf
+                        <button type="submit" class="btn btn-danger float-right">Verwijder account</button>
+                </form>
+            </div>
+        </div>
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -233,9 +244,7 @@
                     </tr>
                 @endforeach
             </table>
-            @if($errors->any())
-                <h4>{{$errors->first()}}</h4>
-            @endif
+
         </div>
     </div>
     </div>
