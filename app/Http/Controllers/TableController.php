@@ -29,11 +29,14 @@ class TableController extends Controller
     {
         $date       = $request['date'];
         $time       = $request['time'];
-        $timeBefore = $time - 1;
-        $timeAfter  = $time + 1;
 
-        $timeBeforeformat = $timeBefore . ':00:00';
-        $timeAfterformat  = $timeAfter . ':00:00';
+        $newTime = explode(":",$time);
+        $timeBefore = $newTime[0] - 2;
+        $timeAfter = $newTime[0] + 2;
+        $timeBefore = $timeBefore . ":" . $newTime[1] . ":" . $newTime[2];
+        $timeAfter = $timeAfter . ":" . $newTime[1] . ":" . $newTime[2];
+        $timeBeforeformat = $timeBefore;
+        $timeAfterformat  = $timeAfter;
 
         $reservations = Reservation::with('tables')
                                    ->where('date', '=', $date)

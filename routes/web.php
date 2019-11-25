@@ -15,9 +15,6 @@
 // public routes
 Auth::routes(['verify' => true]);
 
-
-//Route::get('/', 'HomeController@index')->name('home');
-
 Route::get('/', function () {
     return view('home');
 })->middleware('notBlocked');
@@ -26,18 +23,19 @@ Route::get('/contact', function () {
     return view('contact');
 })->middleware('notBlocked');
 
-Route::post('/contact',  'UserController@sendmail');
+Route::post('/contact', 'UserController@sendmail');
 
-    Route::get('/menu', function () {
-    return view('menu');
-})->middleware('notBlocked');
-
+Route::get('/menu',
+    'ProductController@index');
 
 // User routes
 Route::get('/reserveringen',
     'ReservationController@userGet')->name('home')->middleware('verified')->middleware('notBlocked');
 
 Route::get('/account', 'HomeController@edit')->middleware('verified');
+
+Route::get('account/delete/{id}', 'HomeController@deleteReservation')->middleware('verified');
+
 
 Route::get('/account/{user}',
     ['as' => 'users.edit', 'uses' => 'UserController@edit'])->middleware('verified')->middleware('notBlocked');
@@ -53,9 +51,13 @@ Route::post('/reservering',
 
 Route::get('/get-tables', 'TableController@getTables')->middleware('verified')->middleware('notBlocked');
 
-Route::get('/blocked', function () {
+Route::get('/blocked',[ 'as' => 'blocked', function () {
     return view('blocked');
-});
+}]);
+
+Route::get('/blockedByAdmin',[ 'as' => 'blocked', function () {
+    return view('blockedByAdmin');
+}]);
 
 // Admin routes
 Route::get('/beheer', function () {
@@ -76,10 +78,13 @@ Route::get('/beheer/gebruikers',
 Route::patch('/beheer/gebruikers', 'UserController@index')->middleware('admin')->middleware('verified');
 
 Route::get('/beheer/gebruikers/{user}',
-    ['as' => 'users.adminEdit', 'uses' => 'UserController@adminEdit'])->middleware('verified');
+    ['as' => 'users.adminEdit', 'uses' => 'UserController@adminEdit'])->middleware('verified')->middleware('admin');
 
 Route::patch('/beheer/gebruikers/{user}',
-    ['as' => 'users.adminUpdate', 'uses' => 'UserController@adminUpdate'])->middleware('verified');
+    ['as' => 'users.adminUpdate', 'uses' => 'UserController@adminUpdate'])->middleware('verified')->middleware('admin');
 
+// API
 
 Route::post('/get-reserved', 'TableController@getReservedTable');
+
+Route::post('/toggle-block/{user}', 'UserController@toggleBlock');
