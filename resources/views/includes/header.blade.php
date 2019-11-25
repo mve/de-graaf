@@ -26,9 +26,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/reserveringen') }}">Mijn reserveringen</a>
                     </li>
-                    @if(\Illuminate\Support\Facades\Auth::user()->isadmin >= 1)
+                    @if(\Illuminate\Support\Facades\Auth::user()->isadmin >= 2)
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/beheer') }}">Beheer</a>
+                        </li>
+                    @endif
+                    @if(\Illuminate\Support\Facades\Auth::user()->isadmin >= 1)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/bestellingen') }}">Bestellingen</a>
                         </li>
                     @endif
                 @endauth

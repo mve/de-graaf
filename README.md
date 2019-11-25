@@ -16,3 +16,11 @@
 1. php artisan migrate:fresh
 2. composer dump-autoload
 3. php artisan db:seed
+
+
+## Roles
+1. In de web.php moeten routes beveiligd worden
+2. ->middleware('verified') of ->middleware('auth') is om te kijken of een user ingelogd is
+3. ->middleware('employee') kijkt of de gebruiker de rol van personeelslid heeft, admin's kunnen deze paginas ook gebruikern
+4. ->middleware('admin') is voor paginas die alleen de admin kan bezoeken
+5. ->middleware('notBlocked') is om te kijken of een ingelogde user geblokkeerd is. als dit zo is logt hij uit. Deze middleware moet alleen gebruikt worden op paginas waar een gebruiker voor ingelogd moet zijn
