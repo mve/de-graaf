@@ -8,7 +8,7 @@
 
             <div class="datepicker col-md-4">
                 <label style="width: 100%">Datum:
-                    <input class="form-control" type="date" v-model="datePicker" :min="minDateValue" name="date">
+                    <input class="form-control" v-on:change="getReserved" type="date" v-model="datePicker" :min="minDateValue" name="date">
                 </label>
             </div>
 
@@ -16,21 +16,15 @@
 
             <div class="typepicker col-md-4" v-if="datePicker">
                 Lunch of diner?
-
                 <div class="row" style="padding: 0 15px;">
-
                     <div class="col-md-6">
-
                         <div style="width: 100%" class="btn"
                              :class="selectorType === 'Lunch' ? 'btn-primary' : 'btn-outline-primary'"
                              v-on:click="setSelectorType('Lunch')">
                             Lunch
                         </div>
-
                     </div>
-
                     <div class="col-md-6">
-
                         <div style="width: 100%" class="btn"
                              :class="selectorType === 'Diner' ? 'btn-primary' : 'btn-outline-primary'"
                              v-on:click="setSelectorType('Diner')">
@@ -40,37 +34,56 @@
                     </div>
 
                 </div>
-
-                <!--                    <select class="form-control" name="selectorType" v-model="selectorType">-->
-                <!--                        <option v-for="selectorType in [ 'Lunch', 'Diner' ]">-->
-                <!--                            {{ selectorType }}-->
-                <!--                        </option>-->
-                <!--                    </select>-->
-
             </div>
 
             <div class="space space--20"></div>
 
             <div class="timepicker col-md-4" v-if="selectorType">
                 <label style="width: 100%">Tijd
-                    <select v-on:click="getReserved" class="form-control" name="selectorTime"
-                            v-if="selectorType == 'Lunch'"
+                    <select v-on:click="log" class="form-control" name="selectorTime"
+                            v-if="selectorType === 'Lunch'"
                             v-model="selectorTime">
-                        <option value="10">10:00</option>
-                        <option value="11">11:00</option>
-                        <option value="12">12:00</option>
-                        <option value="13">13:00</option>
-                        <option value="14">14:00</option>
-                        <option value="15">15:00</option>
+                        <option value="12:00:00">12:00</option>
+                        <option value="12:15:00">12:15</option>
+                        <option value="12:30:00">12:30</option>
+                        <option value="12:45:00">12:45</option>
+                        <option value="13:00:00">13:00</option>
+                        <option value="13:15:00">13:15</option>
+                        <option value="13:30:00">13:30</option>
+                        <option value="13:45:00">13:45</option>
+                        <option value="14:00:00">14:00</option>
+                        <option value="14:15:00">14:15</option>
+                        <option value="14:30:00">14:30</option>
+                        <option value="14:45:00">14:45</option>
+                        <option value="15:00:00">15:00</option>
+                        <option value="15:15:00">15:15</option>
+                        <option value="15:30:00">15:30</option>
+                        <option value="15:45:00">15:45</option>
+                        <option value="16:00:00">16:00</option>
+                        <option value="16:15:00">16:15</option>
+                        <option value="16:30:00">16:30</option>
+                        <option value="16:45:00">16:45</option>
                     </select>
 
                     <select v-on:change="getReserved" style="width: 100%" class="form-control"
-                            v-if="selectorType == 'Diner'" name="selectorTime"
+                            v-if="selectorType === 'Diner'" name="selectorTime"
                             v-model="selectorTime">
-                        <option value="17">17:00</option>
-                        <option value="18">18:00</option>
-                        <option value="19">19:00</option>
-                        <option value="20">20:00</option>
+                        <option value="17:00:00">17:00</option>
+                        <option value="17:15:00">17:15</option>
+                        <option value="17:30:00">17:30</option>
+                        <option value="17:45:00">17:45</option>
+                        <option value="18:00:00">18:00</option>
+                        <option value="18:15:00">18:15</option>
+                        <option value="18:30:00">18:30</option>
+                        <option value="18:45:00">18:45</option>
+                        <option value="19:00:00">19:00</option>
+                        <option value="19:15:00">19:15</option>
+                        <option value="19:30:00">19:30</option>
+                        <option value="19:45:00">19:45</option>
+                        <option value="20:00:00">20:00</option>
+                        <option value="20:15:00">20:15</option>
+                        <option value="20:30:00">20:30</option>
+                        <option value="20:45:00">20:45</option>
                     </select>
                 </label>
             </div>
@@ -131,7 +144,7 @@
         mounted() {
 
             axios
-                .get('http://127.0.0.1:8000/get-tables')
+                .get('http://localhost:8000/get-tables')
                 .then(response => {
                     this.allTables = response.data;
                 })
@@ -161,11 +174,14 @@
             setSelectorType(selector) {
                 this.selectorType = selector;
             },
+            log(){
+              console.log("testing this shit");
+            },
             getReserved() {
                 const that = this;
-
+                console.log("test");
                 axios
-                    .get('http://127.0.0.1:8000/get-tables')
+                    .get('http://localhost:8000/get-tables')
                     .then(response => {
                         that.allTables = response.data;
                     })
@@ -174,13 +190,14 @@
                         this.errored = true
                     }).then(
                     axios
-                        .post('http://127.0.0.1:8000/get-reserved', {
+                        .post('http://localhost:8000/get-reserved', {
                             date: this.datePicker,
                             time: this.selectorTime
                         })
                         .then(response => {
                             that.reservedTables = [];
                             that.availableTables = that.allTables;
+                            console.log(that.reservedTables);
 
                             for (let i = 0; i < response.data.length; i++) {
                                 response.data[i].tables.forEach(function (item) {
