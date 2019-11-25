@@ -34,7 +34,13 @@ Route::get('/reserveringen',
 
 Route::get('/account', 'HomeController@edit')->middleware('verified');
 
+Route::post('/get-reserved', 'TableController@getReservedTable');
+
 Route::get('account/delete/{id}', 'HomeController@deleteReservation')->middleware('verified');
+
+Route::post('account/delete/account', 'HomeController@deleteaccount')->middleware('verified');
+
+Route::delete('account/delete/account', 'HomeController@deleteconfirm')->middleware('verified');
 
 
 Route::get('/account/{user}',
