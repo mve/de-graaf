@@ -144,7 +144,7 @@
             </div>
 
             <div v-if="checkedTable.length > 0">
-                <div v-if="checkedTable.length < 3 && messages.length === empty ">
+                <div v-if="checkedTable.length < 3 && error === false ">
                     <button type="submit" value="submit" class="btn btn-primary">
                         Reserveren
                     </button>
@@ -178,6 +178,7 @@
         data() {
             return {
                 messages: '',
+                error: '',
                 datePicker: '',
                 allTables: [],
                 allTablesCap: [],
@@ -204,13 +205,16 @@
             },
             checkAmount() {
                 const that = this;
-                amount = that.people;
+
                 /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
                 that.selectedPeople = 0;
+                that.error = false;
                 for (let i = 0; i < that.checkedTable.length; i++) {
 
                     that.selectedPeople += that.checkedTable[i].max_capacity;
                     if(that.selectedPeople > 8){
+                        that.error = true;
+                        console.log(that.error);
                         that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
                     }else that.messages = false;
 

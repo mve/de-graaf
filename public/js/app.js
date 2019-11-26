@@ -2084,6 +2084,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       messages: '',
+      error: '',
       datePicker: '',
       allTables: [],
       allTablesCap: [],
@@ -2108,15 +2109,17 @@ __webpack_require__.r(__webpack_exports__);
     },
     checkAmount: function checkAmount() {
       var that = this;
-      amount = that.people;
       /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
 
       that.selectedPeople = 0;
+      that.error = false;
 
       for (var i = 0; i < that.checkedTable.length; i++) {
         that.selectedPeople += that.checkedTable[i].max_capacity;
 
         if (that.selectedPeople > 8) {
+          that.error = true;
+          console.log(that.error);
           that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
         } else that.messages = false;
 
@@ -38175,7 +38178,7 @@ var render = function() {
         _vm._v(" "),
         _vm.checkedTable.length > 0
           ? _c("div", [
-              _vm.checkedTable.length < 3 && _vm.messages.length === _vm.empty
+              _vm.checkedTable.length < 3 && _vm.error === false
                 ? _c("div", [
                     _c(
                       "button",
