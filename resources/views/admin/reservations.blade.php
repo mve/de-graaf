@@ -63,6 +63,25 @@
 
                 </div>
 
+                <div class="col-lg-4 card-container scale-animation">
+
+                    <a href="{{ url('/beheer/reserveren') }}" class="card pointer border-top">
+
+                        <div class="row card-content-admin-container">
+
+                            <div class="col-9 card-content-admin">
+                                <h3>Speciale reservering plaatsen</h3>
+                            </div>
+
+                            <div class="col-3 icon-container">
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
             </div>
         <table class="table">
             <tr>

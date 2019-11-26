@@ -114,8 +114,12 @@ Route::patch('/beheer/gebruikers/{user}',
 Route::delete('/beheer/gebruikers/{user}',
     ['as' => 'users.adminDelete', 'uses' => 'UserController@adminDelete'])->middleware('verified')->middleware('admin');
 
+Route::get('beheer/reservering/nota/download/{id}', 'ReceiptController@downloadPDF')->middleware('verified')->middleware('admin');
 
-Route::get('beheer/reservering/nota/download/{id}', 'receiptController@downloadPDF')->middleware('verified')->middleware('admin');
+Route::get('/beheer/reserveren', function () {
+    return view('admin.createReservation');
+})->middleware('admin')->middleware('notBlocked')->middleware('verified');
+Route::post('beheer/reserveren', 'ReservationController@adminCreate')->middleware('verified')->middleware('admin');
 
 // API
 
