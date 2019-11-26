@@ -1,5 +1,4 @@
 @extends('layouts.app')
-c
 @section('content')
 
     <div class="container">
@@ -14,12 +13,21 @@ c
                         Alle toekomstige reserveringen blijven wel bestaan, deze kun je zonder account niet annuleren.
                     </div>
 
-                    <div class="error-actions w-25 mx-auto">
-                        <form method="post">
+                    <div class="error-actions">
+                        <form method="post" action="/delete-account">
                             @csrf
                             @method('DELETE')
 
-                            <button type="submit" class="btn btn-danger float-right w-100">Verwijder account</button>
+                            <div class="form-group recaptcha-container">
+                                @if(env('GOOGLE_RECAPTCHA_KEY'))
+                                    <div class="g-recaptcha"
+                                         data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}">
+                                    </div>
+                                    <span class="text-danger">{{ $errors->first('g-recaptcha-response') }}</span>
+                                @endif
+                            </div>
+
+                            <button type="submit" class="btn btn-danger w-25">Verwijder account</button>
 
                         </form>
                     </div>
