@@ -5,6 +5,7 @@
         <div class="row">
             <h1>Mijn reserveringen</h1>
 
+
             <table class="table">
                 <tr><th class="d-lg-none" colspan="2">Reserveringen</th><th class="d-none d-lg-table-cell">Datum</th><th class="d-none d-lg-table-cell">Tijd</th><th class="d-none d-lg-table-cell">Aantal personen</th><th class="d-none d-lg-table-cell">Opmerking</th><th class="d-none d-lg-table-cell">Tafel</th><th>Nota</th>
                 @foreach($user->reservations as $reservation)
