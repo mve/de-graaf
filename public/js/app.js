@@ -1975,18 +1975,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
   mounted: function mounted() {
@@ -2042,7 +2030,7 @@ __webpack_require__.r(__webpack_exports__);
         time: this.selectorTime
       }).then(function (response) {
         that.reservedTables = [];
-        that.availableTables = that.allTablesCap;
+        that.availableTables = that.allTables;
         console.log(that.reservedTables);
 
         for (var i = 0; i < response.data.length; i++) {
@@ -38100,54 +38088,31 @@ var render = function() {
           ? _c("div", { staticClass: "amountpicker col-md-4" }, [
               _c("label", { staticStyle: { width: "100%" } }, [
                 _vm._v("Aantal\n                "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.people,
-                        expression: "people"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { name: "people" },
-                    on: {
-                      click: _vm.getReserved,
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.people = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.people,
+                      expression: "people"
                     }
+                  ],
+                  attrs: {
+                    type: "number",
+                    name: "people",
+                    min: "1",
+                    max: "58"
                   },
-                  [
-                    _c("option", { attrs: { value: "1" } }, [_vm._v("1")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "2" } }, [_vm._v("2")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "3" } }, [_vm._v("3")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "4" } }, [_vm._v("4")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "5" } }, [_vm._v("5")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "6" } }, [_vm._v("6")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "7" } }, [_vm._v("7")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "8" } }, [_vm._v("8")])
-                  ]
-                )
+                  domProps: { value: _vm.people },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.people = $event.target.value
+                    }
+                  }
+                })
               ])
             ])
           : _vm._e(),
@@ -38258,22 +38223,14 @@ var render = function() {
         _vm._v(" "),
         _vm.checkedTable.length > 0
           ? _c("div", [
-              _vm.checkedTable.length < 3
-                ? _c("div", [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "submit", value: "submit" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                    Reserveren\n                "
-                        )
-                      ]
-                    )
-                  ])
-                : _vm._e()
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "submit", value: "submit" }
+                },
+                [_vm._v("\n                Reserveren\n            ")]
+              )
             ])
           : _vm._e()
       ]

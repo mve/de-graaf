@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Receipt;
 use App\Table;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -9,6 +10,7 @@ use App\Reservation;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use PhpParser\Node\Expr\New_;
 
 class ReservationController extends Controller
 {
@@ -91,6 +93,9 @@ class ReservationController extends Controller
 
         ]);
 
+        $receipt = Receipt::create([
+            'reservation_id' => $reservation->id
+        ]);
 //        $reservation->tables()->attach($table->id);
 
         foreach($table as $t){
@@ -105,18 +110,25 @@ class ReservationController extends Controller
 
     }
     public function adminCreate(Request $request){
+        /*todo when a user is selected*/
+//        $user = $request['userid'];
 
-        $user = Auth::user();
+
         $table=Table::find($request['checkedTable']);
 
+        /*todo if admin selected a user set userid else make reservation without userid*/
         $reservation = Reservation::create([
-            'user_id' => $user->id,
+//            'user_id' => $user->id,
             'people' => $request['people'],
             'date' => $request['date'],
             'time' => $request['selectorTime'],
             'comment' => $request['comment'],
             'reservation_typ' => $request['selectorType']
 
+        ]);
+
+        $receipt = Receipt::create([
+            'reservation_id' => $reservation->id
         ]);
 
 //        $reservation->tables()->attach($table->id);

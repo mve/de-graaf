@@ -90,17 +90,7 @@
 
             <div class="amountpicker col-md-4" v-if="selectorTime">
                 <label style="width: 100%">Aantal
-                    <select v-on:click="getReserved" class="form-control" name="people"
-                            v-model="people">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                    </select>
+                    <input type="number" name="people" v-model="people" min="1" max="58">
                 </label>
             </div>
 
@@ -132,11 +122,9 @@
             </div>
 
             <div v-if="checkedTable.length > 0">
-                <div v-if="checkedTable.length < 3">
-                    <button type="submit" value="submit" class="btn btn-primary">
-                        Reserveren
-                    </button>
-                </div>
+                <button type="submit" value="submit" class="btn btn-primary">
+                    Reserveren
+                </button>
             </div>
 
         </form>
@@ -212,7 +200,7 @@
                         })
                         .then(response => {
                             that.reservedTables = [];
-                            that.availableTables = that.allTablesCap;
+                            that.availableTables = that.allTables;
                             console.log(that.reservedTables);
 
                             for (let i = 0; i < response.data.length; i++) {
