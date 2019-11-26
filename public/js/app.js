@@ -1859,6 +1859,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -1868,14 +1878,15 @@ __webpack_require__.r(__webpack_exports__);
       selectedCategory: '',
       products: '',
       csrf: document.head.querySelector('meta[name="csrf-token"]').content,
-      selectedProducts: []
+      selectedProducts: [],
+      chosenProducts: []
     };
   },
   methods: {
     sendCategory: function sendCategory() {
       var _this = this;
 
-      axios.post('http://localhost:8000/beheer/createOrder', {
+      axios.post('/beheer/createOrder', {
         category: this.selectedCategory
       }).then(function (response) {
         _this.products = response.data;
@@ -1884,9 +1895,10 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    onChange: function onChange(event) {
-      this.selectedProducts.push(event);
-      console.log(this.selectedProducts);
+    addProducts: function addProducts(event) {
+      var that = this;
+      that.chosenProducts.push(that.selectedProducts);
+      console.log(that.chosenProducts);
     }
   }
 });
@@ -37598,17 +37610,45 @@ var render = function() {
           }
         },
         _vm._l(_vm.products, function(item, $index) {
+          return _c("option", { key: $index }, [_vm._v(_vm._s(item.name))])
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              return _vm.addProducts($event)
+            }
+          }
+        },
+        [
+          _c("i", { staticClass: "fas fa-plus" }),
+          _vm._v("\n            Voeg producten toe aan bestelling\n        ")
+        ]
+      ),
+      _vm._v(" "),
+      _c("h3", [_vm._v("Bestelling")]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "list-group" },
+        _vm._l(_vm.chosenProducts, function(product) {
           return _c(
-            "option",
+            "button",
             {
-              key: $index,
-              on: {
-                click: function($event) {
-                  return _vm.onChange(item)
-                }
-              }
+              staticClass: "list-group-item list-group-item-action",
+              attrs: { type: "button" }
             },
-            [_vm._v(_vm._s(item.name))]
+            [
+              _vm._v(
+                "\n                " + _vm._s(product[0]) + "\n            "
+              )
+            ]
           )
         }),
         0

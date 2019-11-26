@@ -13,8 +13,18 @@
             <label for="selectReservation" v-if="selectedCategory">Gerechten uit {{selectedCategory}}</label>
             <label for="selectReservation" v-else>Gerechten</label>
             <select multiple class="form-control" id="selectReservation" v-model="selectedProducts">
-                <option v-for="(item, $index) in products" v-on:click="onChange(item)" :key="$index">{{ item.name }}</option>
+                <option v-for="(item, $index) in products" :key="$index">{{ item.name }}</option>
             </select>
+            <button type="button" class="btn btn-success" v-on:click="addProducts($event)"><i class="fas fa-plus"></i>
+                Voeg producten toe aan bestelling
+            </button>
+
+            <h3>Bestelling</h3>
+            <div class="list-group">
+                <button type="button" v-for="product in chosenProducts" class="list-group-item list-group-item-action">
+                    {{product[0]}}
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -29,12 +39,13 @@
                 selectedCategory: '',
                 products: '',
                 csrf: document.head.querySelector('meta[name="csrf-token"]').content,
-                selectedProducts: []
+                selectedProducts: [],
+                chosenProducts: []
             }
         },
         methods: {
             sendCategory() {
-                axios.post('http://localhost:8000/beheer/createOrder', {category: this.selectedCategory}).then((response) => {
+                axios.post('/beheer/createOrder', {category: this.selectedCategory}).then((response) => {
                     this.products = response.data;
                     console.log(this.products);
                 })
@@ -43,9 +54,10 @@
                     });
             },
 
-            onChange(event) {
-                this.selectedProducts.push(event);
-                console.log(this.selectedProducts);
+            addProducts(event) {
+                const that = this;
+                that.chosenProducts.push(that.selectedProducts);
+                console.log(that.chosenProducts);
             }
         }
     }

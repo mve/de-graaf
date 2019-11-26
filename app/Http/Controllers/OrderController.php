@@ -6,6 +6,7 @@ use App\Order;
 use App\Product;
 use App\Receipt;
 use App\Reservation;
+use App\SubCourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 
@@ -26,7 +27,9 @@ class OrderController extends Controller
 
         $selectedCategory = \request('category');
 
-        return Product::all();
+        $subcoursce = SubCourse::with('products')->where("name", 'LIKE', $selectedCategory)->get();
+        $products = Product::all()->where('sub_course_id', '=', $subcoursce[0]->id);
+        return json_encode($products);
     }
 
     public function getData()
@@ -34,18 +37,17 @@ class OrderController extends Controller
 
         $todayDate = date('Y-m-d');
 
-        $unsortedreservations = Reservation::with('tables', 'user')->where('date', '=', $todayDate)->get();
+        $unsortedreservations = Reservation::with('tables', 'user', 'receipt')->where('date', '=', $todayDate)->get();
 
         return view('admin.createOrder', compact( 'unsortedreservations'));
     }
 
-    public function createOrder(){
+    public function createOrder(Request $request){
         $order = new Order();
 
         $product = new Product();
 
         $orders = Orders::create([
-            'order_id' => $order->id,
             'product_id' => $request['people'],
             'date' => $request['date'],
             'time' => $request['selectorTime'].':00:00',

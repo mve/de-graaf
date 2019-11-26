@@ -12,7 +12,7 @@
                     <label for="selectReservation">Reserveringen van vandaag</label>
                     <select multiple class="form-control" id="selectReservation">
                         @foreach($unsortedreservations as $reservation)
-                        <option>{{$reservation->time}} - {{$reservation->user->name}} - @foreach($reservation->tables as $table) {{$table->id}} @endforeach</option>
+                        <option>{{$reservation->id}} {{$reservation->time}} - {{$reservation->user->name}} - @foreach($reservation->tables as $table) {{$table->id}} @endforeach</option>
                             @endforeach
                     </select>
                 </div>
