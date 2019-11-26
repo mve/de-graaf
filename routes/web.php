@@ -65,8 +65,6 @@ Route::get('/reservering', function () {
 Route::post('/reservering',
     'ReservationController@createReservation')->middleware('verified')->middleware('notBlocked');
 
-Route::get('/get-tables', 'TableController@getTables')->middleware('verified')->middleware('notBlocked');
-
 Route::get('/blocked',[ 'as' => 'blocked', function () {
     return view('blocked');
 }]);
@@ -75,6 +73,7 @@ Route::get('/blockedByAdmin',[ 'as' => 'blocked', function () {
     return view('blockedByAdmin');
 }]);
 Route::get('beheer/reservering/nota/{id}', 'receiptController@getReceipt')->middleware('verified');
+Route::get('/get-tables', 'TableController@getTables')->middleware('verified')->middleware('notBlocked');
 
 Route::get('reservering/nota/{id}', 'receiptController@downloadPDFbyUser')->middleware('verified');
 
@@ -121,5 +120,7 @@ Route::get('beheer/reservering/nota/download/{id}', 'receiptController@downloadP
 // API
 
 Route::post('/get-reserved', 'TableController@getReservedTable');
+
+Route::post('/get-tables-cap', 'TableController@getTablesCapacity');
 
 Route::post('/toggle-block/{user}', 'UserController@toggleBlock');
