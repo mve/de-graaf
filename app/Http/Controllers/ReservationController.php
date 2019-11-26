@@ -134,59 +134,6 @@ class ReservationController extends Controller
 
 
 
-    public function getDay()
-    {
-        $usercur = Auth::user();
-                $today = Carbon::now()->format('Y-m-d');
-        $tomorrow = Carbon::parse($today)->addDay();
-        $yesterday = Carbon::yesterday()->format('Y-m-d');
-        $sorted = Reservation::with('tables')->where('user_id', '=' , $usercur->id);
-        $user = User::find($usercur->id);
-        $reservations = $sorted->with('tables')->whereBetween('date', [$yesterday, $tomorrow]);
 
-//::with(array('order' => function($query)
-//{
-//     $query->where('orders.user_id', $customerID);
-//     $query->orderBy('orders.created_at', 'DESC');
-//}))
-//    ->orderBy('date')
-//    ->get();
-//        $today = Carbon::now()->format('Y-m-d');
-//        $yesterday = Carbon::yesterday()->format('Y-m-d');
-//
-//        $tomorrow = Carbon::parse($today)->addDay();
-//
-//        $unsortedreservations = Reservation::with('tables')->whereBetween('date', [$yesterday, $tomorrow]);
-//        $sorted = $unsortedreservations->orderBy('date','asc');
-        $reservations = $sorted->paginate(6);
-
-        return view('reservations', compact('user'));
-    }
-    public function getWeek()
-    {
-        $today = Carbon::now()->format('Y-m-d');
-        $yesterday = Carbon::yesterday()->format('Y-m-d');
-
-        $nextweek = Carbon::parse($today)->addWeek();
-
-        $unsortedreservations = Reservation::with('tables')->whereBetween('date', [$yesterday, $nextweek]);
-        $sorted = $unsortedreservations->orderBy('date','asc');
-        $reservations = $sorted->paginate(6);
-
-        return view('admin.reservations', compact('reservations'));
-    }
-    public function getMonth()
-    {
-        $today = Carbon::now()->format('Y-m-d');
-        $yesterday = Carbon::yesterday()->format('Y-m-d');
-
-        $nextMonth = Carbon::parse($today)->addMonth();
-
-        $unsortedreservations = Reservation::with('tables')->whereBetween('date', [$yesterday, $nextMonth]);
-        $sorted = $unsortedreservations->orderBy('date','asc');
-        $reservations = $sorted->paginate(6);
-
-        return view('admin.reservations', compact('reservations'));
-    }
 
 }
