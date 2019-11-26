@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Receipt extends Model
 {
+    protected $fillable = [
+        'reservation_id'
+    ];
+
     public function reservation(){
         return $this->belongsTo(Reservation::class);
     }
