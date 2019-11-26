@@ -80,8 +80,13 @@ class ReservationController extends Controller
 
     public function createReservation(Request $request){
 
+        var_dump($request['checkedTable']);
+        die();
+
+
         $user = Auth::user();
         $table=Table::find($request['checkedTable']);
+//        dd(get_object_vars($request['checkedTable'.[0]]));
 
         $reservation = Reservation::create([
             'user_id' => $user->id,

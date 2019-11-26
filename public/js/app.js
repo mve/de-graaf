@@ -2338,6 +2338,7 @@ __webpack_require__.r(__webpack_exports__);
       this.selectorType = selector;
     },
     log: function log() {
+      console.log(this.checkedTable);
       console.log("testing this");
     },
     checkAmount: function checkAmount() {
@@ -38795,32 +38796,35 @@ var render = function() {
                                 name: "checkedTable[]"
                               },
                               domProps: {
-                                value: table,
+                                value: table.id,
                                 checked: Array.isArray(_vm.checkedTable)
-                                  ? _vm._i(_vm.checkedTable, table) > -1
+                                  ? _vm._i(_vm.checkedTable, table.id) > -1
                                   : _vm.checkedTable
                               },
                               on: {
-                                change: function($event) {
-                                  var $$a = _vm.checkedTable,
-                                    $$el = $event.target,
-                                    $$c = $$el.checked ? true : false
-                                  if (Array.isArray($$a)) {
-                                    var $$v = table,
-                                      $$i = _vm._i($$a, $$v)
-                                    if ($$el.checked) {
-                                      $$i < 0 &&
-                                        (_vm.checkedTable = $$a.concat([$$v]))
+                                change: [
+                                  function($event) {
+                                    var $$a = _vm.checkedTable,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = table.id,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          (_vm.checkedTable = $$a.concat([$$v]))
+                                      } else {
+                                        $$i > -1 &&
+                                          (_vm.checkedTable = $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1)))
+                                      }
                                     } else {
-                                      $$i > -1 &&
-                                        (_vm.checkedTable = $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1)))
+                                      _vm.checkedTable = $$c
                                     }
-                                  } else {
-                                    _vm.checkedTable = $$c
-                                  }
-                                }
+                                  },
+                                  _vm.log
+                                ]
                               }
                             }),
                             _vm._v(

@@ -112,7 +112,7 @@
 
                         <div class="form-check mb-2 mr-sm-2 mb-sm-0">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" :value="table" name="checkedTable[]"
+                                <input class="form-check-input" v-on:change="log" type="checkbox" :value="table.id" name="checkedTable[]"
                                        v-model="checkedTable">
                                 Tafel {{table.id}}. {{table.max_capacity}} stoelen
                             </label>
@@ -200,6 +200,7 @@
                 this.selectorType = selector;
             },
             log() {
+                console.log(this.checkedTable);
                 console.log("testing this");
             },
             checkAmount() {
