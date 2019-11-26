@@ -22,6 +22,13 @@ class OrderController extends Controller
         dd($id);
     }
 
+    public function getDishes(){
+
+        $selectedCategory = \request('category');
+
+        return Product::all();
+    }
+
     public function getData()
     {
 

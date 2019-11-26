@@ -69,6 +69,7 @@ Route::get('/beheer/bestellingen',
 
 Route::get('/beheer/createOrder', 'OrderController@getData')->name('home')->middleware('admin')->middleware('notBlocked');
 
+
 Route::get('/beheer/reserveringen',
     'ReservationController@adminGet')->name('home')->middleware('admin')->middleware('notBlocked')->middleware('verified');
 
@@ -88,3 +89,6 @@ Route::patch('/beheer/gebruikers/{user}',
 Route::post('/get-reserved', 'TableController@getReservedTable');
 
 Route::post('/toggle-block/{user}', 'UserController@toggleBlock');
+
+Route::post('/beheer/createOrder', 'OrderController@getDishes');
+

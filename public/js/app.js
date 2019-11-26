@@ -1494,7 +1494,7 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/axios/node_modules/is-buffer/index.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -1829,28 +1829,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/axios/node_modules/is-buffer/index.js":
-/*!************************************************************!*\
-  !*** ./node_modules/axios/node_modules/is-buffer/index.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-module.exports = function isBuffer (obj) {
-  return obj != null && obj.constructor != null &&
-    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DishesComponent.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DishesComponent.vue?vue&type=script&lang=js& ***!
@@ -1875,14 +1853,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
   },
   data: function data() {
     return {
-      selectedCategory: ''
+      selectedCategory: '',
+      products: '',
+      csrf: document.head.querySelector('meta[name="csrf-token"]').content,
+      selectedProducts: []
     };
+  },
+  methods: {
+    sendCategory: function sendCategory() {
+      var _this = this;
+
+      axios.post('http://localhost:8000/beheer/createOrder', {
+        category: this.selectedCategory
+      }).then(function (response) {
+        _this.products = response.data;
+        console.log(_this.products);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    onChange: function onChange(event) {
+      this.selectedProducts.push(event);
+      console.log(this.selectedProducts);
+    }
   }
 });
 
@@ -6637,6 +6642,28 @@ __webpack_require__.r(__webpack_exports__);
 
 }));
 //# sourceMappingURL=bootstrap.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/is-buffer/index.js":
+/*!*****************************************!*\
+  !*** ./node_modules/is-buffer/index.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
 
 
 /***/ }),
@@ -37498,21 +37525,24 @@ var render = function() {
             }
           ],
           staticClass: "form-control",
-          attrs: { id: "selectCategory" },
+          attrs: { id: "selectCategory", name: "selectedCategory" },
           on: {
-            change: function($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function(o) {
-                  return o.selected
-                })
-                .map(function(o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.selectedCategory = $event.target.multiple
-                ? $$selectedVal
-                : $$selectedVal[0]
-            }
+            change: [
+              function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.selectedCategory = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
+              _vm.sendCategory
+            ]
           }
         },
         [
@@ -37529,8 +37559,60 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("p", [
-      _vm._v("Geselecteerde categorie is: " + _vm._s(_vm.selectedCategory))
+    _c("div", { staticClass: "form-group" }, [
+      _vm.selectedCategory
+        ? _c("label", { attrs: { for: "selectReservation" } }, [
+            _vm._v("Gerechten uit " + _vm._s(_vm.selectedCategory))
+          ])
+        : _c("label", { attrs: { for: "selectReservation" } }, [
+            _vm._v("Gerechten")
+          ]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectedProducts,
+              expression: "selectedProducts"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { multiple: "", id: "selectReservation" },
+          on: {
+            change: function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.selectedProducts = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            }
+          }
+        },
+        _vm._l(_vm.products, function(item, $index) {
+          return _c(
+            "option",
+            {
+              key: $index,
+              on: {
+                click: function($event) {
+                  return _vm.onChange(item)
+                }
+              }
+            },
+            [_vm._v(_vm._s(item.name))]
+          )
+        }),
+        0
+      )
     ])
   ])
 }
@@ -50676,8 +50758,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Projects\de-graaf\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Projects\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\de-graaf\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
