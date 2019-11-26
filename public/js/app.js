@@ -2302,6 +2302,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
   mounted: function mounted() {
@@ -2327,6 +2328,7 @@ __webpack_require__.r(__webpack_exports__);
       checkedTable: [],
       comment: '',
       reservedTables: [],
+      max_capacity: 0,
       people: '',
       selectedPeople: '',
       csrf: document.head.querySelector('meta[name="csrf-token"]').content
@@ -2337,9 +2339,8 @@ __webpack_require__.r(__webpack_exports__);
     setSelectorType: function setSelectorType(selector) {
       this.selectorType = selector;
     },
-    log: function log() {
-      console.log(this.checkedTable);
-      console.log("testing this");
+    log: function log() {// console.log(this.checkedTable);
+      // console.log("testing this");
     },
     checkAmount: function checkAmount() {
       var that = this;
@@ -2347,17 +2348,23 @@ __webpack_require__.r(__webpack_exports__);
 
       that.selectedPeople = 0;
       that.error = false;
+      that.max_capacity = 0;
 
       for (var i = 0; i < that.checkedTable.length; i++) {
-        that.selectedPeople += that.checkedTable[i].max_capacity;
+        // console.log('volgende is goed');
+        // console.log(that.checkedTable);
+        axios.post('/get-single-table', {
+          table_id: that.checkedTable
+        }).then(function (response) {
+          that.max_capacity = that.max_capacity + response.data[0].max_capacity;
+          console.log(that.max_capacity);
 
-        if (that.selectedPeople > 8) {
-          that.error = true;
-          console.log(that.error);
-          that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
-        } else that.messages = false;
-
-        console.log(that.selectedPeople);
+          if (that.max_capacity > 8) {
+            that.error = true;
+            console.log(that.error);
+            that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
+          } else that.messages = false;
+        });
       }
     },
     getReserved: function getReserved() {
@@ -2367,8 +2374,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/get-tables-cap', {
         people: this.people
       }).then(function (response) {
-        that.allTablesCap = response.data;
-        console.log(that.allTablesCap);
+        that.allTablesCap = response.data; // console.log(that.allTablesCap);
       })["catch"](function (error) {
         console.log(error);
         _this2.errored = true;
@@ -2377,8 +2383,7 @@ __webpack_require__.r(__webpack_exports__);
         time: this.selectorTime
       }).then(function (response) {
         that.reservedTables = [];
-        that.availableTables = that.allTablesCap;
-        console.log(that.reservedTables);
+        that.availableTables = that.allTablesCap; // console.log(that.reservedTables);
 
         for (var i = 0; i < response.data.length; i++) {
           response.data[i].tables.forEach(function (item) {

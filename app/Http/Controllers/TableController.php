@@ -36,9 +36,12 @@ class TableController extends Controller
         return json_encode($tables);
     }
 
-    public function getTableCapacity(Request $request)
+    public function getSingleTable(Request $request)
     {
-        $table=$request['checkedTable'];
+        $table = $request['table_id'];
+
+        $table_cap = Table::where('id', '=' , $table)->get();
+        return json_encode($table_cap);
     }
 
     public function getReservedTable(Request $request)

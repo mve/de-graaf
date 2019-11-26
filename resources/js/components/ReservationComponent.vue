@@ -112,7 +112,8 @@
 
                         <div class="form-check mb-2 mr-sm-2 mb-sm-0">
                             <label class="form-check-label">
-                                <input class="form-check-input" v-on:change="log" type="checkbox" :value="table.id" name="checkedTable[]"
+                                <input class="form-check-input" v-on:change="log" type="checkbox" :value="table.id"
+                                       name="checkedTable[]"
                                        v-model="checkedTable">
                                 Tafel {{table.id}}. {{table.max_capacity}} stoelen
                             </label>
@@ -187,6 +188,7 @@
                 checkedTable: [],
                 comment: '',
                 reservedTables: [],
+                max_capacity: 0,
                 people: '',
                 selectedPeople: '',
                 csrf: document.head.querySelector('meta[name="csrf-token"]').content
@@ -200,8 +202,8 @@
                 this.selectorType = selector;
             },
             log() {
-                console.log(this.checkedTable);
-                console.log("testing this");
+                // console.log(this.checkedTable);
+                // console.log("testing this");
             },
             checkAmount() {
                 const that = this;
@@ -209,16 +211,26 @@
                 /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
                 that.selectedPeople = 0;
                 that.error = false;
+                that.max_capacity = 0;
                 for (let i = 0; i < that.checkedTable.length; i++) {
 
-                    that.selectedPeople += that.checkedTable[i].max_capacity;
-                    if(that.selectedPeople > 8){
-                        that.error = true;
-                        console.log(that.error);
-                        that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
-                    }else that.messages = false;
+                    // console.log('volgende is goed');
+                    // console.log(that.checkedTable);
 
-                    console.log(that.selectedPeople);
+                    axios
+                        .post('/get-single-table', {
+                            table_id: that.checkedTable
+                        }).then(response => {
+                        that.max_capacity = that.max_capacity + response.data[0].max_capacity;
+                        console.log(that.max_capacity);
+
+                        if (that.max_capacity > 8) {
+                            that.error = true;
+                            console.log(that.error);
+                            that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
+                        } else that.messages = false;
+
+                    });
                 }
             },
             getReserved() {
@@ -229,7 +241,7 @@
                     })
                     .then(response => {
                         that.allTablesCap = response.data;
-                        console.log(that.allTablesCap);
+                        // console.log(that.allTablesCap);
                     })
                     .catch(error => {
                         console.log(error);
@@ -243,7 +255,7 @@
                         .then(response => {
                             that.reservedTables = [];
                             that.availableTables = that.allTablesCap;
-                            console.log(that.reservedTables);
+                            // console.log(that.reservedTables);
 
                             for (let i = 0; i < response.data.length; i++) {
                                 response.data[i].tables.forEach(function (item) {
