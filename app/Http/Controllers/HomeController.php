@@ -47,8 +47,11 @@ class HomeController extends Controller
     {
         $usercur = Auth::user();
         $user    = User::with('reservations.tables')->find($usercur->id);
+        $time = Carbon::now()->format('Y-m-d');
+        $hourNow = Carbon::now()->format('H:i:s');
+        $hour = Carbon::parse($hourNow)->addHours(3);
 
-        return view('account', compact('user'));
+        return view('account', compact('user', 'time', 'hour'));
     }
 
     public function deleteReservation($id)
@@ -56,15 +59,17 @@ class HomeController extends Controller
         $mytimeh = Carbon::now()->format('H:i:s');
         $mytime  = Carbon::now()->format('Y-m-d');
 
-        $time = Carbon::parse($mytimeh)->addHours(4);
+        $time = Carbon::parse($mytimeh)->addHours(3);
 
         $reservation = Reservation::with('receipt', 'tables')->find($id);
+        if ($reservation->date <= $mytime) {
+            if ($time->format('H:i:s') > $reservation->time)
 
-        if ($reservation->date >= $mytime && $time->format('H:i:s') > $reservation->time) {
-
-//            dd("Mag niet reserveren");
+            dd("Mag niet reserveren");
             return Redirect::back()->withErrors(['Je mag niet meer annuleren']);
         }
+
+        $reservation->receipt()->update(['reservation_id' => null]);
 
         $reservation->tables()->update(['reservation_id' => null]);
         $reservation->delete();
