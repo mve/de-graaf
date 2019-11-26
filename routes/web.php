@@ -36,7 +36,7 @@ Route::get('/account', 'HomeController@edit')->middleware('verified');
 
 Route::post('/get-reserved', 'TableController@getReservedTable');
 
-Route::post('/get-single-table', 'TableController@getSingleTable');
+Route::post('/get-tables-by-id', 'TableController@getTablesById');
 
 Route::get('account/delete/{id}', 'HomeController@deleteReservation')->middleware('verified');
 

@@ -8,7 +8,7 @@
 
             <div class="datepicker col-md-4">
                 <label style="width: 100%">Datum:
-                    <input class="form-control" v-on:change="getReserved" type="date" v-model="datePicker"
+                    <input class="form-control" type="date" v-model="datePicker"
                            :min="minDateValue" name="date">
                 </label>
             </div>
@@ -66,7 +66,7 @@
                         <option value="16:45:00">16:45</option>
                     </select>
 
-                    <select v-on:change="getReserved" style="width: 100%" class="form-control"
+                    <select v-on:click="getReserved" style="width: 100%" class="form-control"
                             v-if="selectorType === 'Diner'" name="selectorTime"
                             v-model="selectorTime">
                         <option value="17:00:00">17:00</option>
@@ -211,29 +211,62 @@
                 /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
                 that.selectedPeople = 0;
                 that.error = false;
-                that.max_capacity = 0;
-                for (let i = 0; i < that.checkedTable.length; i++) {
 
-                    // console.log('volgende is goed');
-                    // console.log(that.checkedTable);
 
-                    axios
-                        .post('/get-single-table', {
-                            table_id: that.checkedTable
-                        }).then(response => {
-                        that.max_capacity = that.max_capacity + response.data[0].max_capacity;
-                        console.log(that.max_capacity);
+                // console.log('goeie');
+                // console.log(that.checkedTable);
 
-                        if (that.max_capacity > 8) {
-                            that.error = true;
-                            console.log(that.error);
-                            that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
-                        } else that.messages = false;
+                // for (let i = 0; i < that.checkedTable.length; i++) {
 
-                    });
-                }
+                console.log('checkedTable:');
+                console.log(that.checkedTable);
+                4
+                console.log('checkedTable parsed:');
+                console.log(JSON.stringify(that.checkedTable));
+
+                console.log('checkedTable double parsed:');
+                console.log(JSON.parse(JSON.stringify(that.checkedTable)));
+
+                axios
+                    .post('/get-tables-by-id', {
+
+                        table_id: JSON.parse(JSON.stringify(that.checkedTable))
+
+                    }).then(response => {
+
+                    console.log('response:');
+                    console.log(response);
+
+                    that.max_capacity = 0;
+
+                    for (let i = 0; i < response.data.length; i++) {
+                        that.max_capacity = that.max_capacity + response.data[i].max_capacity;
+
+                        console.log(response.data[i].max_capacity);
+
+                    }
+
+                    console.log(that.max_capacity);
+
+                    if (that.max_capacity > 8) {
+
+                        that.error = true;
+                        console.log(that.error);
+                        that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
+                    } else {
+                        that.messages = false
+                    }
+                });
+                // }
             },
             getReserved() {
+
+                console.log('checked before:');
+                console.log(this.checkedTable);
+                this.checkedTable = [];
+                console.log('checked after:');
+                console.log(this.checkedTable);
+
                 const that = this;
                 axios
                     .post('/get-tables-cap', {
