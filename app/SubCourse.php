@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class SubCourse extends Model
 {
     public function mainCourse(){
-        return $this->belongsTo('app/MainCourse');
+        return $this->belongsTo(MainCourse::class);
     }
 
     public function products(){
