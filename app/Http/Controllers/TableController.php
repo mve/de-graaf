@@ -20,9 +20,25 @@ class TableController extends Controller
         return json_encode($tables);
     }
 
-    public function getSingleTable()
+    public function getTablesCapacity(Request $request)
     {
+        $people = $request['people'];
+        // if selected people <=4 show tables that have capacity < 5
+        if($people <= 4){
+            $tables = Table::where('max_capacity' ,'<=', 4)->get();
 
+        }
+        if($people >=5){
+            $tables = Table::where('max_capacity', '>=', 4)->get();
+
+        }
+
+        return json_encode($tables);
+    }
+
+    public function getTableCapacity(Request $request)
+    {
+        $table=$request['checkedTable'];
     }
 
     public function getReservedTable(Request $request)
@@ -33,8 +49,10 @@ class TableController extends Controller
         $newTime = explode(":",$time);
         $timeBefore = $newTime[0] - 2;
         $timeAfter = $newTime[0] + 2;
-        $timeBefore = $timeBefore . ":" . $newTime[1] . ":" . $newTime[2];
-        $timeAfter = $timeAfter . ":" . $newTime[1] . ":" . $newTime[2];
+        $timeMinBefore = $newTime[1] - 1;
+        $timeMinAfter = $newTime[1] - 1;
+        $timeBefore = $timeBefore . ":" . $timeMinBefore . ":" . $newTime[2];
+        $timeAfter = $timeAfter . ":" . $timeMinAfter . ":" . $newTime[2];
         $timeBeforeformat = $timeBefore;
         $timeAfterformat  = $timeAfter;
 

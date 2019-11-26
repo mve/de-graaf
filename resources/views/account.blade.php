@@ -3,7 +3,18 @@
 @section('content')
     <div class="container">
 
-        <h1>Account</h1>
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Hallo {{$user->name}}</h1>
+            </div>
+
+            <div class="col-md-4">
+                <form method="post" action="{{url('/account/delete/account')}}">
+                    @csrf
+                        <button type="submit" class="btn btn-danger float-right">Verwijder account</button>
+                </form>
+            </div>
+        </div>
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -192,6 +203,8 @@
                     <th class="d-none d-lg-table-cell">Aantal personen</th>
                     <th class="d-none d-lg-table-cell">Opmerking</th>
                     <th class="d-none d-lg-table-cell">Tafel</th>
+                    <th class="d-none d-lg-table-cell">Nota</th>
+
                     <th class="d-none d-lg-table-cell">Annuleren</th>
                 @foreach($user->reservations as $reservation)
                     <tr>
@@ -207,6 +220,8 @@
                             <b><br>Tafels:<br></b>@foreach($reservation->tables as $table)
                                 {{$table->id}}<br>
                             @endforeach<br>
+                            <a href="reservering/nota/{{$reservation->id}}">PDF</a>
+
                             <button class="btn-primary">Annuleren</button>
                         </td>
 
@@ -223,9 +238,10 @@
                             @endforeach
 
                         </td>
+                        <td class="d-none d-lg-table-cell">
+                            <a href="reservering/nota/{{$reservation->id}}">PDF</a>
 
-
-
+                        </td>
 
                         <td class="d-none d-lg-table-cell">
                             <a  href="account/delete/{{$reservation->id}}"><button onclick="return confirm('Weet je het zeker?')" class="button button__delete"><i class="fa fa-trash"></i></button></a>
@@ -233,9 +249,7 @@
                     </tr>
                 @endforeach
             </table>
-            @if($errors->any())
-                <h4>{{$errors->first()}}</h4>
-            @endif
+
         </div>
     </div>
     </div>

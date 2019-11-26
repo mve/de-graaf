@@ -8,7 +8,8 @@
 
             <div class="datepicker col-md-4">
                 <label style="width: 100%">Datum:
-                    <input class="form-control" v-on:change="getReserved" type="date" v-model="datePicker" :min="minDateValue" name="date">
+                    <input class="form-control" v-on:change="getReserved" type="date" v-model="datePicker"
+                           :min="minDateValue" name="date">
                 </label>
             </div>
 
@@ -40,7 +41,7 @@
 
             <div class="timepicker col-md-4" v-if="selectorType">
                 <label style="width: 100%">Tijd
-                    <select v-on:click="log" class="form-control" name="selectorTime"
+                    <select v-on:click="getReserved" class="form-control" name="selectorTime"
                             v-if="selectorType === 'Lunch'"
                             v-model="selectorTime">
                         <option value="12:00:00">12:00</option>
@@ -81,22 +82,37 @@
                         <option value="19:30:00">19:30</option>
                         <option value="19:45:00">19:45</option>
                         <option value="20:00:00">20:00</option>
-                        <option value="20:15:00">20:15</option>
-                        <option value="20:30:00">20:30</option>
-                        <option value="20:45:00">20:45</option>
                     </select>
                 </label>
             </div>
 
             <div class="space space--20"></div>
 
-            <div class="tableGrid" v-if="selectorTime">
+            <div class="amountpicker col-md-4" v-if="selectorTime">
+                <label style="width: 100%">Aantal
+                    <select v-on:click="getReserved" class="form-control" name="people"
+                            v-model="people">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="space space--20"></div>
+
+            <div class="tableGrid" v-if="people">
                 <div class="row">
-                    <div class="col-md-3" v-for="table in this.availableTables">
+                    <div class="col-md-3" v-on:change="checkAmount" v-for="table in this.availableTables">
 
                         <div class="form-check mb-2 mr-sm-2 mb-sm-0">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" :value="table.id" name="checkedTable[]"
+                                <input class="form-check-input" type="checkbox" :value="table" name="checkedTable[]"
                                        v-model="checkedTable">
                                 Tafel {{table.id}}. {{table.max_capacity}} stoelen
                             </label>
@@ -112,6 +128,11 @@
                     Neem contact met ons op om meer te reserveren.
                 </div>
 
+                <div v-if="messages" class="alert alert-danger" role="alert">
+                    {{messages}}
+                </div>
+
+
             </div>
 
             <div class="space space--20"></div>
@@ -123,7 +144,7 @@
             </div>
 
             <div v-if="checkedTable.length > 0">
-                <div v-if="checkedTable.length < 3">
+                <div v-if="checkedTable.length < 3 && error === false ">
                     <button type="submit" value="submit" class="btn btn-primary">
                         Reserveren
                     </button>
@@ -144,7 +165,7 @@
         mounted() {
 
             axios
-                .get('http://localhost:8000/get-tables')
+                .get('http://127.0.0.1:8000/get-tables')
                 .then(response => {
                     this.allTables = response.data;
                 })
@@ -156,14 +177,19 @@
         },
         data() {
             return {
+                messages: '',
+                error: '',
                 datePicker: '',
                 allTables: [],
+                allTablesCap: [],
                 availableTables: [],
                 selectorType: '',
                 selectorTime: '',
                 checkedTable: [],
                 comment: '',
                 reservedTables: [],
+                people: '',
+                selectedPeople: '',
                 csrf: document.head.querySelector('meta[name="csrf-token"]').content
             }
 
@@ -174,29 +200,49 @@
             setSelectorType(selector) {
                 this.selectorType = selector;
             },
-            log(){
-              console.log("testing this shit");
+            log() {
+                console.log("testing this");
+            },
+            checkAmount() {
+                const that = this;
+
+                /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
+                that.selectedPeople = 0;
+                that.error = false;
+                for (let i = 0; i < that.checkedTable.length; i++) {
+
+                    that.selectedPeople += that.checkedTable[i].max_capacity;
+                    if(that.selectedPeople > 8){
+                        that.error = true;
+                        console.log(that.error);
+                        that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
+                    }else that.messages = false;
+
+                    console.log(that.selectedPeople);
+                }
             },
             getReserved() {
                 const that = this;
-                console.log("test");
                 axios
-                    .get('http://localhost:8000/get-tables')
+                    .post('http://localhost:8000/get-tables-cap', {
+                        people: this.people
+                    })
                     .then(response => {
-                        that.allTables = response.data;
+                        that.allTablesCap = response.data;
+                        console.log(that.allTablesCap);
                     })
                     .catch(error => {
                         console.log(error);
                         this.errored = true
                     }).then(
                     axios
-                        .post('http://localhost:8000/get-reserved', {
+                        .post('http://127.0.0.1:8000/get-reserved', {
                             date: this.datePicker,
                             time: this.selectorTime
                         })
                         .then(response => {
                             that.reservedTables = [];
-                            that.availableTables = that.allTables;
+                            that.availableTables = that.allTablesCap;
                             console.log(that.reservedTables);
 
                             for (let i = 0; i < response.data.length; i++) {
