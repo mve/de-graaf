@@ -43,6 +43,16 @@ Route::post('account/delete/account', 'HomeController@deleteaccount')->middlewar
 Route::delete('account/delete/account', 'HomeController@deleteconfirm')->middleware('verified');
 
 
+Route::get('/reserveringen/dag',
+    'ReservationController@getDay')->name('home')->middleware('notBlocked')->middleware('verified');
+
+Route::get('/reserveringen/week',
+    'ReservationController@getWeek')->name('home')->middleware('notBlocked')->middleware('verified');
+
+Route::get('/reserveringen/maand',
+    'ReservationController@getMonth')->name('home')->middleware('notBlocked')->middleware('verified');
+
+
 Route::get('/account/{user}',
     ['as' => 'users.edit', 'uses' => 'UserController@edit'])->middleware('verified')->middleware('notBlocked');
 Route::patch('/account/{user}',
@@ -77,6 +87,15 @@ Route::get('/beheer/createOrder', 'OrderController@getData')->name('home')->midd
 
 Route::get('/beheer/reserveringen',
     'ReservationController@adminGet')->name('home')->middleware('admin')->middleware('notBlocked')->middleware('verified');
+
+Route::get('/beheer/reserveringen/dag',
+    'ReservationController@adminGetDay')->name('home')->middleware('admin')->middleware('notBlocked')->middleware('verified');
+
+Route::get('/beheer/reserveringen/week',
+    'ReservationController@adminGetWeek')->name('home')->middleware('admin')->middleware('notBlocked')->middleware('verified');
+
+Route::get('/beheer/reserveringen/maand',
+    'ReservationController@adminGetMonth')->name('home')->middleware('admin')->middleware('notBlocked')->middleware('verified');
 
 Route::get('/beheer/gebruikers',
     'UserController@index')->middleware('admin')->middleware('notBlocked')->middleware('verified');
