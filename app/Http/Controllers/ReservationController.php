@@ -104,6 +104,29 @@ class ReservationController extends Controller
     {
 
     }
+    public function adminCreate(Request $request){
+
+        $user = Auth::user();
+        $table=Table::find($request['checkedTable']);
+
+        $reservation = Reservation::create([
+            'user_id' => $user->id,
+            'people' => $request['people'],
+            'date' => $request['date'],
+            'time' => $request['selectorTime'],
+            'comment' => $request['comment'],
+            'reservation_typ' => $request['selectorType']
+
+        ]);
+
+//        $reservation->tables()->attach($table->id);
+
+        foreach($table as $t){
+            $reservation->tables()->attach($t->id);
+        }
+
+        return view('reservations', compact('user'));
+    }
 
     public function adminEdit(Reservation $reservation)
     {
