@@ -108,7 +108,7 @@
 
             <div class="tableGrid" v-if="people">
                 <div class="row">
-                    <div class="col-md-3" v-on:change="checkAmount" v-for="table in this.availableTables">
+                    <div class="col-md-3" v-for="table in this.availableTables">
 
                         <div class="form-check mb-2 mr-sm-2 mb-sm-0">
                             <label class="form-check-label">
@@ -121,18 +121,6 @@
                     </div>
                 </div>
 
-                <div class="space space--10"></div>
-
-                <div v-if="checkedTable.length > 2" class="alert alert-danger" role="alert">
-                    Er zijn te veel tafels geselecteerd.
-                    Neem contact met ons op om meer te reserveren.
-                </div>
-
-                <div v-if="messages" class="alert alert-danger" role="alert">
-                    {{messages}}
-                </div>
-
-
             </div>
 
             <div class="space space--20"></div>
@@ -144,7 +132,7 @@
             </div>
 
             <div v-if="checkedTable.length > 0">
-                <div v-if="checkedTable.length < 3 && error === false ">
+                <div v-if="checkedTable.length < 3">
                     <button type="submit" value="submit" class="btn btn-primary">
                         Reserveren
                     </button>
@@ -163,6 +151,7 @@
     export default {
         name: "ReservationComponent",
         mounted() {
+
             axios
                 .get('/get-tables')
                 .then(response => {
@@ -201,24 +190,6 @@
             },
             log() {
                 console.log("testing this");
-            },
-            checkAmount() {
-                const that = this;
-
-                /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
-                that.selectedPeople = 0;
-                that.error = false;
-                for (let i = 0; i < that.checkedTable.length; i++) {
-
-                    that.selectedPeople += that.checkedTable[i].max_capacity;
-                    if(that.selectedPeople > 8){
-                        that.error = true;
-                        console.log(that.error);
-                        that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
-                    }else that.messages = false;
-
-                    console.log(that.selectedPeople);
-                }
             },
             getReserved() {
                 const that = this;

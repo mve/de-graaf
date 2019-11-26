@@ -9,10 +9,10 @@
             </div>
 
             <div class="col-md-4">
-                <form method="post" action="{{url('/account/delete/account')}}">
-                    @csrf
+                <a  href="{{url('/delete-account')}}">
+
                         <button type="submit" class="btn btn-danger float-right">Verwijder account</button>
-                </form>
+                </a>
             </div>
         </div>
 
@@ -244,7 +244,7 @@
                         </td>
 
                         <td class="d-none d-lg-table-cell">
-                            <a  href="account/delete/{{$reservation->id}}"><button onclick="return confirm('Weet je het zeker?')" class="button button__delete"><i class="fa fa-trash"></i></button></a>
+                            <a  href="account/delete/{{$reservation->id}}"><button class="button button__delete"><i class="fa fa-trash"></i></button></a>
                         </td>
                     </tr>
                 @endforeach
