@@ -49,8 +49,6 @@ Route::get('/reservering', function () {
 Route::post('/reservering',
     'ReservationController@createReservation')->middleware('verified')->middleware('notBlocked');
 
-Route::get('/get-tables', 'TableController@getTables')->middleware('verified')->middleware('notBlocked');
-
 Route::get('/blocked',[ 'as' => 'blocked', function () {
     return view('blocked');
 }]);
@@ -58,6 +56,7 @@ Route::get('/blocked',[ 'as' => 'blocked', function () {
 Route::get('/blockedByAdmin',[ 'as' => 'blocked', function () {
     return view('blockedByAdmin');
 }]);
+Route::get('/get-tables', 'TableController@getTables')->middleware('verified')->middleware('notBlocked');
 
 // Admin routes
 Route::get('/beheer', function () {
@@ -86,5 +85,7 @@ Route::patch('/beheer/gebruikers/{user}',
 // API
 
 Route::post('/get-reserved', 'TableController@getReservedTable');
+
+Route::post('/get-tables-cap', 'TableController@getTablesCapacity');
 
 Route::post('/toggle-block/{user}', 'UserController@toggleBlock');
