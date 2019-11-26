@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+c
 @section('content')
 
     <div class="container">
@@ -10,13 +10,14 @@
                        Weet je zeker dat je je account wilt verwijderen?</h1>
 
                     <div class="error-details">
-                   Nadat je je account hebt verwijderd is het niet meer mogelijk om deze te herstellen! Alle toekomstige reserveringen blijven wel bestaan, deze kun je zonder account niet annuleren. 
+                        Nadat je je account hebt verwijderd is het niet meer mogelijk om deze te herstellen!<br>
+                        Alle toekomstige reserveringen blijven wel bestaan, deze kun je zonder account niet annuleren.
                     </div>
 
                     <div class="error-actions w-25 mx-auto">
-                        <form method="post" >
+                        <form method="post">
                             @csrf
-                            {{method_field('DELETE')}}
+                            @method('DELETE')
 
                             <button type="submit" class="btn btn-danger float-right w-100">Verwijder account</button>
 

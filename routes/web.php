@@ -89,6 +89,9 @@ Route::get('/beheer/gebruikers/{user}',
 Route::patch('/beheer/gebruikers/{user}',
     ['as' => 'users.adminUpdate', 'uses' => 'UserController@adminUpdate'])->middleware('verified')->middleware('admin');
 
+Route::delete('/beheer/gebruikers/{user}',
+    ['as' => 'users.adminDelete', 'uses' => 'UserController@adminDelete'])->middleware('verified')->middleware('admin');
+
 // API
 
 Route::post('/get-reserved', 'TableController@getReservedTable');

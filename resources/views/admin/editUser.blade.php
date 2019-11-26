@@ -10,12 +10,20 @@
             <div class="col-md-4">
                 <form method="post" action="{{url('/toggle-block', $user)}}">
                     @csrf
-                    @if($user->blocked === 0)
-                        <button type="submit" class="btn btn-danger float-right">blokkeer</button>
+                    @if($user->blocked == 0)
+                        <button type="submit" class="btn btn-danger float-right">Blokkeer</button>
                     @else
-                        <button type="submit" class="btn btn-success float-right">deblokkeer</button>
+                        <button type="submit" class="btn btn-success float-right">Deblokkeer</button>
                     @endif
                 </form>
+
+                <form method="post" action="{{route('users.adminDelete', $user)}}">
+                    @csrf
+                        @method('delete')
+
+                    <button type="submit" class="btn btn-danger float-right">Verwijder</button>
+                </form>
+
             </div>
         </div>
 

@@ -99,6 +99,7 @@ class UserController extends Controller
     {
         return view('admin.editUser', compact('user'));
     }
+
     public function sendmail(Request $request)
     {
 
@@ -106,6 +107,7 @@ class UserController extends Controller
 
         return view('home');
     }
+
     /**
      * Update for admin, can change role.
      *
@@ -157,8 +159,7 @@ class UserController extends Controller
 
     public function toggleBlock(User $user)
     {
-        if ($user->blocked === 0)
-        {
+        if ($user->blocked == 0) {
             $user->blocked = 1;
         } else {
             $user->blocked = 0;
@@ -167,5 +168,34 @@ class UserController extends Controller
         $user->save();
 
         return back();
+    }
+
+    public function deleteAccount(User $user)
+    {
+
+        $user = User::with('reservations.tables')->find($user->id);
+        $user->reservations()->update(['user_id' => null]);
+
+        try {
+            $user->delete();
+        } catch (\Exception $e) {
+        }
+
+        return redirect('/login')->withErrors(['Je account is succesvol verwijderd']);
+    }
+
+    public function adminDelete(User $user)
+    {
+        $user = User::with('reservations.tables')->find($user->id);
+
+        $user->reservations()->update(['user_id' => null]);
+
+        try {
+            $user->delete();
+        } catch (\Exception $e) {
+            dd($e);
+        }
+
+        return redirect('/beheer/gebruikers');
     }
 }
