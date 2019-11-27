@@ -1,7 +1,15 @@
 <template>
-    <div class="container">
-        <form >
+
+        <form>
             <div class="form-group">
+
+                    <label for="selectReservation">Reserveringen van vandaag</label>
+                    <select   class="form-control" id="reservations" @change="onChange($event)" name="reservations">
+                        <option disabled selected> -- Selecteer een tafel -- </option>
+                        <option v-for="res in this.unsortedreservations" :value="res.id">{{res.time}} - Reservering van: {{res.user.name}} Tafel(s): <span v-for="table in res.tables">{{table.id}}, </span></option>
+
+                    </select>
+
                 <label for="selectCategory">Product categorie</label>
                 <select class="form-control" id="selectCategory" v-on:change="sendCategory" name="selectedCategory"
                         v-model="selectedCategory">
@@ -43,14 +51,19 @@
                 </div>
             </div>
         </form>
-    </div>
+
 
 </template>
 
 <script>
     export default {
+        props: ['unsortedreservations'],
         mounted() {
-            console.log('Component mounted.')
+            console.log();
+            for (let i = 0; i < this.unsortedreservations.length; i++) {
+                console.log(this.unsortedreservations[i].id);
+            }
+            console.log(this.unsortedreservations);
         },
         data: function () {
             return {
@@ -58,7 +71,8 @@
                 products: '',
                 csrf: document.head.querySelector('meta[name="csrf-token"]').content,
                 selectedProducts: [],
-                chosenProducts: []
+                chosenProducts: [],
+                chosenReservation: '',
             }
         },
         methods: {
@@ -71,6 +85,9 @@
                         console.log(error);
                     });
             },
+            onChange(event) {
+                this.chosenReservation= event.target.value;
+            },
 
             addProducts(event) {
                 const that = this;
@@ -80,8 +97,10 @@
 
             sendOrder() {
                 const that = this;
-                axios.post('/beheer/createOrder', that.chosenProducts).then((response) => {
-                    console.log(response.data);
+                console.log("Reserving:" +that.chosenReservation);
+
+
+                axios.post('/beheer/createOrder', {'products': that.chosenProducts, 'reservationid': that.chosenReservation}).then((response) => {                    console.log(response.data);
                 })
                     .catch((error) => {
                         console.log(error);

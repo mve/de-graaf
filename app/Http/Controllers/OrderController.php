@@ -43,18 +43,32 @@ class OrderController extends Controller
     }
 
     public function createOrder(Request $request){
-        $products = $request->all();
+        $products = $request['products'];
+        $reservationId = $request['reservationid'];
+        $productenarray = [];
+        $reservation = Reservation::with('receipt')->find($reservationId);
 
         foreach ($products as $item)
         {
-            $product = Product::all()->where("name", 'LIKE', $item[0]);
-            $orders = Order::create([
-                'product_id' => $product[0]['id'],
-            ]);
+            $test = $item[0];
+            array_push($productenarray, $test);
+//            $product = Product::all()->where("name", 'LIKE', $test);
+//            $orders = Order::create([
+//                'product_id' => $product[0]['id'],
+//            ]);
         }
+        $product = Product::all()->whereIn("name", $productenarray);
 
-        return $product;
+        foreach($product as $addproduct){
+                        $orders = Order::create([
+                'product_id' => $addproduct->id,
+                            'receipt_id' => $reservation->receipt->id,
 
+                        ]);
+        }
+//        return $request->input('selectReservation');
+
+        return $reservation->receipt->id;
 //
 //        $receipt = new Receipt();
 //
