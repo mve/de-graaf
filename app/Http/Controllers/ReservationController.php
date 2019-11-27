@@ -83,9 +83,6 @@ class ReservationController extends Controller
 
     public function createReservation(Request $request)
     {
-
-
-
         $user  = Auth::user();
         $table = Table::find($request['checkedTable']);
 
