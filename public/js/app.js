@@ -1975,6 +1975,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
   mounted: function mounted() {
@@ -2000,6 +2035,7 @@ __webpack_require__.r(__webpack_exports__);
       checkedTable: [],
       comment: '',
       reservedTables: [],
+      max_capacity: 0,
       people: '',
       selectedPeople: '',
       csrf: document.head.querySelector('meta[name="csrf-token"]').content
@@ -2010,18 +2046,52 @@ __webpack_require__.r(__webpack_exports__);
     setSelectorType: function setSelectorType(selector) {
       this.selectorType = selector;
     },
-    log: function log() {
-      console.log("testing this");
+    styleCheckbox: function styleCheckbox() {
+      var checkboxes = document.getElementsByClassName('reservation-checkbox');
+
+      for (var i = 0; checkboxes.length > i; i++) {
+        checkboxes[i].classList.remove("reservation-checked");
+      }
+
+      for (var _i = 0; this.checkedTable.length > _i; _i++) {
+        var checkbox = document.getElementById(this.checkedTable[_i]);
+        checkbox.classList.add("reservation-checked");
+      }
+    },
+    checkAmount: function checkAmount() {
+      var that = this;
+      /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
+
+      that.selectedPeople = 0;
+      that.error = false;
+      axios.post('/get-tables-by-id', {
+        table_id: JSON.parse(JSON.stringify(that.checkedTable))
+      }).then(function (response) {
+        that.max_capacity = 0;
+
+        for (var i = 0; i < response.data.length; i++) {
+          that.max_capacity = that.max_capacity + response.data[i].max_capacity;
+        }
+
+        if (that.max_capacity > 8) {
+          that.error = true;
+          that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
+        } else {
+          that.messages = false;
+        }
+      }); // }
     },
     getReserved: function getReserved() {
       var _this2 = this;
 
+      // reset checkTable and checkbox style.
+      this.checkedTable = [];
+      this.styleCheckbox();
       var that = this;
       axios.post('/get-tables-cap', {
         people: this.people
       }).then(function (response) {
         that.allTablesCap = response.data;
-        console.log(that.allTablesCap);
       })["catch"](function (error) {
         console.log(error);
         _this2.errored = true;
@@ -2030,8 +2100,7 @@ __webpack_require__.r(__webpack_exports__);
         time: this.selectorTime
       }).then(function (response) {
         that.reservedTables = [];
-        that.availableTables = that.allTables;
-        console.log(that.reservedTables);
+        that.availableTables = that.allTablesCap;
 
         for (var i = 0; i < response.data.length; i++) {
           response.data[i].tables.forEach(function (item) {
@@ -2039,10 +2108,10 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
 
-        for (var _i = that.availableTables.length - 1; _i >= 0; _i--) {
+        for (var _i2 = that.availableTables.length - 1; _i2 >= 0; _i2--) {
           for (var j = 0; j < that.reservedTables.length; j++) {
-            if (that.availableTables[_i] && that.availableTables[_i].id === that.reservedTables[j].id) {
-              that.availableTables.splice(_i, 1);
+            if (that.availableTables[_i2] && that.availableTables[_i2].id === that.reservedTables[j].id) {
+              that.availableTables.splice(_i2, 1);
             }
           }
         }
@@ -37924,7 +37993,6 @@ var render = function() {
               attrs: { type: "date", min: _vm.minDateValue, name: "date" },
               domProps: { value: _vm.datePicker },
               on: {
-                change: _vm.getReserved,
                 input: function($event) {
                   if ($event.target.composing) {
                     return
@@ -38134,22 +38202,20 @@ var render = function() {
                         staticStyle: { width: "100%" },
                         attrs: { name: "selectorTime" },
                         on: {
-                          change: [
-                            function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.selectorTime = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            },
-                            _vm.getReserved
-                          ]
+                          click: _vm.getReserved,
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.selectorTime = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
                         }
                       },
                       [
@@ -38217,31 +38283,54 @@ var render = function() {
           ? _c("div", { staticClass: "amountpicker col-md-4" }, [
               _c("label", { staticStyle: { width: "100%" } }, [
                 _vm._v("Aantal\n                "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.people,
-                      expression: "people"
-                    }
-                  ],
-                  attrs: {
-                    type: "number",
-                    name: "people",
-                    min: "1",
-                    max: "58"
-                  },
-                  domProps: { value: _vm.people },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.people,
+                        expression: "people"
                       }
-                      _vm.people = $event.target.value
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "people" },
+                    on: {
+                      click: _vm.getReserved,
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.people = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
                     }
-                  }
-                })
+                  },
+                  [
+                    _c("option", { attrs: { value: "1" } }, [_vm._v("1")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2" } }, [_vm._v("2")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "3" } }, [_vm._v("3")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "4" } }, [_vm._v("4")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "5" } }, [_vm._v("5")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "6" } }, [_vm._v("6")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "7" } }, [_vm._v("7")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "8" } }, [_vm._v("8")])
+                  ]
+                )
               ])
             ])
           : _vm._e(),
@@ -38252,14 +38341,28 @@ var render = function() {
           ? _c("div", { staticClass: "tableGrid" }, [
               _c(
                 "div",
-                { staticClass: "row" },
+                { staticClass: "row no-gutters" },
                 _vm._l(this.availableTables, function(table) {
-                  return _c("div", { staticClass: "col-md-3" }, [
-                    _c(
-                      "div",
-                      { staticClass: "form-check mb-2 mr-sm-2 mb-sm-0" },
-                      [
-                        _c("label", { staticClass: "form-check-label" }, [
+                  return _c(
+                    "div",
+                    {
+                      staticClass:
+                        "col-md-3 card reservation-checkbox text-center",
+                      attrs: { id: table.id },
+                      on: { change: _vm.checkAmount }
+                    },
+                    [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label",
+                          staticStyle: {
+                            width: "100%",
+                            height: "100%",
+                            padding: "30px"
+                          }
+                        },
+                        [
                           _c("input", {
                             directives: [
                               {
@@ -38269,51 +38372,101 @@ var render = function() {
                                 expression: "checkedTable"
                               }
                             ],
-                            staticClass: "form-check-input",
+                            staticClass: "form-check-input hide-checkbox",
                             attrs: { type: "checkbox", name: "checkedTable[]" },
                             domProps: {
-                              value: table,
+                              value: table.id,
                               checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, table) > -1
+                                ? _vm._i(_vm.checkedTable, table.id) > -1
                                 : _vm.checkedTable
                             },
                             on: {
-                              change: function($event) {
-                                var $$a = _vm.checkedTable,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = table,
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      (_vm.checkedTable = $$a.concat([$$v]))
+                              change: [
+                                function($event) {
+                                  var $$a = _vm.checkedTable,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = table.id,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        (_vm.checkedTable = $$a.concat([$$v]))
+                                    } else {
+                                      $$i > -1 &&
+                                        (_vm.checkedTable = $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1)))
+                                    }
                                   } else {
-                                    $$i > -1 &&
-                                      (_vm.checkedTable = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
+                                    _vm.checkedTable = $$c
                                   }
-                                } else {
-                                  _vm.checkedTable = $$c
+                                },
+                                function($event) {
+                                  return _vm.styleCheckbox()
                                 }
-                              }
+                              ]
                             }
                           }),
-                          _vm._v(
-                            "\n                            Tafel " +
-                              _vm._s(table.id) +
-                              ". " +
-                              _vm._s(table.max_capacity) +
-                              " stoelen\n                        "
-                          )
-                        ])
-                      ]
-                    )
-                  ])
+                          _vm._v(" "),
+                          _c("span", { staticClass: "h4" }, [
+                            _vm._v(
+                              "\n                                Tafel " +
+                                _vm._s(table.id) +
+                                "\n                        "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "h5" }, [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(table.max_capacity) +
+                                " stoelen\n                        "
+                            )
+                          ])
+                        ]
+                      )
+                    ]
+                  )
                 }),
                 0
-              )
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "space space--10" }),
+              _vm._v(" "),
+              _vm.checkedTable.length > 2
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "alert alert-danger",
+                      attrs: { role: "alert" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                Er zijn te veel tafels geselecteerd.\n                Neem contact met ons op om meer te reserveren.\n            "
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.messages
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "alert alert-danger",
+                      attrs: { role: "alert" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.messages) +
+                          "\n            "
+                      )
+                    ]
+                  )
+                : _vm._e()
             ])
           : _vm._e(),
         _vm._v(" "),
@@ -38352,14 +38505,22 @@ var render = function() {
         _vm._v(" "),
         _vm.checkedTable.length > 0
           ? _c("div", [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: { type: "submit", value: "submit" }
-                },
-                [_vm._v("\n                Reserveren\n            ")]
-              )
+              _vm.checkedTable.length < 3 && _vm.error === false
+                ? _c("div", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "submit", value: "submit" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    Reserveren\n                "
+                        )
+                      ]
+                    )
+                  ])
+                : _vm._e()
             ])
           : _vm._e()
       ]
