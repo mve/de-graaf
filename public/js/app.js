@@ -2175,6 +2175,9 @@ __webpack_require__.r(__webpack_exports__);
       that.chosenProducts.push(that.selectedProducts);
       console.log(that.selectedProducts);
     },
+    deleteEvent: function deleteEvent(product) {
+      this.chosenProducts.splice(this.chosenProducts.indexOf(product), 1);
+    },
     sendOrder: function sendOrder() {
       var _this2 = this;
 
@@ -38557,12 +38560,17 @@ var render = function() {
         "div",
         { staticClass: "list-group" },
         [
-          _vm._l(_vm.chosenProducts, function(product) {
+          _vm._l(_vm.chosenProducts, function(product, index) {
             return _c(
               "button",
               {
                 staticClass: "list-group-item list-group-item-action",
-                attrs: { type: "button" }
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.deleteEvent(index)
+                  }
+                }
               },
               [
                 _vm._v(
@@ -51900,8 +51908,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\de_graaf\de-graaf\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\de_graaf\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\de-graaf\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

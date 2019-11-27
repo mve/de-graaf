@@ -4,7 +4,9 @@
     <div class="container">
         <div class="row w-100 mb-3">
             <h1 class="float-left">Admin Orders</h1>
-            <button type="button" onclick="window.location='{{ url("/beheer/createOrder") }}'" class="btn btn-success ml-auto"><i class="fa fa-plus" aria-hidden="true"></i> Bestelling aanmaken</button>
+            <button type="button" onclick="window.location='{{ url("/beheer/createOrder") }}'"
+                    class="btn btn-success ml-auto"><i class="fa fa-plus" aria-hidden="true"></i> Bestelling aanmaken
+            </button>
         </div>
         <table class="table">
             <tr>
@@ -38,8 +40,11 @@
                         @endforeach
                     </td>
                     <td>
-                        <a><button type="button" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
-                        <a><button type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
+                        <a href="{{action('OrderController@deleteOrder', $order->id)}}" >
+                            <button class="btn btn-danger button__delete">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </a>
                     </td>
                     {{--<a href="{{action('YourController@callMeDirectlyFromUrl')}}">Link name/Embedded Button</a>
 --}}
@@ -47,7 +52,7 @@
             @endforeach
         </table>
         <div class="row d-flex justify-content-center">
-            <div class="col-md-6">    {!! $unsortedorders->links() !!}</div>
+            <div class="col-md-6">{!! $unsortedorders->links()!!}</div>
         </div>
     </div>
 @endsection

@@ -136,3 +136,6 @@ Route::post('/beheer/getProducts', 'OrderController@getDishes');
 
 Route::post('/beheer/createOrder', 'OrderController@createOrder');
 
+Route::get('beheer/deleteOrder/{id}', 'OrderController@deleteOrder');
+
+

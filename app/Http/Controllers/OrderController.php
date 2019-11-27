@@ -14,16 +14,18 @@ class OrderController extends Controller
 {
     public function getOrders()
     {
-        $unsortedorders = Order::with('product', 'receipt.reservation.tables')->paginate(6);
+        $unsortedorders = Order::with('product', 'receipt.reservation.tables')->paginate(15);
 
         return view('admin.orders', compact('unsortedorders'));
     }
 
-    public function removeOrder($id){
+    public function removeOrder($id)
+    {
         dd($id);
     }
 
-    public function getDishes(){
+    public function getDishes()
+    {
 
         $selectedCategory = \request('category');
 
@@ -39,26 +41,26 @@ class OrderController extends Controller
 
         $unsortedreservations = Reservation::with('tables', 'user', 'receipt')->where('date', '=', $todayDate)->get();
 
-        return view('admin.createOrder', compact( 'unsortedreservations'));
+        return view('admin.createOrder', compact('unsortedreservations'));
     }
 
-    public function createOrder(Request $request){
+    public function createOrder(Request $request)
+    {
         $products = $request['products'];
         $reservationId = $request['reservationid'];
         $productenarray = [];
         $reservation = Reservation::with('receipt')->find($reservationId);
-         $count = 1;
+        $count = 1;
         $quantitys = [];
-        foreach ($products as $item)
-        {
+        foreach ($products as $item) {
 
             if (in_array($item[0], $productenarray)) {
                 $count++;
             }
 
-                $test = $item[0];
-                array_push($productenarray, $test);
-            array_push($quantitys, $count,$test);
+            $test = $item[0];
+            array_push($productenarray, $test);
+            array_push($quantitys, $count, $test);
 
 
         }
@@ -66,19 +68,21 @@ class OrderController extends Controller
 
         $product = Product::all()->whereIn("name", $productenarray);
 
-        foreach($product as $addproduct){
-                        $orders = Order::create([
+        foreach ($product as $addproduct) {
+            $orders = Order::create([
                 'product_id' => $addproduct->id,
-                            'receipt_id' => $reservation->receipt->id,
-                            'quantity' => $quantitys[$addproduct->name],
+                'receipt_id' => $reservation->receipt->id,
+                'quantity' => $quantitys[$addproduct->name],
 
-                        ]);
+            ]);
         }
-//        return $request->input('selectReservation');
-return 'Bestelling geplaatst';
-//
-//        $receipt = new Receipt();
-//
-//        $receipt->save();
+        return 'Bestelling geplaatst';
     }
+
+    public function deleteOrder($id){
+        $Order = Order::all()->find($id);
+        $Order->delete();
+        return redirect()->back();
+    }
+
 }

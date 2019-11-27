@@ -41,7 +41,7 @@
 
                 <h3>Bestelling</h3>
                 <div class="list-group">
-                    <button type="button" v-for="product in chosenProducts"
+                    <button type="button" v-for="(product, index) in chosenProducts" @click="deleteEvent(index)"
                             class="list-group-item list-group-item-action">
                         1x {{product[0]}}
                     </button>
@@ -103,6 +103,10 @@
                 const that = this;
                 that.chosenProducts.push(that.selectedProducts);
                 console.log(that.selectedProducts);
+            },
+
+            deleteEvent: function(product) {
+                this.chosenProducts.splice(this.chosenProducts.indexOf(product), 1);
             },
 
             sendOrder() {
