@@ -201,31 +201,12 @@
             setSelectorType(selector) {
                 this.selectorType = selector;
             },
-            log() {
-                // console.log(this.checkedTable);
-                // console.log("testing this");
-            },
             checkAmount() {
                 const that = this;
 
                 /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
                 that.selectedPeople = 0;
                 that.error = false;
-
-
-                // console.log('goeie');
-                // console.log(that.checkedTable);
-
-                // for (let i = 0; i < that.checkedTable.length; i++) {
-
-                console.log('checkedTable:');
-                console.log(that.checkedTable);
-                4
-                console.log('checkedTable parsed:');
-                console.log(JSON.stringify(that.checkedTable));
-
-                console.log('checkedTable double parsed:');
-                console.log(JSON.parse(JSON.stringify(that.checkedTable)));
 
                 axios
                     .post('/get-tables-by-id', {
@@ -234,24 +215,15 @@
 
                     }).then(response => {
 
-                    console.log('response:');
-                    console.log(response);
-
                     that.max_capacity = 0;
 
                     for (let i = 0; i < response.data.length; i++) {
                         that.max_capacity = that.max_capacity + response.data[i].max_capacity;
-
-                        console.log(response.data[i].max_capacity);
-
                     }
-
-                    console.log(that.max_capacity);
 
                     if (that.max_capacity > 8) {
 
                         that.error = true;
-                        console.log(that.error);
                         that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
                     } else {
                         that.messages = false
@@ -261,11 +233,7 @@
             },
             getReserved() {
 
-                console.log('checked before:');
-                console.log(this.checkedTable);
                 this.checkedTable = [];
-                console.log('checked after:');
-                console.log(this.checkedTable);
 
                 const that = this;
                 axios
@@ -274,7 +242,6 @@
                     })
                     .then(response => {
                         that.allTablesCap = response.data;
-                        // console.log(that.allTablesCap);
                     })
                     .catch(error => {
                         console.log(error);
@@ -288,7 +255,6 @@
                         .then(response => {
                             that.reservedTables = [];
                             that.availableTables = that.allTablesCap;
-                            // console.log(that.reservedTables);
 
                             for (let i = 0; i < response.data.length; i++) {
                                 response.data[i].tables.forEach(function (item) {
