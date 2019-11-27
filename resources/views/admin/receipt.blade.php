@@ -233,6 +233,7 @@
         <div class="row">
             <div class="equalHWrap eqWrap top">
                 @if(!$isPdf)
+                    <a href="/beheer/reserveringen"><button class="btn"> back</button></a>
                 <a href="/beheer/reservering/nota/download/{{$receipt->id}}"><button class="btn"> Download</button></a>
                 @endif
                 <div class="equalHW eq contact-info-block">
@@ -240,7 +241,7 @@
                     <span id="AccountPhone">047 226 47 280</span>
                 </div>
                 <div class="equalHW eq title-block">
-                    <h2 class="right no-padding" id="InvoiceSumExVat" style="margin:0px;">FAKTUUR</h2>
+                    <h2 class="right no-padding" id="InvoiceSumExVat" style="margin:0px;">FACTUUR</h2>
                 </div>
             </div>
             <div class="row" style="margin-top:20px;">
@@ -292,8 +293,20 @@
                                 <td><span id="ProductCost">€{{$totalbtw}}</span> </td>
                             </tr>
                             <tr>
-                                <td><span style="display:inline-block;margin-right:10px;"><strong>Te betalen:</strong></span></td>
+                                <td><span style="display:inline-block;margin-right:10px;"><strong>Totaalprijs:</strong></span></td>
                                 <td><span id="ProductCost">€{{$total+$totalbtw}}</span> </td>
+                            </tr>
+                            <tr>
+                                <td><span style="display:inline-block;margin-right:10px;"><strong>Betaald:</strong></span></td>
+                                <td><span id="ProductCost">€{{$receipt->amount_recieved}}</span> </td>
+                            </tr>
+                            <tr>
+                                <td><span style="display:inline-block;margin-right:10px;"><strong>Nog te voldoen:</strong></span></td>
+                                <td><span id="ProductCost">€{{$total+$totalbtw-$receipt->amount_recieved}}</span> </td>
+                            </tr>
+                            <tr>
+                                <td><span style="display:inline-block;margin-right:10px;"><strong>Betaalwijze:</strong></span></td>
+                                <td><span id="ProductCost">{{$receipt->payment}}</span> </td>
                             </tr>
                         </table>
                     </div>
