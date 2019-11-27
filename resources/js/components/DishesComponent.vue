@@ -1,5 +1,6 @@
 
 <template>
+    <div class="container">
 
         <form>
             <div class="form-group">
@@ -55,7 +56,7 @@
                 <h1>{{message}}</h1>
             </div>
         </form>
-
+    </div>
 
 </template>
 

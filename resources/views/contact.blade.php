@@ -29,6 +29,7 @@
                             <div class="md-form mb-0">
                                 <label for="email" class="h3">Jouw email</label>
                                 <input type="text" id="email" name="email" class="form-control">
+
                             </div>
                         </div>
 
@@ -83,6 +84,15 @@
             </div>
 
         </div>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
     </div>
 @endsection

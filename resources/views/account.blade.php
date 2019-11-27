@@ -67,7 +67,7 @@
                         <div class="col-md-6">
                             <input id="surname" type="text" value="{{ $user->surname }}"
                                    class="form-control @error('surname') is-invalid @enderror" name="surname"
-                                   value="{{ old('surname') }}" required autocomplete="surname" autofocus>
+                                   value="{{ old('surname') }}"  autocomplete="surname" autofocus>
 
                             @error('surname')
                             <span class="invalid-feedback" role="alert">
@@ -163,7 +163,7 @@
                         <div class="col-md-3">
                             <input id="zipcode" value="{{ $user->zipcode }}" type="text"
                                    class="form-control @error('zipcode') is-invalid @enderror" name="zipcode"
-                                   placeholder="Postcode" value="{{ old('zipcode') }}" required autocomplete="city"
+                                   placeholder="Postcode" value="{{ old('zipcode') }}"  autocomplete="city"
                                    autofocus>
 
                             @error('zipcode')
@@ -176,7 +176,7 @@
                             <input id="city" type="text" value="{{ $user->city }}"
                                    class="form-control @error('city') is-invalid @enderror" name="city"
                                    placeholder="plaats"
-                                   value="{{ old('city') }}" required autocomplete="city" autofocus>
+                                   value="{{ old('city') }}"  autocomplete="city" autofocus>
 
                             @error('city')
                             <span class="invalid-feedback" role="alert">

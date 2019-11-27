@@ -2132,6 +2132,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['unsortedreservations'],
   mounted: function mounted() {
@@ -38364,70 +38365,157 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("form", [
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "selectReservation" } }, [
-        _vm._v("Reserveringen van vandaag")
-      ]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          staticClass: "form-control",
-          attrs: { id: "reservations", name: "reservations" },
-          on: {
-            change: function($event) {
-              return _vm.onChange($event)
+  return _c("div", { staticClass: "container" }, [
+    _c("form", [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "selectReservation" } }, [
+          _vm._v("Reserveringen van vandaag")
+        ]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            staticClass: "form-control",
+            attrs: { id: "reservations", name: "reservations" },
+            on: {
+              change: function($event) {
+                return _vm.onChange($event)
+              }
             }
-          }
-        },
-        [
-          _c("option", { attrs: { disabled: "", selected: "" } }, [
-            _vm._v(" -- Selecteer een tafel -- ")
-          ]),
-          _vm._v(" "),
-          _vm._l(this.unsortedreservations, function(res) {
-            return _c(
-              "option",
-              { domProps: { value: res.id } },
-              [
-                _vm._v(
-                  _vm._s(res.time) +
-                    " - Reservering van: " +
-                    _vm._s(res.user.name) +
-                    " Tafel(s): "
-                ),
-                _vm._l(res.tables, function(table) {
-                  return _c("span", [_vm._v(_vm._s(table.id) + ", ")])
-                })
-              ],
-              2
-            )
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("label", { attrs: { for: "selectCategory" } }, [
-        _vm._v("Product categorie")
-      ]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.selectedCategory,
-              expression: "selectedCategory"
-            }
+          },
+          [
+            _c("option", { attrs: { disabled: "", selected: "" } }, [
+              _vm._v(" -- Selecteer een tafel -- ")
+            ]),
+            _vm._v(" "),
+            _vm._l(this.unsortedreservations, function(res) {
+              return _c(
+                "option",
+                { domProps: { value: res.id } },
+                [
+                  _vm._v(
+                    _vm._s(res.time) +
+                      " - Reservering van: " +
+                      _vm._s(res.user.name) +
+                      " Tafel(s): "
+                  ),
+                  _vm._l(res.tables, function(table) {
+                    return _c("span", [_vm._v(_vm._s(table.id) + ", ")])
+                  })
+                ],
+                2
+              )
+            })
           ],
-          staticClass: "form-control",
-          attrs: { id: "selectCategory", name: "selectedCategory" },
-          on: {
-            change: [
-              function($event) {
+          2
+        ),
+        _vm._v(" "),
+        _c("label", { attrs: { for: "selectCategory" } }, [
+          _vm._v("Product categorie")
+        ]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.selectedCategory,
+                expression: "selectedCategory"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { id: "selectCategory", name: "selectedCategory" },
+            on: {
+              change: [
+                function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.selectedCategory = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                },
+                _vm.sendCategory
+              ]
+            }
+          },
+          [
+            _c("option", { attrs: { value: "Warme voorgerechten" } }, [
+              _vm._v("Warme voorgerechten")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Koude voorgerechten" } }, [
+              _vm._v("Koude voorgerechten")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Visgerechten" } }, [
+              _vm._v("Visgerechten")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Vegetarische gerechten" } }, [
+              _vm._v("Vegetarische gerechten")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Ijs" } }, [_vm._v("Ijs")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Mousse" } }, [_vm._v("Mousse")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Warme dranken" } }, [
+              _vm._v("Warme dranken")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Bieren" } }, [_vm._v("Bieren")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Huiswijnen" } }, [
+              _vm._v("Huiswijnen")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Frisdranken" } }, [
+              _vm._v("Frisdranken")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Warme hapjes" } }, [
+              _vm._v("Warme hapjes")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Koude hapjes" } }, [
+              _vm._v("Koude hapjes")
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _vm.selectedCategory
+          ? _c("label", { attrs: { for: "selectReservation" } }, [
+              _vm._v("Gerechten uit " + _vm._s(_vm.selectedCategory))
+            ])
+          : _c("label", { attrs: { for: "selectReservation" } }, [
+              _vm._v("Gerechten")
+            ]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.selectedProducts,
+                expression: "selectedProducts"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { multiple: "", id: "selectReservation" },
+            on: {
+              change: function($event) {
                 var $$selectedVal = Array.prototype.filter
                   .call($event.target.options, function(o) {
                     return o.selected
@@ -38436,168 +38524,87 @@ var render = function() {
                     var val = "_value" in o ? o._value : o.value
                     return val
                   })
-                _vm.selectedCategory = $event.target.multiple
+                _vm.selectedProducts = $event.target.multiple
                   ? $$selectedVal
                   : $$selectedVal[0]
-              },
-              _vm.sendCategory
-            ]
-          }
-        },
-        [
-          _c("option", { attrs: { value: "Warme voorgerechten" } }, [
-            _vm._v("Warme voorgerechten")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Koude voorgerechten" } }, [
-            _vm._v("Koude voorgerechten")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Visgerechten" } }, [
-            _vm._v("Visgerechten")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Vegetarische gerechten" } }, [
-            _vm._v("Vegetarische gerechten")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Ijs" } }, [_vm._v("Ijs")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Mousse" } }, [_vm._v("Mousse")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Warme dranken" } }, [
-            _vm._v("Warme dranken")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Bieren" } }, [_vm._v("Bieren")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Huiswijnen" } }, [
-            _vm._v("Huiswijnen")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Frisdranken" } }, [
-            _vm._v("Frisdranken")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Warme hapjes" } }, [
-            _vm._v("Warme hapjes")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Koude hapjes" } }, [
-            _vm._v("Koude hapjes")
-          ])
-        ]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _vm.selectedCategory
-        ? _c("label", { attrs: { for: "selectReservation" } }, [
-            _vm._v("Gerechten uit " + _vm._s(_vm.selectedCategory))
-          ])
-        : _c("label", { attrs: { for: "selectReservation" } }, [
-            _vm._v("Gerechten")
-          ]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.selectedProducts,
-              expression: "selectedProducts"
+              }
             }
-          ],
-          staticClass: "form-control",
-          attrs: { multiple: "", id: "selectReservation" },
-          on: {
-            change: function($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function(o) {
-                  return o.selected
-                })
-                .map(function(o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.selectedProducts = $event.target.multiple
-                ? $$selectedVal
-                : $$selectedVal[0]
-            }
-          }
-        },
-        _vm._l(_vm.products, function(item, $index) {
-          return _c("option", { key: $index }, [_vm._v(_vm._s(item.name))])
-        }),
-        0
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success",
-          attrs: { type: "button" },
-          on: {
-            click: function($event) {
-              return _vm.addProducts($event)
-            }
-          }
-        },
-        [
-          _c("i", { staticClass: "fas fa-plus" }),
-          _vm._v("\n            Voeg producten toe aan bestelling\n        ")
-        ]
-      ),
-      _vm._v(" "),
-      _c("h3", [_vm._v("Bestelling")]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "list-group" },
-        [
-          _vm._l(_vm.chosenProducts, function(product) {
-            return _c(
-              "button",
-              {
-                staticClass: "list-group-item list-group-item-action",
-                attrs: { type: "button" }
-              },
-              [
-                _vm._v(
-                  "\n                1x " +
-                    _vm._s(product[0]) +
-                    "\n            "
-                )
-              ]
-            )
+          },
+          _vm._l(_vm.products, function(item, $index) {
+            return _c("option", { key: $index }, [_vm._v(_vm._s(item.name))])
           }),
-          _vm._v(" "),
-          _vm.chosenProducts.length > 0
-            ? _c(
+          0
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                return _vm.addProducts($event)
+              }
+            }
+          },
+          [
+            _c("i", { staticClass: "fas fa-plus" }),
+            _vm._v(
+              "\n                Voeg producten toe aan bestelling\n            "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("h3", [_vm._v("Bestelling")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "list-group" },
+          [
+            _vm._l(_vm.chosenProducts, function(product) {
+              return _c(
                 "button",
                 {
-                  staticClass: "btn btn-success",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      return _vm.sendOrder()
-                    }
-                  }
+                  staticClass: "list-group-item list-group-item-action",
+                  attrs: { type: "button" }
                 },
                 [
-                  _c("i", { staticClass: "fas fa-plus" }),
-                  _vm._v("\n                Bestelling plaatsen\n            ")
+                  _vm._v(
+                    "\n                    1x " +
+                      _vm._s(product[0]) +
+                      "\n                "
+                  )
                 ]
               )
-            : _vm._e()
-        ],
-        2
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", [_c("h1", [_vm._v(_vm._s(_vm.message))])])
+            }),
+            _vm._v(" "),
+            _vm.chosenProducts.length > 0
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sendOrder()
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fas fa-plus" }),
+                    _vm._v(
+                      "\n                    Bestelling plaatsen\n                "
+                    )
+                  ]
+                )
+              : _vm._e()
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", [_c("h1", [_vm._v(_vm._s(_vm.message))])])
+    ])
   ])
 }
 var staticRenderFns = []
