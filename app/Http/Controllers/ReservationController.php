@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Receipt;
 use App\Table;
 use Carbon\Carbon;
@@ -22,7 +23,7 @@ class ReservationController extends Controller
     public function adminGet()
     {
         $unsortedreservations = Reservation::with('tables')->where('people', '>', 0);
-        $sorted               = $unsortedreservations->orderBy('date', 'asc');
+        $sorted               = $unsortedreservations->orderBy('date', 'desc');
         $reservations         = $sorted->paginate(6);
 
         return view('admin.reservations', compact('reservations'));
@@ -31,12 +32,9 @@ class ReservationController extends Controller
     public function adminGetDay()
     {
         $today     = Carbon::now()->format('Y-m-d');
-        $yesterday = Carbon::yesterday()->format('Y-m-d');
 
-        $tomorrow = Carbon::parse($today)->addDay();
-
-        $unsortedreservations = Reservation::with('tables')->whereBetween('date', [$yesterday, $tomorrow]);
-        $sorted               = $unsortedreservations->orderBy('date', 'asc');
+        $unsortedreservations = Reservation::with('tables')->where('date', $today);
+        $sorted               = $unsortedreservations->orderBy('date', 'desc');
         $reservations         = $sorted->paginate(6);
 
         return view('admin.reservations', compact('reservations'));
@@ -45,12 +43,11 @@ class ReservationController extends Controller
     public function adminGetWeek()
     {
         $today     = Carbon::now()->format('Y-m-d');
-        $yesterday = Carbon::yesterday()->format('Y-m-d');
 
         $nextweek = Carbon::parse($today)->addWeek();
 
-        $unsortedreservations = Reservation::with('tables')->whereBetween('date', [$yesterday, $nextweek]);
-        $sorted               = $unsortedreservations->orderBy('date', 'asc');
+        $unsortedreservations = Reservation::with('tables')->whereBetween('date', [$today, $nextweek]);
+        $sorted               = $unsortedreservations->orderBy('date', 'desc');
         $reservations         = $sorted->paginate(6);
 
         return view('admin.reservations', compact('reservations'));
@@ -59,12 +56,11 @@ class ReservationController extends Controller
     public function adminGetMonth()
     {
         $today     = Carbon::now()->format('Y-m-d');
-        $yesterday = Carbon::yesterday()->format('Y-m-d');
 
         $nextMonth = Carbon::parse($today)->addMonth();
 
-        $unsortedreservations = Reservation::with('tables')->whereBetween('date', [$yesterday, $nextMonth]);
-        $sorted               = $unsortedreservations->orderBy('date', 'asc');
+        $unsortedreservations = Reservation::with('tables')->whereBetween('date', [$today, $nextMonth]);
+        $sorted               = $unsortedreservations->orderBy('date', 'desc');
         $reservations         = $sorted->paginate(6);
 
         return view('admin.reservations', compact('reservations'));
@@ -105,27 +101,29 @@ class ReservationController extends Controller
             $reservation->tables()->attach($t->id);
         }
 
-        return view('reservations', compact('user'));
+        return redirect('/account');
     }
 
     public function edit(Reservation $reservation)
     {
 
     }
-    public function adminCreate(Request $request){
+
+    public function adminCreate(Request $request)
+    {
         /*todo when a user is selected*/
 //        $user = $request['userid'];
 
 
-        $table=Table::find($request['checkedTable']);
+        $table = Table::find($request['checkedTable']);
 
         /*todo if admin selected a user set userid else make reservation without userid*/
         $reservation = Reservation::create([
 //            'user_id' => $user->id,
-            'people' => $request['people'],
-            'date' => $request['date'],
-            'time' => $request['selectorTime'],
-            'comment' => $request['comment'],
+            'people'          => $request['people'],
+            'date'            => $request['date'],
+            'time'            => $request['selectorTime'],
+            'comment'         => $request['comment'],
             'reservation_typ' => $request['selectorType']
 
         ]);
@@ -166,6 +164,19 @@ class ReservationController extends Controller
         $reservation->reservation_typ = (isset($request->reservation_typ) > 0) ? $request->reservation_typ : $reservation->reservation_typ;
         /* TODO gereserveerde tafels bewerken bij een reservering*/
         $reservation->save();
+
+        return back();
+    }
+
+    public function adminDelete($id)
+    {
+        $reservation = Reservation::with('receipt', 'tables')->find($id);
+
+        $reservation->receipt()->update(['reservation_id' => null]);
+
+        $reservation->tables()->update(['reservation_id' => null]);
+
+        $reservation->delete();
 
         return back();
     }

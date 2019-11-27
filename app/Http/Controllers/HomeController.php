@@ -7,6 +7,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -47,9 +48,10 @@ class HomeController extends Controller
     {
         $usercur = Auth::user();
         $user    = User::with('reservations.tables')->find($usercur->id);
-        $time = Carbon::now()->format('Y-m-d');
+
+        $time    = Carbon::now()->format('Y-m-d');
         $hourNow = Carbon::now()->format('H:i:s');
-        $hour = Carbon::parse($hourNow)->addHours(3);
+        $hour    = Carbon::parse($hourNow)->addHours(3);
 
         return view('account', compact('user', 'time', 'hour'));
     }
@@ -63,10 +65,9 @@ class HomeController extends Controller
 
         $reservation = Reservation::with('receipt', 'tables')->find($id);
         if ($reservation->date <= $mytime) {
-            if ($time->format('H:i:s') > $reservation->time)
-
-            dd("Mag niet reserveren");
-            return Redirect::back()->withErrors(['Je mag niet meer annuleren']);
+            if ($time->format('H:i:s') > $reservation->time) {
+                return Redirect::back()->withErrors(['Je mag niet meer annuleren']);
+            }
         }
 
         $reservation->receipt()->update(['reservation_id' => null]);

@@ -103,7 +103,13 @@ class UserController extends Controller
 
     public function sendmail(Request $request)
     {
+        $this->validate(request(), [
 
+            'email' => 'required',
+            'subject' => 'required',
+            'name' => 'required',
+            'message' => 'required',
+        ]);
         Mail::send(new contact($request));
 
         return view('home');

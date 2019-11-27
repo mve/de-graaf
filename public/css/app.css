@@ -67,6 +67,19 @@ h6,
   height: 100px;
 }
 
+/* no-gutters Class Rules */
+
+.row.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.row.no-gutters > [class^=col-],
+.row.no-gutters > [class*=" col-"] {
+  padding-right: 0;
+  padding-left: 0;
+}
+
 .icon-container {
   text-align: center;
   align-self: center;
@@ -82,11 +95,34 @@ h6,
   height: 125px;
 }
 
+.card-content-admin-container--small {
+  padding: 15px 30px;
+  height: 60px;
+}
+
 .card-content-admin {
   display: -webkit-box;
   display: flex;
   -webkit-box-align: center;
           align-items: center;
+}
+
+.hide-checkbox {
+  opacity: 0;
+  left: 30px;
+  position: absolute;
+}
+
+.hide-checkbox:checked {
+  background-color: red;
+}
+
+.reservation-checked {
+  background-color: #38c172 !important;
+}
+
+.tableGrid {
+  width: 100%;
 }
 
 .recaptcha-container {

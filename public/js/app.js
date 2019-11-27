@@ -1975,6 +1975,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
   mounted: function mounted() {
@@ -2000,6 +2010,7 @@ __webpack_require__.r(__webpack_exports__);
       checkedTable: [],
       comment: '',
       reservedTables: [],
+      max_capacity: 0,
       people: '',
       selectedPeople: '',
       csrf: document.head.querySelector('meta[name="csrf-token"]').content
@@ -2010,18 +2021,27 @@ __webpack_require__.r(__webpack_exports__);
     setSelectorType: function setSelectorType(selector) {
       this.selectorType = selector;
     },
-    log: function log() {
-      console.log("testing this");
+    styleCheckbox: function styleCheckbox() {
+      var checkboxes = document.getElementsByClassName('reservation-checkbox');
+
+      for (var i = 0; checkboxes.length > i; i++) {
+        checkboxes[i].classList.remove("reservation-checked");
+      }
+
+      for (var _i = 0; this.checkedTable.length > _i; _i++) {
+        var checkbox = document.getElementById(this.checkedTable[_i]);
+        checkbox.classList.add("reservation-checked");
+      }
     },
     getReserved: function getReserved() {
       var _this2 = this;
 
+      // reset checkTable and checkbox style.
+      this.checkedTable = [];
+      this.styleCheckbox();
       var that = this;
-      axios.post('/get-tables-cap', {
-        people: this.people
-      }).then(function (response) {
-        that.allTablesCap = response.data;
-        console.log(that.allTablesCap);
+      axios.get('/get-tables', {}).then(function (response) {
+        that.allTables = response.data;
       })["catch"](function (error) {
         console.log(error);
         _this2.errored = true;
@@ -2031,7 +2051,6 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         that.reservedTables = [];
         that.availableTables = that.allTables;
-        console.log(that.reservedTables);
 
         for (var i = 0; i < response.data.length; i++) {
           response.data[i].tables.forEach(function (item) {
@@ -2039,10 +2058,10 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
 
-        for (var _i = that.availableTables.length - 1; _i >= 0; _i--) {
+        for (var _i2 = that.availableTables.length - 1; _i2 >= 0; _i2--) {
           for (var j = 0; j < that.reservedTables.length; j++) {
-            if (that.availableTables[_i] && that.availableTables[_i].id === that.reservedTables[j].id) {
-              that.availableTables.splice(_i, 1);
+            if (that.availableTables[_i2] && that.availableTables[_i2].id === that.reservedTables[j].id) {
+              that.availableTables.splice(_i2, 1);
             }
           }
         }
@@ -2071,6 +2090,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -2409,6 +2429,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
   mounted: function mounted() {
@@ -2445,6 +2475,18 @@ __webpack_require__.r(__webpack_exports__);
     setSelectorType: function setSelectorType(selector) {
       this.selectorType = selector;
     },
+    styleCheckbox: function styleCheckbox() {
+      var checkboxes = document.getElementsByClassName('reservation-checkbox');
+
+      for (var i = 0; checkboxes.length > i; i++) {
+        checkboxes[i].classList.remove("reservation-checked");
+      }
+
+      for (var _i = 0; this.checkedTable.length > _i; _i++) {
+        var checkbox = document.getElementById(this.checkedTable[_i]);
+        checkbox.classList.add("reservation-checked");
+      }
+    },
     checkAmount: function checkAmount() {
       var that = this;
       /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
@@ -2466,12 +2508,14 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           that.messages = false;
         }
-      }); // }
+      });
     },
     getReserved: function getReserved() {
       var _this2 = this;
 
+      // reset checkTable and checkbox style.
       this.checkedTable = [];
+      this.styleCheckbox();
       var that = this;
       axios.post('/get-tables-cap', {
         people: this.people
@@ -2493,10 +2537,10 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
 
-        for (var _i = that.availableTables.length - 1; _i >= 0; _i--) {
+        for (var _i2 = that.availableTables.length - 1; _i2 >= 0; _i2--) {
           for (var j = 0; j < that.reservedTables.length; j++) {
-            if (that.availableTables[_i] && that.availableTables[_i].id === that.reservedTables[j].id) {
-              that.availableTables.splice(_i, 1);
+            if (that.availableTables[_i2] && that.availableTables[_i2].id === that.reservedTables[j].id) {
+              that.availableTables.splice(_i2, 1);
             }
           }
         }
@@ -37903,7 +37947,6 @@ var render = function() {
               attrs: { type: "date", min: _vm.minDateValue, name: "date" },
               domProps: { value: _vm.datePicker },
               on: {
-                change: _vm.getReserved,
                 input: function($event) {
                   if ($event.target.composing) {
                     return
@@ -38113,22 +38156,20 @@ var render = function() {
                         staticStyle: { width: "100%" },
                         attrs: { name: "selectorTime" },
                         on: {
-                          change: [
-                            function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.selectorTime = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            },
-                            _vm.getReserved
-                          ]
+                          click: _vm.getReserved,
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.selectorTime = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
                         }
                       },
                       [
@@ -38195,7 +38236,9 @@ var render = function() {
         _vm.selectorTime
           ? _c("div", { staticClass: "amountpicker col-md-4" }, [
               _c("label", { staticStyle: { width: "100%" } }, [
-                _vm._v("Aantal\n                "),
+                _vm._v("Aantal"),
+                _c("br"),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
@@ -38213,6 +38256,7 @@ var render = function() {
                   },
                   domProps: { value: _vm.people },
                   on: {
+                    change: _vm.getReserved,
                     input: function($event) {
                       if ($event.target.composing) {
                         return
@@ -38231,14 +38275,27 @@ var render = function() {
           ? _c("div", { staticClass: "tableGrid" }, [
               _c(
                 "div",
-                { staticClass: "row" },
+                { staticClass: "row no-gutters" },
                 _vm._l(this.availableTables, function(table) {
-                  return _c("div", { staticClass: "col-md-3" }, [
-                    _c(
-                      "div",
-                      { staticClass: "form-check mb-2 mr-sm-2 mb-sm-0" },
-                      [
-                        _c("label", { staticClass: "form-check-label" }, [
+                  return _c(
+                    "div",
+                    {
+                      staticClass:
+                        "col-md-3 card reservation-checkbox text-center",
+                      attrs: { id: table.id }
+                    },
+                    [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label",
+                          staticStyle: {
+                            width: "100%",
+                            height: "100%",
+                            padding: "30px"
+                          }
+                        },
+                        [
                           _c("input", {
                             directives: [
                               {
@@ -38248,48 +38305,64 @@ var render = function() {
                                 expression: "checkedTable"
                               }
                             ],
-                            staticClass: "form-check-input",
+                            staticClass: "form-check-input hide-checkbox",
                             attrs: { type: "checkbox", name: "checkedTable[]" },
                             domProps: {
-                              value: table,
+                              value: table.id,
                               checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, table) > -1
+                                ? _vm._i(_vm.checkedTable, table.id) > -1
                                 : _vm.checkedTable
                             },
                             on: {
-                              change: function($event) {
-                                var $$a = _vm.checkedTable,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = table,
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      (_vm.checkedTable = $$a.concat([$$v]))
+                              change: [
+                                function($event) {
+                                  var $$a = _vm.checkedTable,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = table.id,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        (_vm.checkedTable = $$a.concat([$$v]))
+                                    } else {
+                                      $$i > -1 &&
+                                        (_vm.checkedTable = $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1)))
+                                    }
                                   } else {
-                                    $$i > -1 &&
-                                      (_vm.checkedTable = $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1)))
+                                    _vm.checkedTable = $$c
                                   }
-                                } else {
-                                  _vm.checkedTable = $$c
+                                },
+                                function($event) {
+                                  return _vm.styleCheckbox()
                                 }
-                              }
+                              ]
                             }
                           }),
-                          _vm._v(
-                            "\n                            Tafel " +
-                              _vm._s(table.id) +
-                              ". " +
-                              _vm._s(table.max_capacity) +
-                              " stoelen\n                        "
-                          )
-                        ])
-                      ]
-                    )
-                  ])
+                          _vm._v(" "),
+                          _c("span", { staticClass: "h4" }, [
+                            _vm._v(
+                              "\n                                Tafel " +
+                                _vm._s(table.id) +
+                                "\n                        "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "h5" }, [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(table.max_capacity) +
+                                " stoelen\n                        "
+                            )
+                          ])
+                        ]
+                      )
+                    ]
+                  )
                 }),
                 0
               )
@@ -38367,70 +38440,157 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("form", [
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "selectReservation" } }, [
-        _vm._v("Reserveringen van vandaag")
-      ]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          staticClass: "form-control",
-          attrs: { id: "reservations", name: "reservations" },
-          on: {
-            change: function($event) {
-              return _vm.onChange($event)
+  return _c("div", { staticClass: "container" }, [
+    _c("form", [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "selectReservation" } }, [
+          _vm._v("Reserveringen van vandaag")
+        ]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            staticClass: "form-control",
+            attrs: { id: "reservations", name: "reservations" },
+            on: {
+              change: function($event) {
+                return _vm.onChange($event)
+              }
             }
-          }
-        },
-        [
-          _c("option", { attrs: { disabled: "", selected: "" } }, [
-            _vm._v(" -- Selecteer een tafel -- ")
-          ]),
-          _vm._v(" "),
-          _vm._l(this.unsortedreservations, function(res) {
-            return _c(
-              "option",
-              { domProps: { value: res.id } },
-              [
-                _vm._v(
-                  _vm._s(res.time) +
-                    " - Reservering van: " +
-                    _vm._s(res.user.name) +
-                    " Tafel(s): "
-                ),
-                _vm._l(res.tables, function(table) {
-                  return _c("span", [_vm._v(_vm._s(table.id) + ", ")])
-                })
-              ],
-              2
-            )
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("label", { attrs: { for: "selectCategory" } }, [
-        _vm._v("Product categorie")
-      ]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.selectedCategory,
-              expression: "selectedCategory"
-            }
+          },
+          [
+            _c("option", { attrs: { disabled: "", selected: "" } }, [
+              _vm._v(" -- Selecteer een tafel -- ")
+            ]),
+            _vm._v(" "),
+            _vm._l(this.unsortedreservations, function(res) {
+              return _c(
+                "option",
+                { domProps: { value: res.id } },
+                [
+                  _vm._v(
+                    _vm._s(res.time) +
+                      " - Reservering van: " +
+                      _vm._s(res.user.name) +
+                      " Tafel(s): "
+                  ),
+                  _vm._l(res.tables, function(table) {
+                    return _c("span", [_vm._v(_vm._s(table.id) + ", ")])
+                  })
+                ],
+                2
+              )
+            })
           ],
-          staticClass: "form-control",
-          attrs: { id: "selectCategory", name: "selectedCategory" },
-          on: {
-            change: [
-              function($event) {
+          2
+        ),
+        _vm._v(" "),
+        _c("label", { attrs: { for: "selectCategory" } }, [
+          _vm._v("Product categorie")
+        ]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.selectedCategory,
+                expression: "selectedCategory"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { id: "selectCategory", name: "selectedCategory" },
+            on: {
+              change: [
+                function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.selectedCategory = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                },
+                _vm.sendCategory
+              ]
+            }
+          },
+          [
+            _c("option", { attrs: { value: "Warme voorgerechten" } }, [
+              _vm._v("Warme voorgerechten")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Koude voorgerechten" } }, [
+              _vm._v("Koude voorgerechten")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Visgerechten" } }, [
+              _vm._v("Visgerechten")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Vegetarische gerechten" } }, [
+              _vm._v("Vegetarische gerechten")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Ijs" } }, [_vm._v("Ijs")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Mousse" } }, [_vm._v("Mousse")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Warme dranken" } }, [
+              _vm._v("Warme dranken")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Bieren" } }, [_vm._v("Bieren")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Huiswijnen" } }, [
+              _vm._v("Huiswijnen")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Frisdranken" } }, [
+              _vm._v("Frisdranken")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Warme hapjes" } }, [
+              _vm._v("Warme hapjes")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "Koude hapjes" } }, [
+              _vm._v("Koude hapjes")
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _vm.selectedCategory
+          ? _c("label", { attrs: { for: "selectReservation" } }, [
+              _vm._v("Gerechten uit " + _vm._s(_vm.selectedCategory))
+            ])
+          : _c("label", { attrs: { for: "selectReservation" } }, [
+              _vm._v("Gerechten")
+            ]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.selectedProducts,
+                expression: "selectedProducts"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { multiple: "", id: "selectReservation" },
+            on: {
+              change: function($event) {
                 var $$selectedVal = Array.prototype.filter
                   .call($event.target.options, function(o) {
                     return o.selected
@@ -38439,173 +38599,87 @@ var render = function() {
                     var val = "_value" in o ? o._value : o.value
                     return val
                   })
-                _vm.selectedCategory = $event.target.multiple
+                _vm.selectedProducts = $event.target.multiple
                   ? $$selectedVal
                   : $$selectedVal[0]
-              },
-              _vm.sendCategory
-            ]
-          }
-        },
-        [
-          _c("option", { attrs: { value: "Warme voorgerechten" } }, [
-            _vm._v("Warme voorgerechten")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Koude voorgerechten" } }, [
-            _vm._v("Koude voorgerechten")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Visgerechten" } }, [
-            _vm._v("Visgerechten")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Vegetarische gerechten" } }, [
-            _vm._v("Vegetarische gerechten")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Ijs" } }, [_vm._v("Ijs")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Mousse" } }, [_vm._v("Mousse")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Warme dranken" } }, [
-            _vm._v("Warme dranken")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Bieren" } }, [_vm._v("Bieren")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Huiswijnen" } }, [
-            _vm._v("Huiswijnen")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Frisdranken" } }, [
-            _vm._v("Frisdranken")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Warme hapjes" } }, [
-            _vm._v("Warme hapjes")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Koude hapjes" } }, [
-            _vm._v("Koude hapjes")
-          ])
-        ]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _vm.selectedCategory
-        ? _c("label", { attrs: { for: "selectReservation" } }, [
-            _vm._v("Gerechten uit " + _vm._s(_vm.selectedCategory))
-          ])
-        : _c("label", { attrs: { for: "selectReservation" } }, [
-            _vm._v("Gerechten")
-          ]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.selectedProducts,
-              expression: "selectedProducts"
+              }
             }
-          ],
-          staticClass: "form-control",
-          attrs: { multiple: "", id: "selectReservation" },
-          on: {
-            change: function($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function(o) {
-                  return o.selected
-                })
-                .map(function(o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.selectedProducts = $event.target.multiple
-                ? $$selectedVal
-                : $$selectedVal[0]
-            }
-          }
-        },
-        _vm._l(_vm.products, function(item, $index) {
-          return _c("option", { key: $index }, [_vm._v(_vm._s(item.name))])
-        }),
-        0
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success",
-          attrs: { type: "button" },
-          on: {
-            click: function($event) {
-              return _vm.addProducts($event)
-            }
-          }
-        },
-        [
-          _c("i", { staticClass: "fas fa-plus" }),
-          _vm._v("\n            Voeg producten toe aan bestelling\n        ")
-        ]
-      ),
-      _vm._v(" "),
-      _c("h3", [_vm._v("Bestelling")]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "list-group" },
-        [
-          _vm._l(_vm.chosenProducts, function(product, index) {
-            return _c(
-              "button",
-              {
-                staticClass: "list-group-item list-group-item-action",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    return _vm.deleteEvent(index)
-                  }
-                }
-              },
-              [
-                _vm._v(
-                  "\n                1x " +
-                    _vm._s(product[0]) +
-                    "\n            "
-                )
-              ]
-            )
+          },
+          _vm._l(_vm.products, function(item, $index) {
+            return _c("option", { key: $index }, [_vm._v(_vm._s(item.name))])
           }),
-          _vm._v(" "),
-          _vm.chosenProducts.length > 0
-            ? _c(
+          0
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                return _vm.addProducts($event)
+              }
+            }
+          },
+          [
+            _c("i", { staticClass: "fas fa-plus" }),
+            _vm._v(
+              "\n                Voeg producten toe aan bestelling\n            "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("h3", [_vm._v("Bestelling")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "list-group" },
+          [
+            _vm._l(_vm.chosenProducts, function(product) {
+              return _c(
                 "button",
                 {
-                  staticClass: "btn btn-success",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      return _vm.sendOrder()
-                    }
-                  }
+                  staticClass: "list-group-item list-group-item-action",
+                  attrs: { type: "button" }
                 },
                 [
-                  _c("i", { staticClass: "fas fa-plus" }),
-                  _vm._v("\n                Bestelling plaatsen\n            ")
+                  _vm._v(
+                    "\n                    1x " +
+                      _vm._s(product[0]) +
+                      "\n                "
+                  )
                 ]
               )
-            : _vm._e()
-        ],
-        2
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", [_c("h1", [_vm._v(_vm._s(_vm.message))])])
+            }),
+            _vm._v(" "),
+            _vm.chosenProducts.length > 0
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.sendOrder()
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fas fa-plus" }),
+                    _vm._v(
+                      "\n                    Bestelling plaatsen\n                "
+                    )
+                  ]
+                )
+              : _vm._e()
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", [_c("h1", [_vm._v(_vm._s(_vm.message))])])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -39058,42 +39132,48 @@ var render = function() {
           ? _c("div", { staticClass: "tableGrid" }, [
               _c(
                 "div",
-                { staticClass: "row" },
+                { staticClass: "row no-gutters" },
                 _vm._l(this.availableTables, function(table) {
                   return _c(
                     "div",
                     {
-                      staticClass: "col-md-3",
+                      staticClass:
+                        "col-md-3 card reservation-checkbox text-center",
+                      attrs: { id: table.id },
                       on: { change: _vm.checkAmount }
                     },
                     [
                       _c(
-                        "div",
-                        { staticClass: "form-check mb-2 mr-sm-2 mb-sm-0" },
+                        "label",
+                        {
+                          staticClass: "form-check-label",
+                          staticStyle: {
+                            width: "100%",
+                            height: "100%",
+                            padding: "30px"
+                          }
+                        },
                         [
-                          _c("label", { staticClass: "form-check-label" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.checkedTable,
-                                  expression: "checkedTable"
-                                }
-                              ],
-                              staticClass: "form-check-input",
-                              attrs: {
-                                type: "checkbox",
-                                name: "checkedTable[]"
-                              },
-                              domProps: {
-                                value: table.id,
-                                checked: Array.isArray(_vm.checkedTable)
-                                  ? _vm._i(_vm.checkedTable, table.id) > -1
-                                  : _vm.checkedTable
-                              },
-                              on: {
-                                change: function($event) {
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.checkedTable,
+                                expression: "checkedTable"
+                              }
+                            ],
+                            staticClass: "form-check-input hide-checkbox",
+                            attrs: { type: "checkbox", name: "checkedTable[]" },
+                            domProps: {
+                              value: table.id,
+                              checked: Array.isArray(_vm.checkedTable)
+                                ? _vm._i(_vm.checkedTable, table.id) > -1
+                                : _vm.checkedTable
+                            },
+                            on: {
+                              change: [
+                                function($event) {
                                   var $$a = _vm.checkedTable,
                                     $$el = $event.target,
                                     $$c = $$el.checked ? true : false
@@ -39112,13 +39192,27 @@ var render = function() {
                                   } else {
                                     _vm.checkedTable = $$c
                                   }
+                                },
+                                function($event) {
+                                  return _vm.styleCheckbox()
                                 }
-                              }
-                            }),
+                              ]
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "h4" }, [
                             _vm._v(
-                              "\n                            Tafel " +
+                              "\n                                Tafel " +
                                 _vm._s(table.id) +
-                                ". " +
+                                "\n                        "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "h5" }, [
+                            _vm._v(
+                              "\n                                " +
                                 _vm._s(table.max_capacity) +
                                 " stoelen\n                        "
                             )
@@ -51908,8 +52002,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\de-graaf\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\de-graaf\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
