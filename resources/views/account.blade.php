@@ -3,7 +3,20 @@
 @section('content')
     <div class="container">
 
-        <h1>Account</h1>
+        <div class="space space--20"></div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Hallo {{$user->name}}</h1>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{{url('/delete-account')}}">
+
+                    <button type="submit" class="btn btn-danger float-right">Verwijder account</button>
+                </a>
+            </div>
+        </div>
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -173,6 +186,16 @@
                         </div>
                     </div>
 
+                    <div class="form-group row">
+                        @if(env('GOOGLE_RECAPTCHA_KEY'))
+                            <div class="col-md-4"></div>
+                            <div class="g-recaptcha col-md-8"
+                                 data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}">
+                            </div>
+                            <span class="text-danger">{{ $errors->first('g-recaptcha-response') }}</span>
+                        @endif
+                    </div>
+
                     <div class="form-group row mb-0">
                         <div class="col-md-6 offset-md-4">
                             <button type="submit" class="btn btn-primary">
@@ -182,62 +205,80 @@
                     </div>
                 </form>
             </div>
-
-        <div class="col-md-12 mt-3">
-            <table class="table">
-                <tr>
-                    <th class="d-lg-none" colspan="2">Reserveringen</th>
-                    <th class="d-none d-lg-table-cell">Datum</th>
-                    <th class="d-none d-lg-table-cell">Tijd</th>
-                    <th class="d-none d-lg-table-cell">Aantal personen</th>
-                    <th class="d-none d-lg-table-cell">Opmerking</th>
-                    <th class="d-none d-lg-table-cell">Tafel</th>
-                    <th class="d-none d-lg-table-cell">Annuleren</th>
-                @foreach($user->reservations as $reservation)
-                    <tr>
-
-                        <td class="d-none d-lg-table-cell">{{$reservation->date}}</td>
-                        <td class="d-none d-lg-table-cell">
-                            {{$reservation->time}}
-                        </td>
-                        <td class="d-lg-none"><b>Datum:<br></b>{{$reservation->date}}<br>
-                            <b>Tijd<br></b>{{$reservation->time}}</td>
-
-                        <td class="d-lg-none"><b>Aantal personen:<br></b>{{$reservation->people}}
-                            <b><br>Tafels:<br></b>@foreach($reservation->tables as $table)
-                                {{$table->id}}<br>
-                            @endforeach<br>
-                            <button class="btn-primary">Annuleren</button>
-                        </td>
-
-
-                        <td class="d-none d-lg-table-cell">
-                            {{$reservation->people}}
-                        </td>
-                        <td class="d-none d-lg-table-cell">
-                            {{$reservation->comment}}
-                        </td>
-                        <td class="d-none d-lg-table-cell">
-                            @foreach($reservation->tables as $table)
-                                {{$table->id}}<br>
-                            @endforeach
-
-                        </td>
-
-
-
-
-                        <td class="d-none d-lg-table-cell">
-                            <a  href="account/delete/{{$reservation->id}}"><button onclick="return confirm('Weet je het zeker?')" class="button button__delete"><i class="fa fa-trash"></i></button></a>
-                        </td>
-                    </tr>
-                @endforeach
-            </table>
-            @if($errors->any())
-                <h4>{{$errors->first()}}</h4>
-            @endif
         </div>
-    </div>
+        <div class="space space--50"></div>
+        <h1>Mijn reserveringen</h1>
+        <div class="row">
+            <div class="col-md-12 mt-3">
+                <table class="table">
+                    <tr>
+                        <th class="d-lg-none" colspan="2">Reserveringen</th>
+                        <th class="d-none d-lg-table-cell">Datum</th>
+                        <th class="d-none d-lg-table-cell">Tijd</th>
+                        <th class="d-none d-lg-table-cell">Aantal personen</th>
+                        <th class="d-none d-lg-table-cell">Opmerking</th>
+                        <th class="d-none d-lg-table-cell">Tafel</th>
+                        <th class="d-none d-lg-table-cell">Nota</th>
+
+                        <th class="d-none d-lg-table-cell">Annuleren</th>
+                    @foreach($user->reservations as $reservation)
+                        <tr>
+
+                            <td class="d-none d-lg-table-cell">{{$reservation->date}}</td>
+                            <td class="d-none d-lg-table-cell">
+                                {{$reservation->time}}
+                            </td>
+                            <td class="d-lg-none"><b>Datum:<br></b>{{$reservation->date}}<br>
+                                <b>Tijd<br></b>{{$reservation->time}}</td>
+
+                            <td class="d-lg-none"><b>Aantal personen:<br></b>{{$reservation->people}}
+                                <b><br>Tafels:<br></b>@foreach($reservation->tables as $table)
+                                    {{$table->id}}<br>
+                                @endforeach<br>
+                                <a href="reservering/nota/{{$reservation->id}}">PDF</a>
+
+                                <button class="btn-primary">Annuleren</button>
+                            </td>
+
+
+                            <td class="d-none d-lg-table-cell">
+                                {{$reservation->people}}
+                            </td>
+                            <td class="d-none d-lg-table-cell">
+                                {{$reservation->comment}}
+                            </td>
+                            <td class="d-none d-lg-table-cell">
+                                @foreach($reservation->tables as $table)
+                                    {{$table->id}}<br>
+                                @endforeach
+
+                            </td>
+                            <td class="d-none d-lg-table-cell">
+                                @if($reservation->date >= $time )
+                                    @if($reservation->date !== $time or $reservation->time <= $hour)
+                                        <a href="reservering/nota/{{$reservation->id}}">PDF</a>
+                                    @endif
+                                @endif
+
+                            </td>
+
+                            <td class="d-none d-lg-table-cell">
+                                @if($reservation->date >= $time )
+                                    @if($reservation->date !== $time or $reservation->time >= $hour)
+                                        <a href="account/delete/{{$reservation->id}}">
+                                            <button class="btn btn-danger button__delete">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </a>
+                                    @endif
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </table>
+
+            </div>
+        </div>
     </div>
 
 @endsection

@@ -11,7 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(ReservationTableSeeder::class);
+        // Deze code is raar. Eerst MenuSeeder uitvoeren (ReservationTableSeeder uitcommenten) Daarna ReservationTableSeeder uitvoeren.)
 
+        // 1. MenuSeeder uitvoeren, ReservationTableSeeder NIET.
+//        $this->call(MenuSeeder::class);
+        // 2. ReservationTableSeeder uitvoeren, MenuSeeder NIET.
+        $this->call(ReservationTableSeeder::class);
     }
 }

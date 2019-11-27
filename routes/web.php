@@ -34,7 +34,25 @@ Route::get('/reserveringen',
 
 Route::get('/account', 'HomeController@edit')->middleware('verified');
 
+Route::post('/get-reserved', 'TableController@getReservedTable');
+
+Route::post('/get-tables-by-id', 'TableController@getTablesById');
+
 Route::get('account/delete/{id}', 'HomeController@deleteReservation')->middleware('verified');
+
+Route::get('delete-account', 'HomeController@deleteaccount')->middleware('verified');
+
+Route::delete('delete-account', 'HomeController@deleteconfirm')->middleware('verified');
+
+
+Route::get('/reserveringen/dag',
+    'ReservationController@getDay')->name('home')->middleware('notBlocked')->middleware('verified');
+
+Route::get('/reserveringen/week',
+    'ReservationController@getWeek')->name('home')->middleware('notBlocked')->middleware('verified');
+
+Route::get('/reserveringen/maand',
+    'ReservationController@getMonth')->name('home')->middleware('notBlocked')->middleware('verified');
 
 
 Route::get('/account/{user}',
@@ -49,8 +67,6 @@ Route::get('/reservering', function () {
 Route::post('/reservering',
     'ReservationController@createReservation')->middleware('verified')->middleware('notBlocked');
 
-Route::get('/get-tables', 'TableController@getTables')->middleware('verified')->middleware('notBlocked');
-
 Route::get('/blocked',[ 'as' => 'blocked', function () {
     return view('blocked');
 }]);
@@ -58,6 +74,11 @@ Route::get('/blocked',[ 'as' => 'blocked', function () {
 Route::get('/blockedByAdmin',[ 'as' => 'blocked', function () {
     return view('blockedByAdmin');
 }]);
+Route::get('beheer/reservering/nota/{id}', 'receiptController@getReceipt')->middleware('verified');
+Route::get('/get-tables', 'TableController@getTables')->middleware('verified')->middleware('notBlocked');
+
+Route::get('reservering/nota/{id}', 'receiptController@downloadPDFbyUser')->middleware('verified');
+
 
 // Admin routes
 Route::get('/beheer', function () {
@@ -72,6 +93,15 @@ Route::get('/beheer/createOrder', 'OrderController@getData')->name('home')->midd
 Route::get('/beheer/reserveringen',
     'ReservationController@adminGet')->name('home')->middleware('admin')->middleware('notBlocked')->middleware('verified');
 
+Route::get('/beheer/reserveringen/dag',
+    'ReservationController@adminGetDay')->name('home')->middleware('admin')->middleware('notBlocked')->middleware('verified');
+
+Route::get('/beheer/reserveringen/week',
+    'ReservationController@adminGetWeek')->name('home')->middleware('admin')->middleware('notBlocked')->middleware('verified');
+
+Route::get('/beheer/reserveringen/maand',
+    'ReservationController@adminGetMonth')->name('home')->middleware('admin')->middleware('notBlocked')->middleware('verified');
+
 Route::get('/beheer/gebruikers',
     'UserController@index')->middleware('admin')->middleware('notBlocked')->middleware('verified');
 
@@ -83,8 +113,20 @@ Route::get('/beheer/gebruikers/{user}',
 Route::patch('/beheer/gebruikers/{user}',
     ['as' => 'users.adminUpdate', 'uses' => 'UserController@adminUpdate'])->middleware('verified')->middleware('admin');
 
+Route::delete('/beheer/gebruikers/{user}',
+    ['as' => 'users.adminDelete', 'uses' => 'UserController@adminDelete'])->middleware('verified')->middleware('admin');
+
+Route::get('beheer/reservering/nota/download/{id}', 'ReceiptController@downloadPDF')->middleware('verified')->middleware('admin');
+
+Route::get('/beheer/reserveren', function () {
+    return view('admin.createReservation');
+})->middleware('admin')->middleware('notBlocked')->middleware('verified');
+Route::post('beheer/reserveren', 'ReservationController@adminCreate')->middleware('verified')->middleware('admin');
+
 // API
 
 Route::post('/get-reserved', 'TableController@getReservedTable');
+
+Route::post('/get-tables-cap', 'TableController@getTablesCapacity');
 
 Route::post('/toggle-block/{user}', 'UserController@toggleBlock');

@@ -11,7 +11,7 @@ class Product extends Model
     }
 
     public function subCourse(){
-        return $this->belongsTo('app/SubCourse');
+        return $this->belongsTo(SubCourse::class);
     }
 
 

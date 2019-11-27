@@ -18,6 +18,15 @@
                     <form method="POST" action="{{ route('password.email') }}">
                         @csrf
 
+                        <div class="form-group recaptcha-container">
+                            @if(env('GOOGLE_RECAPTCHA_KEY'))
+                                <div class="g-recaptcha"
+                                     data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}">
+                                </div>
+                                <span class="text-danger">{{ $errors->first('g-recaptcha-response') }}</span>
+                            @endif
+                        </div>
+
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 

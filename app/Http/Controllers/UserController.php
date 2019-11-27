@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(10);
 
         return view('admin.users', compact('users'));
     }
@@ -56,13 +56,14 @@ class UserController extends Controller
     {
 
         $this->validate(request(), [
-            'name'      => ['sometimes', 'nullable', 'string', 'max:191'],
-            'infix'     => ['sometimes', 'nullable', 'string', 'max:191'],
-            'surname'   => ['sometimes', 'nullable', 'string', 'max:191'],
-            'telephone' => ['sometimes', 'nullable', 'numeric'],
-            'zipcode'   => ['sometimes', 'nullable', 'string', 'min:4'],
-            'city'      => ['sometimes', 'nullable', 'string', 'max:191'],
-            'address'   => ['sometimes', 'nullable', 'string', 'max:191'],
+            'name'                 => ['sometimes', 'nullable', 'string', 'max:191'],
+            'infix'                => ['sometimes', 'nullable', 'string', 'max:191'],
+            'surname'              => ['sometimes', 'nullable', 'string', 'max:191'],
+            'telephone'            => ['sometimes', 'nullable', 'numeric'],
+            'zipcode'              => ['sometimes', 'nullable', 'string', 'min:4'],
+            'city'                 => ['sometimes', 'nullable', 'string', 'max:191'],
+            'address'              => ['sometimes', 'nullable', 'string', 'max:191'],
+            'g-recaptcha-response' => 'required|recaptcha',
 
             'email'    => [
                 'sometimes',
@@ -99,6 +100,7 @@ class UserController extends Controller
     {
         return view('admin.editUser', compact('user'));
     }
+
     public function sendmail(Request $request)
     {
 
@@ -106,6 +108,7 @@ class UserController extends Controller
 
         return view('home');
     }
+
     /**
      * Update for admin, can change role.
      *
@@ -157,8 +160,7 @@ class UserController extends Controller
 
     public function toggleBlock(User $user)
     {
-        if ($user->blocked === 0)
-        {
+        if ($user->blocked == 0) {
             $user->blocked = 1;
         } else {
             $user->blocked = 0;
@@ -167,5 +169,34 @@ class UserController extends Controller
         $user->save();
 
         return back();
+    }
+
+    public function deleteAccount(User $user)
+    {
+
+        $user = User::with('reservations.tables')->find($user->id);
+        $user->reservations()->update(['user_id' => null]);
+
+        try {
+            $user->delete();
+        } catch (\Exception $e) {
+        }
+
+        return redirect('/login')->withErrors(['Je account is succesvol verwijderd']);
+    }
+
+    public function adminDelete(User $user)
+    {
+        $user = User::with('reservations.tables')->find($user->id);
+
+        $user->reservations()->update(['user_id' => null]);
+
+        try {
+            $user->delete();
+        } catch (\Exception $e) {
+            dd($e);
+        }
+
+        return redirect('/beheer/gebruikers');
     }
 }

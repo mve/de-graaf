@@ -76,18 +76,19 @@ $factory->define(Receipt::class, function (Faker $faker) {
 });
 
 $factory->define(MainCourse::class, function (Faker $faker) {
+    static $order = 0;
 
-    $array = ['Voorgerecht', 'Hoofdgerecht', 'Nagerecht'];
+    $array = ['Voorgerecht', 'Hoofdgerecht', 'Nagerecht', 'Hapjes', 'Drankjes'];
 
     return [
-        'name'  => $array[random_int(0, 2)],
+        'name' => $array[$order++],
     ];
 });
 
 $factory->define(SubCourse::class, function (Faker $faker) {
 
     return [
-        'name'  => $faker->name,
+        'name'           => $faker->name,
         'main_course_id' => MainCourse::all()->random()->id
     ];
 });
@@ -95,8 +96,8 @@ $factory->define(SubCourse::class, function (Faker $faker) {
 $factory->define(Product::class, function (Faker $faker) {
 
     return [
-        'name'  => $faker->name,
-        'price' => $faker->randomDigit,
+        'name'          => $faker->name,
+        'price'         => $faker->randomDigit,
         'sub_course_id' => SubCourse::all()->random()->id
     ];
 });
@@ -105,7 +106,8 @@ $factory->define(Order::class, function (Faker $faker) {
     return [
         'quantity'   => random_int(1, 8),
         'receipt_id' => Receipt::all()->random()->id,
-        'product_id' => Product::all()->random()->id,
+//        'product_id' => Product::all()->random()->id,
+        'product_id' => random_int(1, 5),
 
     ];
 });

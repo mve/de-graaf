@@ -1494,7 +1494,7 @@ module.exports = function spread(callback) {
 
 
 var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/axios/node_modules/is-buffer/index.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -1829,25 +1829,236 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/axios/node_modules/is-buffer/index.js":
-/*!************************************************************!*\
-  !*** ./node_modules/axios/node_modules/is-buffer/index.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminReservationComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminReservationComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "ReservationComponent",
+  mounted: function mounted() {
+    var _this = this;
 
-module.exports = function isBuffer (obj) {
-  return obj != null && obj.constructor != null &&
-    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
+    axios.get('/get-tables').then(function (response) {
+      _this.allTables = response.data;
+    })["catch"](function (error) {
+      console.log(error);
+      _this.errored = true;
+    });
+  },
+  data: function data() {
+    return {
+      messages: '',
+      error: '',
+      datePicker: '',
+      allTables: [],
+      allTablesCap: [],
+      availableTables: [],
+      selectorType: '',
+      selectorTime: '',
+      checkedTable: [],
+      comment: '',
+      reservedTables: [],
+      people: '',
+      selectedPeople: '',
+      csrf: document.head.querySelector('meta[name="csrf-token"]').content
+    };
+  },
+  methods: {
+    submit: function submit() {},
+    setSelectorType: function setSelectorType(selector) {
+      this.selectorType = selector;
+    },
+    log: function log() {
+      console.log("testing this");
+    },
+    getReserved: function getReserved() {
+      var _this2 = this;
 
+      var that = this;
+      axios.post('/get-tables-cap', {
+        people: this.people
+      }).then(function (response) {
+        that.allTablesCap = response.data;
+        console.log(that.allTablesCap);
+      })["catch"](function (error) {
+        console.log(error);
+        _this2.errored = true;
+      }).then(axios.post('/get-reserved', {
+        date: this.datePicker,
+        time: this.selectorTime
+      }).then(function (response) {
+        that.reservedTables = [];
+        that.availableTables = that.allTables;
+        console.log(that.reservedTables);
+
+        for (var i = 0; i < response.data.length; i++) {
+          response.data[i].tables.forEach(function (item) {
+            that.reservedTables.push(item);
+          });
+        }
+
+        for (var _i = that.availableTables.length - 1; _i >= 0; _i--) {
+          for (var j = 0; j < that.reservedTables.length; j++) {
+            if (that.availableTables[_i] && that.availableTables[_i].id === that.reservedTables[j].id) {
+              that.availableTables.splice(_i, 1);
+            }
+          }
+        }
+      })["catch"](function (error) {
+        console.log(error);
+        _this2.errored = true;
+      }));
+    }
+  },
+  computed: {
+    minDateValue: function minDateValue() {
+      var today = new Date().toISOString();
+      return today.substr(0, today.indexOf('T'));
+    }
+  }
+});
 
 /***/ }),
 
@@ -2070,12 +2281,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('http://localhost:8000/get-tables').then(function (response) {
+    axios.get('/get-tables').then(function (response) {
       _this.allTables = response.data;
     })["catch"](function (error) {
       console.log(error);
@@ -2084,14 +2317,20 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      messages: '',
+      error: '',
       datePicker: '',
       allTables: [],
+      allTablesCap: [],
       availableTables: [],
       selectorType: '',
       selectorTime: '',
       checkedTable: [],
       comment: '',
       reservedTables: [],
+      max_capacity: 0,
+      people: '',
+      selectedPeople: '',
       csrf: document.head.querySelector('meta[name="csrf-token"]').content
     };
   },
@@ -2100,26 +2339,47 @@ __webpack_require__.r(__webpack_exports__);
     setSelectorType: function setSelectorType(selector) {
       this.selectorType = selector;
     },
-    log: function log() {
-      console.log("testing this shit");
+    checkAmount: function checkAmount() {
+      var that = this;
+      /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
+
+      that.selectedPeople = 0;
+      that.error = false;
+      axios.post('/get-tables-by-id', {
+        table_id: JSON.parse(JSON.stringify(that.checkedTable))
+      }).then(function (response) {
+        that.max_capacity = 0;
+
+        for (var i = 0; i < response.data.length; i++) {
+          that.max_capacity = that.max_capacity + response.data[i].max_capacity;
+        }
+
+        if (that.max_capacity > 8) {
+          that.error = true;
+          that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
+        } else {
+          that.messages = false;
+        }
+      }); // }
     },
     getReserved: function getReserved() {
       var _this2 = this;
 
+      this.checkedTable = [];
       var that = this;
-      console.log("test");
-      axios.get('http://localhost:8000/get-tables').then(function (response) {
-        that.allTables = response.data;
+      axios.post('/get-tables-cap', {
+        people: this.people
+      }).then(function (response) {
+        that.allTablesCap = response.data;
       })["catch"](function (error) {
         console.log(error);
         _this2.errored = true;
-      }).then(axios.post('http://localhost:8000/get-reserved', {
+      }).then(axios.post('/get-reserved', {
         date: this.datePicker,
         time: this.selectorTime
       }).then(function (response) {
         that.reservedTables = [];
-        that.availableTables = that.allTables;
-        console.log(that.reservedTables);
+        that.availableTables = that.allTablesCap;
 
         for (var i = 0; i < response.data.length; i++) {
           response.data[i].tables.forEach(function (item) {
@@ -6637,6 +6897,28 @@ __webpack_require__.r(__webpack_exports__);
 
 }));
 //# sourceMappingURL=bootstrap.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/is-buffer/index.js":
+/*!*****************************************!*\
+  !*** ./node_modules/is-buffer/index.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+module.exports = function isBuffer (obj) {
+  return obj != null && obj.constructor != null &&
+    typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
 
 
 /***/ }),
@@ -37465,131 +37747,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DishesComponent.vue?vue&type=template&id=04f0dbfa&scoped=true&":
-/*!******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DishesComponent.vue?vue&type=template&id=04f0dbfa&scoped=true& ***!
-  \******************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "selectCategory" } }, [
-        _vm._v("Product categorie")
-      ]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.selectedCategory,
-              expression: "selectedCategory"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { id: "selectCategory" },
-          on: {
-            change: function($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function(o) {
-                  return o.selected
-                })
-                .map(function(o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.selectedCategory = $event.target.multiple
-                ? $$selectedVal
-                : $$selectedVal[0]
-            }
-          }
-        },
-        [
-          _c("option", { attrs: { value: "Voorgerecht" } }, [
-            _vm._v("Voorgerecht")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Hoofdgerecht" } }, [
-            _vm._v("Hoofdgerecht")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Dessert" } }, [_vm._v("Dessert")])
-        ]
-      )
-    ]),
-    _vm._v(" "),
-    _c("p", [
-      _vm._v("Geselecteerde categorie is: " + _vm._s(_vm.selectedCategory))
-    ])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
-  \*******************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("h1", [_vm._v("I'm an example component.")])
-            ])
-          ])
-        ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc&":
-/*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc& ***!
-  \***********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminReservationComponent.vue?vue&type=template&id=927eaeb6&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminReservationComponent.vue?vue&type=template&id=927eaeb6& ***!
+  \****************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -37730,7 +37891,7 @@ var render = function() {
                         staticClass: "form-control",
                         attrs: { name: "selectorTime" },
                         on: {
-                          click: _vm.log,
+                          click: _vm.getReserved,
                           change: function($event) {
                             var $$selectedVal = Array.prototype.filter
                               .call($event.target.options, function(o) {
@@ -37915,18 +38076,6 @@ var render = function() {
                         _vm._v(" "),
                         _c("option", { attrs: { value: "20:00:00" } }, [
                           _vm._v("20:00")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "20:15:00" } }, [
-                          _vm._v("20:15")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "20:30:00" } }, [
-                          _vm._v("20:30")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "20:45:00" } }, [
-                          _vm._v("20:45")
                         ])
                       ]
                     )
@@ -37938,6 +38087,41 @@ var render = function() {
         _c("div", { staticClass: "space space--20" }),
         _vm._v(" "),
         _vm.selectorTime
+          ? _c("div", { staticClass: "amountpicker col-md-4" }, [
+              _c("label", { staticStyle: { width: "100%" } }, [
+                _vm._v("Aantal\n                "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.people,
+                      expression: "people"
+                    }
+                  ],
+                  attrs: {
+                    type: "number",
+                    name: "people",
+                    min: "1",
+                    max: "58"
+                  },
+                  domProps: { value: _vm.people },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.people = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "space space--20" }),
+        _vm._v(" "),
+        _vm.people
           ? _c("div", { staticClass: "tableGrid" }, [
               _c(
                 "div",
@@ -37961,9 +38145,9 @@ var render = function() {
                             staticClass: "form-check-input",
                             attrs: { type: "checkbox", name: "checkedTable[]" },
                             domProps: {
-                              value: table.id,
+                              value: table,
                               checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, table.id) > -1
+                                ? _vm._i(_vm.checkedTable, table) > -1
                                 : _vm.checkedTable
                             },
                             on: {
@@ -37972,7 +38156,7 @@ var render = function() {
                                   $$el = $event.target,
                                   $$c = $$el.checked ? true : false
                                 if (Array.isArray($$a)) {
-                                  var $$v = table.id,
+                                  var $$v = table,
                                     $$i = _vm._i($$a, $$v)
                                   if ($$el.checked) {
                                     $$i < 0 &&
@@ -38002,6 +38186,659 @@ var render = function() {
                   ])
                 }),
                 0
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "space space--20" }),
+        _vm._v(" "),
+        _vm.checkedTable.length > 0
+          ? _c("div", [
+              _c("label", [
+                _vm._v("Heeft u dingen die wij moeten weten. bv: dieet wensen"),
+                _c("br"),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.comment,
+                      expression: "comment"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "comment" },
+                  domProps: { value: _vm.comment },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.comment = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.checkedTable.length > 0
+          ? _c("div", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "submit", value: "submit" }
+                },
+                [_vm._v("\n                Reserveren\n            ")]
+              )
+            ])
+          : _vm._e()
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DishesComponent.vue?vue&type=template&id=04f0dbfa&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DishesComponent.vue?vue&type=template&id=04f0dbfa&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "selectCategory" } }, [
+        _vm._v("Product categorie")
+      ]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectedCategory,
+              expression: "selectedCategory"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { id: "selectCategory" },
+          on: {
+            change: function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.selectedCategory = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            }
+          }
+        },
+        [
+          _c("option", { attrs: { value: "Voorgerecht" } }, [
+            _vm._v("Voorgerecht")
+          ]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "Hoofdgerecht" } }, [
+            _vm._v("Hoofdgerecht")
+          ]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "Dessert" } }, [_vm._v("Dessert")])
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c("p", [
+      _vm._v("Geselecteerde categorie is: " + _vm._s(_vm.selectedCategory))
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v("Example Component")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c("h1", [_vm._v("I'm an example component.")])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ReservationComponent.vue?vue&type=template&id=75cc3efc& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "form",
+      {
+        staticStyle: {
+          width: "100%",
+          "align-items": "center",
+          display: "flex",
+          "flex-direction": "column",
+          "align-self": "flex-start"
+        },
+        attrs: { method: "POST", action: "/reservering" }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm.csrf }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "datepicker col-md-4" }, [
+          _c("label", { staticStyle: { width: "100%" } }, [
+            _vm._v("Datum:\n                "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.datePicker,
+                  expression: "datePicker"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "date", min: _vm.minDateValue, name: "date" },
+              domProps: { value: _vm.datePicker },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.datePicker = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "space space--20" }),
+        _vm._v(" "),
+        _vm.datePicker
+          ? _c("div", { staticClass: "typepicker col-md-4" }, [
+              _vm._v("\n            Lunch of diner?\n            "),
+              _c(
+                "div",
+                { staticClass: "row", staticStyle: { padding: "0 15px" } },
+                [
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "btn",
+                        class:
+                          _vm.selectorType === "Lunch"
+                            ? "btn-primary"
+                            : "btn-outline-primary",
+                        staticStyle: { width: "100%" },
+                        on: {
+                          click: function($event) {
+                            return _vm.setSelectorType("Lunch")
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Lunch\n                    "
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "btn",
+                        class:
+                          _vm.selectorType === "Diner"
+                            ? "btn-primary"
+                            : "btn-outline-primary",
+                        staticStyle: { width: "100%" },
+                        on: {
+                          click: function($event) {
+                            return _vm.setSelectorType("Diner")
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Diner\n                    "
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "space space--20" }),
+        _vm._v(" "),
+        _vm.selectorType
+          ? _c("div", { staticClass: "timepicker col-md-4" }, [
+              _c("label", { staticStyle: { width: "100%" } }, [
+                _vm._v("Tijd\n                "),
+                _vm.selectorType === "Lunch"
+                  ? _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectorTime,
+                            expression: "selectorTime"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "selectorTime" },
+                        on: {
+                          click: _vm.getReserved,
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.selectorTime = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "12:00:00" } }, [
+                          _vm._v("12:00")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "12:15:00" } }, [
+                          _vm._v("12:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "12:30:00" } }, [
+                          _vm._v("12:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "12:45:00" } }, [
+                          _vm._v("12:45")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "13:00:00" } }, [
+                          _vm._v("13:00")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "13:15:00" } }, [
+                          _vm._v("13:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "13:30:00" } }, [
+                          _vm._v("13:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "13:45:00" } }, [
+                          _vm._v("13:45")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "14:00:00" } }, [
+                          _vm._v("14:00")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "14:15:00" } }, [
+                          _vm._v("14:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "14:30:00" } }, [
+                          _vm._v("14:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "14:45:00" } }, [
+                          _vm._v("14:45")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "15:00:00" } }, [
+                          _vm._v("15:00")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "15:15:00" } }, [
+                          _vm._v("15:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "15:30:00" } }, [
+                          _vm._v("15:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "15:45:00" } }, [
+                          _vm._v("15:45")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "16:00:00" } }, [
+                          _vm._v("16:00")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "16:15:00" } }, [
+                          _vm._v("16:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "16:30:00" } }, [
+                          _vm._v("16:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "16:45:00" } }, [
+                          _vm._v("16:45")
+                        ])
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.selectorType === "Diner"
+                  ? _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectorTime,
+                            expression: "selectorTime"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        staticStyle: { width: "100%" },
+                        attrs: { name: "selectorTime" },
+                        on: {
+                          click: _vm.getReserved,
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.selectorTime = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "17:00:00" } }, [
+                          _vm._v("17:00")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "17:15:00" } }, [
+                          _vm._v("17:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "17:30:00" } }, [
+                          _vm._v("17:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "17:45:00" } }, [
+                          _vm._v("17:45")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "18:00:00" } }, [
+                          _vm._v("18:00")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "18:15:00" } }, [
+                          _vm._v("18:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "18:30:00" } }, [
+                          _vm._v("18:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "18:45:00" } }, [
+                          _vm._v("18:45")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "19:00:00" } }, [
+                          _vm._v("19:00")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "19:15:00" } }, [
+                          _vm._v("19:15")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "19:30:00" } }, [
+                          _vm._v("19:30")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "19:45:00" } }, [
+                          _vm._v("19:45")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "20:00:00" } }, [
+                          _vm._v("20:00")
+                        ])
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "space space--20" }),
+        _vm._v(" "),
+        _vm.selectorTime
+          ? _c("div", { staticClass: "amountpicker col-md-4" }, [
+              _c("label", { staticStyle: { width: "100%" } }, [
+                _vm._v("Aantal\n                "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.people,
+                        expression: "people"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { name: "people" },
+                    on: {
+                      click: _vm.getReserved,
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.people = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "1" } }, [_vm._v("1")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2" } }, [_vm._v("2")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "3" } }, [_vm._v("3")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "4" } }, [_vm._v("4")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "5" } }, [_vm._v("5")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "6" } }, [_vm._v("6")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "7" } }, [_vm._v("7")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "8" } }, [_vm._v("8")])
+                  ]
+                )
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "space space--20" }),
+        _vm._v(" "),
+        _vm.people
+          ? _c("div", { staticClass: "tableGrid" }, [
+              _c(
+                "div",
+                { staticClass: "row" },
+                _vm._l(this.availableTables, function(table) {
+                  return _c(
+                    "div",
+                    {
+                      staticClass: "col-md-3",
+                      on: { change: _vm.checkAmount }
+                    },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "form-check mb-2 mr-sm-2 mb-sm-0" },
+                        [
+                          _c("label", { staticClass: "form-check-label" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.checkedTable,
+                                  expression: "checkedTable"
+                                }
+                              ],
+                              staticClass: "form-check-input",
+                              attrs: {
+                                type: "checkbox",
+                                name: "checkedTable[]"
+                              },
+                              domProps: {
+                                value: table.id,
+                                checked: Array.isArray(_vm.checkedTable)
+                                  ? _vm._i(_vm.checkedTable, table.id) > -1
+                                  : _vm.checkedTable
+                              },
+                              on: {
+                                change: [
+                                  function($event) {
+                                    var $$a = _vm.checkedTable,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = table.id,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          (_vm.checkedTable = $$a.concat([$$v]))
+                                      } else {
+                                        $$i > -1 &&
+                                          (_vm.checkedTable = $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1)))
+                                      }
+                                    } else {
+                                      _vm.checkedTable = $$c
+                                    }
+                                  },
+                                  _vm.log
+                                ]
+                              }
+                            }),
+                            _vm._v(
+                              "\n                            Tafel " +
+                                _vm._s(table.id) +
+                                ". " +
+                                _vm._s(table.max_capacity) +
+                                " stoelen\n                        "
+                            )
+                          ])
+                        ]
+                      )
+                    ]
+                  )
+                }),
+                0
               ),
               _vm._v(" "),
               _c("div", { staticClass: "space space--10" }),
@@ -38016,6 +38853,23 @@ var render = function() {
                     [
                       _vm._v(
                         "\n                Er zijn te veel tafels geselecteerd.\n                Neem contact met ons op om meer te reserveren.\n            "
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.messages
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "alert alert-danger",
+                      attrs: { role: "alert" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.messages) +
+                          "\n            "
                       )
                     ]
                   )
@@ -38058,7 +38912,7 @@ var render = function() {
         _vm._v(" "),
         _vm.checkedTable.length > 0
           ? _c("div", [
-              _vm.checkedTable.length < 3
+              _vm.checkedTable.length < 3 && _vm.error === false
                 ? _c("div", [
                     _c(
                       "button",
@@ -50324,6 +51178,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('test-component', __webpack_require__(/*! ./components/TestComponent.vue */ "./resources/js/components/TestComponent.vue")["default"]);
 Vue.component('reservation-component', __webpack_require__(/*! ./components/ReservationComponent.vue */ "./resources/js/components/ReservationComponent.vue")["default"]);
+Vue.component('admin-reservation-component', __webpack_require__(/*! ./components/AdminReservationComponent.vue */ "./resources/js/components/AdminReservationComponent.vue")["default"]);
 Vue.component('dishes-component', __webpack_require__(/*! ./components/DishesComponent.vue */ "./resources/js/components/DishesComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -50379,6 +51234,75 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminReservationComponent.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/AdminReservationComponent.vue ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AdminReservationComponent_vue_vue_type_template_id_927eaeb6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminReservationComponent.vue?vue&type=template&id=927eaeb6& */ "./resources/js/components/AdminReservationComponent.vue?vue&type=template&id=927eaeb6&");
+/* harmony import */ var _AdminReservationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminReservationComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/AdminReservationComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AdminReservationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AdminReservationComponent_vue_vue_type_template_id_927eaeb6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AdminReservationComponent_vue_vue_type_template_id_927eaeb6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/AdminReservationComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminReservationComponent.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/AdminReservationComponent.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminReservationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AdminReservationComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminReservationComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminReservationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminReservationComponent.vue?vue&type=template&id=927eaeb6&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/AdminReservationComponent.vue?vue&type=template&id=927eaeb6& ***!
+  \**********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminReservationComponent_vue_vue_type_template_id_927eaeb6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AdminReservationComponent.vue?vue&type=template&id=927eaeb6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminReservationComponent.vue?vue&type=template&id=927eaeb6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminReservationComponent_vue_vue_type_template_id_927eaeb6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminReservationComponent_vue_vue_type_template_id_927eaeb6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
