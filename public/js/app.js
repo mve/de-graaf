@@ -38093,7 +38093,9 @@ var render = function() {
         _vm.selectorTime
           ? _c("div", { staticClass: "amountpicker col-md-4" }, [
               _c("label", { staticStyle: { width: "100%" } }, [
-                _vm._v("Aantal\n                "),
+                _vm._v("Aantal"),
+                _c("br"),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
@@ -38149,9 +38151,9 @@ var render = function() {
                             staticClass: "form-check-input",
                             attrs: { type: "checkbox", name: "checkedTable[]" },
                             domProps: {
-                              value: table,
+                              value: table.id,
                               checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, table) > -1
+                                ? _vm._i(_vm.checkedTable, table.id) > -1
                                 : _vm.checkedTable
                             },
                             on: {
@@ -38160,7 +38162,7 @@ var render = function() {
                                   $$el = $event.target,
                                   $$c = $$el.checked ? true : false
                                 if (Array.isArray($$a)) {
-                                  var $$v = table,
+                                  var $$v = table.id,
                                     $$i = _vm._i($$a, $$v)
                                   if ($$el.checked) {
                                     $$i < 0 &&

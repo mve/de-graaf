@@ -89,7 +89,7 @@
             <div class="space space--20"></div>
 
             <div class="amountpicker col-md-4" v-if="selectorTime">
-                <label style="width: 100%">Aantal
+                <label style="width: 100%">Aantal<br>
                     <input type="number" name="people" v-model="people" min="1" max="58">
                 </label>
             </div>
@@ -102,7 +102,7 @@
 
                         <div class="form-check mb-2 mr-sm-2 mb-sm-0">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" :value="table" name="checkedTable[]"
+                                <input class="form-check-input" type="checkbox" :value="table.id" name="checkedTable[]"
                                        v-model="checkedTable">
                                 Tafel {{table.id}}. {{table.max_capacity}} stoelen
                             </label>
