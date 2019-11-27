@@ -126,5 +126,7 @@ Route::post('/get-tables-cap', 'TableController@getTablesCapacity');
 
 Route::post('/toggle-block/{user}', 'UserController@toggleBlock');
 
-Route::post('/beheer/createOrder', 'OrderController@getDishes');
+Route::post('/beheer/getProducts', 'OrderController@getDishes');
+
+Route::post('/beheer/createOrder', 'OrderController@createOrder');
 
