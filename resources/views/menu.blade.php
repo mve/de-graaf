@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container" style="text-align: center;">
+    <div class="container" style="text-align: center; max-width: 600px;">
         <h1>Menu</h1>
 
         <div class="space space--50"></div>
@@ -20,9 +20,25 @@
                     @foreach ($products as $product)
                         @if($product->subCourse->name === $subCourse->name)
 
-                            <div>
-                                {{ $product->name }}
-                                € {{ $product->price }} ,-
+                            <div class="row" style="border-bottom: 1px solid #c9c9c9">
+
+                                <div class="col-6">
+                                    <span class="float-left">
+
+                                    {{ $product->name }}
+
+                                     </span>
+
+                                </div>
+                                <div class="col-6">
+                                    <span class="float-right">
+
+                                    € {{ $product->price }} ,-
+
+                                    </span>
+
+                                </div>
+
                             </div>
 
                         @endif
@@ -37,31 +53,6 @@
             <div class="space space--40"></div>
 
         @endforeach
-
-
-{{--        <h2>Hoofdgerechten</h2>--}}
-
-{{--        @foreach($subCourses as $subCourse)--}}
-{{--            @if($subCourse->mainCourse->name === 'Hoofdgerechten')--}}
-
-{{--                <div>--}}
-{{--                    {{ $subCourse->name }}--}}
-{{--                </div>--}}
-
-{{--            @endif--}}
-{{--        @endforeach--}}
-
-{{--        <h2>Nagerechten</h2>--}}
-
-{{--        @foreach($subCourses as $subCourse)--}}
-{{--            @if($subCourse->mainCourse->name === 'Nagerechten')--}}
-
-{{--                <div>--}}
-{{--                    {{ $subCourse->name }}--}}
-{{--                </div>--}}
-
-{{--            @endif--}}
-{{--        @endforeach--}}
 
     </div>
 @endsection

@@ -89,6 +89,16 @@ h6,
           align-items: center;
 }
 
+.recaptcha-container {
+  -webkit-box-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+}
+
 .background-image {
   margin-top: -1.5rem;
   z-index: -1;

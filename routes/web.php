@@ -36,11 +36,13 @@ Route::get('/account', 'HomeController@edit')->middleware('verified');
 
 Route::post('/get-reserved', 'TableController@getReservedTable');
 
+Route::post('/get-single-table', 'TableController@getSingleTable');
+
 Route::get('account/delete/{id}', 'HomeController@deleteReservation')->middleware('verified');
 
-Route::post('account/delete/account', 'HomeController@deleteaccount')->middleware('verified');
+Route::get('delete-account', 'HomeController@deleteaccount')->middleware('verified');
 
-Route::delete('account/delete/account', 'HomeController@deleteconfirm')->middleware('verified');
+Route::delete('delete-account', 'HomeController@deleteconfirm')->middleware('verified');
 
 
 Route::get('/reserveringen/dag',
@@ -115,8 +117,12 @@ Route::patch('/beheer/gebruikers/{user}',
 Route::delete('/beheer/gebruikers/{user}',
     ['as' => 'users.adminDelete', 'uses' => 'UserController@adminDelete'])->middleware('verified')->middleware('admin');
 
+Route::get('beheer/reservering/nota/download/{id}', 'ReceiptController@downloadPDF')->middleware('verified')->middleware('admin');
 
-Route::get('beheer/reservering/nota/download/{id}', 'receiptController@downloadPDF')->middleware('verified')->middleware('admin');
+Route::get('/beheer/reserveren', function () {
+    return view('admin.createReservation');
+})->middleware('admin')->middleware('notBlocked')->middleware('verified');
+Route::post('beheer/reserveren', 'ReservationController@adminCreate')->middleware('verified')->middleware('admin');
 
 // API
 

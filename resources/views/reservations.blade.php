@@ -4,66 +4,8 @@
     <div class="container">
         <div class="row">
             <h1>Mijn reserveringen</h1>
-            <div class="row mx-auto">
 
-                <div class="col-lg-4 card-container scale-animation">
 
-                    <a href="{{ url('/reserveringen/dag')  }}" class="card pointer border-top">
-
-                        <div class="row card-content-admin-container">
-
-                            <div class="col-9 card-content-admin">
-                                <h3>Vandaag</h3>
-                            </div>
-
-                            <div class="col-3 icon-container">
-                            </div>
-
-                        </div>
-
-                    </a>
-
-                </div>
-
-                <div class="col-lg-4 card-container scale-animation">
-
-                    <a href="{{ url('/reserveringen/week') }}" class="card pointer border-top">
-
-                        <div class="row card-content-admin-container">
-
-                            <div class="col-9 card-content-admin">
-                                <h3>Komende week</h3>
-                            </div>
-
-                            <div class="col-3 icon-container">
-                            </div>
-
-                        </div>
-
-                    </a>
-
-                </div>
-
-                <div class="col-lg-4 card-container scale-animation">
-
-                    <a href="{{ url('/reserveringen/maand')  }}" class="card pointer border-top">
-
-                        <div class="row card-content-admin-container">
-
-                            <div class="col-9 card-content-admin">
-                                <h3>Komende maand</h3>
-                            </div>
-
-                            <div class="col-3 icon-container">
-                            </div>
-
-                        </div>
-
-                    </a>
-
-                </div>
-
-            </div>
             <table class="table">
                 <tr><th class="d-lg-none" colspan="2">Reserveringen</th><th class="d-none d-lg-table-cell">Datum</th><th class="d-none d-lg-table-cell">Tijd</th><th class="d-none d-lg-table-cell">Aantal personen</th><th class="d-none d-lg-table-cell">Opmerking</th><th class="d-none d-lg-table-cell">Tafel</th><th>Nota</th>
                 @foreach($user->reservations as $reservation)

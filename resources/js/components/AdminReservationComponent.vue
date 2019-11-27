@@ -90,17 +90,7 @@
 
             <div class="amountpicker col-md-4" v-if="selectorTime">
                 <label style="width: 100%">Aantal
-                    <select v-on:click="getReserved" class="form-control" name="people"
-                            v-model="people">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                    </select>
+                    <input type="number" name="people" v-model="people" min="1" max="58">
                 </label>
             </div>
 
@@ -108,12 +98,11 @@
 
             <div class="tableGrid" v-if="people">
                 <div class="row">
-                    <div class="col-md-3" v-on:change="checkAmount" v-for="table in this.availableTables">
+                    <div class="col-md-3" v-for="table in this.availableTables">
 
                         <div class="form-check mb-2 mr-sm-2 mb-sm-0">
                             <label class="form-check-label">
-                                <input class="form-check-input" v-on:change="log" type="checkbox" :value="table.id"
-                                       name="checkedTable[]"
+                                <input class="form-check-input" type="checkbox" :value="table" name="checkedTable[]"
                                        v-model="checkedTable">
                                 Tafel {{table.id}}. {{table.max_capacity}} stoelen
                             </label>
@@ -121,18 +110,6 @@
 
                     </div>
                 </div>
-
-                <div class="space space--10"></div>
-
-                <div v-if="checkedTable.length > 2" class="alert alert-danger" role="alert">
-                    Er zijn te veel tafels geselecteerd.
-                    Neem contact met ons op om meer te reserveren.
-                </div>
-
-                <div v-if="messages" class="alert alert-danger" role="alert">
-                    {{messages}}
-                </div>
-
 
             </div>
 
@@ -145,11 +122,9 @@
             </div>
 
             <div v-if="checkedTable.length > 0">
-                <div v-if="checkedTable.length < 3 && error === false ">
-                    <button type="submit" value="submit" class="btn btn-primary">
-                        Reserveren
-                    </button>
-                </div>
+                <button type="submit" value="submit" class="btn btn-primary">
+                    Reserveren
+                </button>
             </div>
 
         </form>
@@ -164,6 +139,7 @@
     export default {
         name: "ReservationComponent",
         mounted() {
+
             axios
                 .get('/get-tables')
                 .then(response => {
@@ -188,7 +164,6 @@
                 checkedTable: [],
                 comment: '',
                 reservedTables: [],
-                max_capacity: 0,
                 people: '',
                 selectedPeople: '',
                 csrf: document.head.querySelector('meta[name="csrf-token"]').content
@@ -202,36 +177,7 @@
                 this.selectorType = selector;
             },
             log() {
-                // console.log(this.checkedTable);
-                // console.log("testing this");
-            },
-            checkAmount() {
-                const that = this;
-
-                /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
-                that.selectedPeople = 0;
-                that.error = false;
-                that.max_capacity = 0;
-                for (let i = 0; i < that.checkedTable.length; i++) {
-
-                    // console.log('volgende is goed');
-                    // console.log(that.checkedTable);
-
-                    axios
-                        .post('/get-single-table', {
-                            table_id: that.checkedTable
-                        }).then(response => {
-                        that.max_capacity = that.max_capacity + response.data[0].max_capacity;
-                        console.log(that.max_capacity);
-
-                        if (that.max_capacity > 8) {
-                            that.error = true;
-                            console.log(that.error);
-                            that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
-                        } else that.messages = false;
-
-                    });
-                }
+                console.log("testing this");
             },
             getReserved() {
                 const that = this;
@@ -241,7 +187,7 @@
                     })
                     .then(response => {
                         that.allTablesCap = response.data;
-                        // console.log(that.allTablesCap);
+                        console.log(that.allTablesCap);
                     })
                     .catch(error => {
                         console.log(error);
@@ -254,8 +200,8 @@
                         })
                         .then(response => {
                             that.reservedTables = [];
-                            that.availableTables = that.allTablesCap;
-                            // console.log(that.reservedTables);
+                            that.availableTables = that.allTables;
+                            console.log(that.reservedTables);
 
                             for (let i = 0; i < response.data.length; i++) {
                                 response.data[i].tables.forEach(function (item) {

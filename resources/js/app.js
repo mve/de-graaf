@@ -22,6 +22,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('test-component', require('./components/TestComponent.vue').default);
 Vue.component('reservation-component', require('./components/ReservationComponent.vue').default);
+Vue.component('admin-reservation-component', require('./components/AdminReservationComponent.vue').default);
 Vue.component('dishes-component', require('./components/DishesComponent.vue').default);
 
 /**

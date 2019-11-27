@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(10);
 
         return view('admin.users', compact('users'));
     }
@@ -56,13 +56,14 @@ class UserController extends Controller
     {
 
         $this->validate(request(), [
-            'name'      => ['sometimes', 'nullable', 'string', 'max:191'],
-            'infix'     => ['sometimes', 'nullable', 'string', 'max:191'],
-            'surname'   => ['sometimes', 'nullable', 'string', 'max:191'],
-            'telephone' => ['sometimes', 'nullable', 'numeric'],
-            'zipcode'   => ['sometimes', 'nullable', 'string', 'min:4'],
-            'city'      => ['sometimes', 'nullable', 'string', 'max:191'],
-            'address'   => ['sometimes', 'nullable', 'string', 'max:191'],
+            'name'                 => ['sometimes', 'nullable', 'string', 'max:191'],
+            'infix'                => ['sometimes', 'nullable', 'string', 'max:191'],
+            'surname'              => ['sometimes', 'nullable', 'string', 'max:191'],
+            'telephone'            => ['sometimes', 'nullable', 'numeric'],
+            'zipcode'              => ['sometimes', 'nullable', 'string', 'min:4'],
+            'city'                 => ['sometimes', 'nullable', 'string', 'max:191'],
+            'address'              => ['sometimes', 'nullable', 'string', 'max:191'],
+            'g-recaptcha-response' => 'required|recaptcha',
 
             'email'    => [
                 'sometimes',
