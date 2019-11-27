@@ -15,28 +15,28 @@
                     <a class="nav-link @if (\Request::is('/')) nav-link--active @endif" href="{{ url('/') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/menu') }}">Menu</a>
+                    <a class="nav-link @if (\Request::is('menu')) nav-link--active @endif" href="{{ url('/menu') }}">Menu</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/contact') }}">Contact</a>
+                    <a class="nav-link @if (\Request::is('contact')) nav-link--active @endif" href="{{ url('/contact') }}">Contact</a>
                 </li>
 
                 <!-- User is logged in -->
                 @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/reservering') }}">Nieuwe reservering</a>
+                        <a class="nav-link @if (\Request::is('reservering')) nav-link--active @endif" href="{{ url('/reservering') }}">Nieuwe reservering</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/reserveringen') }}">Mijn reserveringen</a>
+                        <a class="nav-link @if (\Request::is('reserveringen')) nav-link--active @endif" href="{{ url('/reserveringen') }}">Mijn reserveringen</a>
                     </li>
                     @if(\Illuminate\Support\Facades\Auth::user()->isadmin >= 2)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/beheer') }}">Beheer</a>
+                            <a class="nav-link  @if (\Request::is('beheer')) nav-link--active @endif" href="{{ url('/beheer') }}">Beheer</a>
                         </li>
                     @endif
                     @if(\Illuminate\Support\Facades\Auth::user()->isadmin >= 1)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/bestellingen') }}">Bestellingen</a>
+                            <a class="nav-link  @if (\Request::is('bestellingen')) nav-link--active @endif" href="{{ url('/bestellingen') }}">Bestellingen</a>
                         </li>
                     @endif
                 @endauth
