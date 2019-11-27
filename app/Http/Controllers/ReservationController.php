@@ -101,7 +101,7 @@ class ReservationController extends Controller
             $reservation->tables()->attach($t->id);
         }
 
-        return view('reservations', compact('user'));
+        return redirect('/account');
     }
 
     public function edit(Reservation $reservation)

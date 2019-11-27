@@ -26,9 +26,6 @@
                     <li class="nav-item">
                         <a class="nav-link @if (\Request::is('reservering')) nav-link--active @endif" href="{{ url('/reservering') }}">Nieuwe reservering</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link @if (\Request::is('reserveringen')) nav-link--active @endif" href="{{ url('/reserveringen') }}">Mijn reserveringen</a>
-                    </li>
                     @if(\Illuminate\Support\Facades\Auth::user()->isadmin >= 2)
                         <li class="nav-item">
                             <a class="nav-link  @if (\Request::is('beheer')) nav-link--active @endif" href="{{ url('/beheer') }}">Beheer</a>
