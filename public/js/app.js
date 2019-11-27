@@ -38800,29 +38800,26 @@ var render = function() {
                                   : _vm.checkedTable
                               },
                               on: {
-                                change: [
-                                  function($event) {
-                                    var $$a = _vm.checkedTable,
-                                      $$el = $event.target,
-                                      $$c = $$el.checked ? true : false
-                                    if (Array.isArray($$a)) {
-                                      var $$v = table.id,
-                                        $$i = _vm._i($$a, $$v)
-                                      if ($$el.checked) {
-                                        $$i < 0 &&
-                                          (_vm.checkedTable = $$a.concat([$$v]))
-                                      } else {
-                                        $$i > -1 &&
-                                          (_vm.checkedTable = $$a
-                                            .slice(0, $$i)
-                                            .concat($$a.slice($$i + 1)))
-                                      }
+                                change: function($event) {
+                                  var $$a = _vm.checkedTable,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = table.id,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        (_vm.checkedTable = $$a.concat([$$v]))
                                     } else {
-                                      _vm.checkedTable = $$c
+                                      $$i > -1 &&
+                                        (_vm.checkedTable = $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1)))
                                     }
-                                  },
-                                  _vm.log
-                                ]
+                                  } else {
+                                    _vm.checkedTable = $$c
+                                  }
+                                }
                               }
                             }),
                             _vm._v(
