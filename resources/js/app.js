@@ -3,6 +3,8 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+import Toasted from 'vue-toasted';
+
 
 require('./bootstrap');
 
@@ -24,6 +26,7 @@ Vue.component('test-component', require('./components/TestComponent.vue').defaul
 Vue.component('reservation-component', require('./components/ReservationComponent.vue').default);
 Vue.component('admin-reservation-component', require('./components/AdminReservationComponent.vue').default);
 Vue.component('dishes-component', require('./components/DishesComponent.vue').default);
+Vue.use(Toasted);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

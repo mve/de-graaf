@@ -47,28 +47,35 @@ class OrderController extends Controller
         $reservationId = $request['reservationid'];
         $productenarray = [];
         $reservation = Reservation::with('receipt')->find($reservationId);
-
+         $count = 1;
+        $quantitys = [];
         foreach ($products as $item)
         {
-            $test = $item[0];
-            array_push($productenarray, $test);
-//            $product = Product::all()->where("name", 'LIKE', $test);
-//            $orders = Order::create([
-//                'product_id' => $product[0]['id'],
-//            ]);
+
+            if (in_array($item[0], $productenarray)) {
+                $count++;
+            }
+
+                $test = $item[0];
+                array_push($productenarray, $test);
+            array_push($quantitys, $count,$test);
+
+
         }
+        $quantitys = array_count_values($productenarray);
+
         $product = Product::all()->whereIn("name", $productenarray);
 
         foreach($product as $addproduct){
                         $orders = Order::create([
                 'product_id' => $addproduct->id,
                             'receipt_id' => $reservation->receipt->id,
+                            'quantity' => $quantitys[$addproduct->name],
 
                         ]);
         }
 //        return $request->input('selectReservation');
-
-        return $reservation->receipt->id;
+return 'Bestelling geplaatst';
 //
 //        $receipt = new Receipt();
 //

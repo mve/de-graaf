@@ -1,3 +1,4 @@
+
 <template>
 
         <form>
@@ -42,7 +43,7 @@
                 <div class="list-group">
                     <button type="button" v-for="product in chosenProducts"
                             class="list-group-item list-group-item-action">
-                        {{product[0]}}
+                        1x {{product[0]}}
                     </button>
                     <button type="button" class="btn btn-success" v-if="chosenProducts.length > 0" v-on:click="sendOrder()"><i
                             class="fas fa-plus"></i>
@@ -50,15 +51,22 @@
                     </button>
                 </div>
             </div>
+            <div >
+                <h1>{{message}}</h1>
+            </div>
         </form>
 
 
 </template>
 
 <script>
+
     export default {
+
         props: ['unsortedreservations'],
+
         mounted() {
+
             console.log();
             for (let i = 0; i < this.unsortedreservations.length; i++) {
                 console.log(this.unsortedreservations[i].id);
@@ -73,9 +81,11 @@
                 selectedProducts: [],
                 chosenProducts: [],
                 chosenReservation: '',
+                message: '',
             }
         },
         methods: {
+
             sendCategory() {
                 axios.post('/beheer/getProducts', {category: this.selectedCategory}).then((response) => {
                     this.products = response.data;
@@ -100,7 +110,16 @@
                 console.log("Reserving:" +that.chosenReservation);
 
 
-                axios.post('/beheer/createOrder', {'products': that.chosenProducts, 'reservationid': that.chosenReservation}).then((response) => {                    console.log(response.data);
+                axios.post('/beheer/createOrder', {'products': that.chosenProducts, 'reservationid': that.chosenReservation}).then((response) => {
+                  console.log(response.data);
+
+                    this.$toasted.show("Bestelling aangemaakt", {
+                        theme: "toasted-primary",
+                        position: "top-right",
+                        duration : 5000
+                    });
+                    this.chosenProducts = [];
+
                 })
                     .catch((error) => {
                         console.log(error);
