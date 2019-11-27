@@ -221,7 +221,7 @@
                         <th class="d-none d-lg-table-cell">Nota</th>
 
                         <th class="d-none d-lg-table-cell">Annuleren</th>
-                    @foreach($user->reservations as $reservation)
+                    @foreach($user->reservations->sortByDesc('date') as $reservation)
                         <tr>
 
                             <td class="d-none d-lg-table-cell">{{$reservation->date}}</td>

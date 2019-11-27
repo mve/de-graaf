@@ -229,7 +229,6 @@
                         that.messages = false
                     }
                 });
-                // }
             },
             getReserved() {
 
