@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    protected $fillable = [
+        'product_id', 'receipt_id', 'quantity'
+    ];
+
     public function receipt(){
         return $this->belongsTo(Receipt::class);
     }

@@ -288,7 +288,7 @@
                                 <td><span id="InvoceTotalVat">€{{$total}}</span> <br></td>
                             </tr>
                             <tr>
-                                @php $totalbtw = $total*0.21 @endphp
+                                @php $totalbtw = round($total*0.21,2) @endphp
                                 <td><span style="display:inline-block;margin-right:10px;"><strong>Te betalen BTW:</strong></span></td>
                                 <td><span id="ProductCost">€{{$totalbtw}}</span> </td>
                             </tr>
@@ -298,7 +298,7 @@
                             </tr>
                             <tr>
                                 <td><span style="display:inline-block;margin-right:10px;"><strong>Betaald:</strong></span></td>
-                                <td><span id="ProductCost">€{{$receipt->amount_recieved}}</span> </td>
+                                <td><span id="ProductCost">€{{0+$receipt->amount_recieved}}</span> </td>
                             </tr>
                             <tr>
                                 <td><span style="display:inline-block;margin-right:10px;"><strong>Nog te voldoen:</strong></span></td>

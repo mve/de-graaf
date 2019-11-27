@@ -6,6 +6,7 @@ use App\Order;
 use App\Product;
 use App\Receipt;
 use App\Reservation;
+use App\SubCourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 
@@ -22,35 +23,62 @@ class OrderController extends Controller
         dd($id);
     }
 
+    public function getDishes(){
+
+        $selectedCategory = \request('category');
+
+        $subcoursce = SubCourse::with('products')->where("name", 'LIKE', $selectedCategory)->get();
+        $products = Product::all()->where('sub_course_id', '=', $subcoursce[0]->id);
+        return json_encode($products);
+    }
+
     public function getData()
     {
 
         $todayDate = date('Y-m-d');
 
-        $unsortedreservations = Reservation::with('tables', 'user')->where('date', '=', $todayDate)->get();
+        $unsortedreservations = Reservation::with('tables', 'user', 'receipt')->where('date', '=', $todayDate)->get();
 
         return view('admin.createOrder', compact( 'unsortedreservations'));
     }
 
-    public function createOrder(){
-        $order = new Order();
+    public function createOrder(Request $request){
+        $products = $request['products'];
+        $reservationId = $request['reservationid'];
+        $productenarray = [];
+        $reservation = Reservation::with('receipt')->find($reservationId);
+         $count = 1;
+        $quantitys = [];
+        foreach ($products as $item)
+        {
 
-        $product = new Product();
+            if (in_array($item[0], $productenarray)) {
+                $count++;
+            }
 
-        $orders = Orders::create([
-            'order_id' => $order->id,
-            'product_id' => $request['people'],
-            'date' => $request['date'],
-            'time' => $request['selectorTime'].':00:00',
-            'comment' => $request['comment'],
-            'reservation_typ' => $request['selectorType']
+                $test = $item[0];
+                array_push($productenarray, $test);
+            array_push($quantitys, $count,$test);
 
-        ]);
 
-        $receipt = new Receipt();
+        }
+        $quantitys = array_count_values($productenarray);
 
-        $receipt->save();
+        $product = Product::all()->whereIn("name", $productenarray);
 
-        $receipt->orders()->attach($order->id);
+        foreach($product as $addproduct){
+                        $orders = Order::create([
+                'product_id' => $addproduct->id,
+                            'receipt_id' => $reservation->receipt->id,
+                            'quantity' => $quantitys[$addproduct->name],
+
+                        ]);
+        }
+//        return $request->input('selectReservation');
+return 'Bestelling geplaatst';
+//
+//        $receipt = new Receipt();
+//
+//        $receipt->save();
     }
 }
