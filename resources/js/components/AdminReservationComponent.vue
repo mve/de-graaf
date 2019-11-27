@@ -89,18 +89,8 @@
             <div class="space space--20"></div>
 
             <div class="amountpicker col-md-4" v-if="selectorTime">
-                <label style="width: 100%">Aantal
-                    <select v-on:click="getReserved" class="form-control" name="people"
-                            v-model="people">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                    </select>
+                <label style="width: 100%">Aantal<br>
+                    <input type="number" v-on:change="getReserved" name="people" v-model="people" min="1" max="58">
                 </label>
             </div>
 
@@ -109,7 +99,7 @@
             <div class="tableGrid" v-if="people">
 
                 <div class="row no-gutters">
-                    <div :id="table.id" class="col-md-3 card reservation-checkbox text-center" v-on:change="checkAmount"
+                    <div :id="table.id" class="col-md-3 card reservation-checkbox text-center"
                          v-for="table in this.availableTables">
 
                         <label class="form-check-label" style="width: 100%; height: 100%; padding: 30px;">
@@ -131,19 +121,6 @@
 
                     </div>
                 </div>
-
-                <div class="space space--10"></div>
-
-                <div v-if="checkedTable.length > 2" class="alert alert-danger" role="alert">
-                    Er zijn te veel tafels geselecteerd.
-                    Neem contact met ons op om meer te reserveren.
-                </div>
-
-                <div v-if="messages" class="alert alert-danger" role="alert">
-                    {{messages}}
-                </div>
-
-
             </div>
 
             <div class="space space--20"></div>
@@ -155,11 +132,9 @@
             </div>
 
             <div v-if="checkedTable.length > 0">
-                <div v-if="checkedTable.length < 3 && error === false ">
-                    <button type="submit" value="submit" class="btn btn-primary">
-                        Reserveren
-                    </button>
-                </div>
+                <button type="submit" value="submit" class="btn btn-primary">
+                    Reserveren
+                </button>
             </div>
 
         </form>
@@ -225,36 +200,6 @@
                 }
 
             },
-            checkAmount() {
-                const that = this;
-
-                /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
-                that.selectedPeople = 0;
-                that.error = false;
-
-                axios
-                    .post('/get-tables-by-id', {
-
-                        table_id: JSON.parse(JSON.stringify(that.checkedTable))
-
-                    }).then(response => {
-
-                    that.max_capacity = 0;
-
-                    for (let i = 0; i < response.data.length; i++) {
-                        that.max_capacity = that.max_capacity + response.data[i].max_capacity;
-                    }
-
-                    if (that.max_capacity > 8) {
-
-                        that.error = true;
-                        that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
-                    } else {
-                        that.messages = false
-                    }
-                });
-                // }
-            },
             getReserved() {
                 // reset checkTable and checkbox style.
                 this.checkedTable = [];
@@ -262,11 +207,9 @@
 
                 const that = this;
                 axios
-                    .post('/get-tables-cap', {
-                        people: this.people
-                    })
+                    .get('/get-tables', {})
                     .then(response => {
-                        that.allTablesCap = response.data;
+                        that.allTables = response.data;
                     })
                     .catch(error => {
                         console.log(error);
@@ -279,7 +222,7 @@
                         })
                         .then(response => {
                             that.reservedTables = [];
-                            that.availableTables = that.allTablesCap;
+                            that.availableTables = that.allTables;
 
                             for (let i = 0; i < response.data.length; i++) {
                                 response.data[i].tables.forEach(function (item) {
