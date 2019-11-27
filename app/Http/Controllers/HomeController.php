@@ -50,7 +50,7 @@ class HomeController extends Controller
         $time = Carbon::now()->format('Y-m-d');
         $hourNow = Carbon::now()->format('H:i:s');
         $hour = Carbon::parse($hourNow)->addHours(3);
-
+        $hour= $hour->format('H:i:s');
         return view('account', compact('user', 'time', 'hour'));
     }
 
@@ -61,12 +61,13 @@ class HomeController extends Controller
 
         $time = Carbon::parse($mytimeh)->addHours(3);
 
+
         $reservation = Reservation::with('receipt', 'tables')->find($id);
         if ($reservation->date <= $mytime) {
-            if ($time->format('H:i:s') > $reservation->time)
+            if ($time->format('H:i:s') > $reservation->time) {
 
-            dd("Mag niet reserveren");
-            return Redirect::back()->withErrors(['Je mag niet meer annuleren']);
+                return Redirect::back()->withErrors(['Je mag niet meer annuleren']);
+            }
         }
 
         $reservation->receipt()->update(['reservation_id' => null]);

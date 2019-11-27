@@ -264,7 +264,7 @@
 
                             <td class="d-none d-lg-table-cell">
                                 @if($reservation->date >= $time )
-                                    @if($reservation->date !== $time or $reservation->time >= $hour)
+                                @if($reservation->date !== $time ||  $reservation->time > $hour)
                                         <a href="account/delete/{{$reservation->id}}">
                                             <button class="btn btn-danger button__delete">
                                                 <i class="fa fa-trash"></i>
