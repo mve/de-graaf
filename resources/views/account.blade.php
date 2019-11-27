@@ -205,13 +205,9 @@
                     </div>
                 </form>
             </div>
-
         </div>
-
         <div class="space space--50"></div>
-
         <h1>Mijn reserveringen</h1>
-
         <div class="row">
             <div class="col-md-12 mt-3">
                 <table class="table">
@@ -258,16 +254,24 @@
 
                             </td>
                             <td class="d-none d-lg-table-cell">
-                                <a href="reservering/nota/{{$reservation->id}}">PDF</a>
+                                @if($reservation->date >= $time )
+                                    @if($reservation->date !== $time or $reservation->time <= $hour)
+                                        <a href="reservering/nota/{{$reservation->id}}">PDF</a>
+                                    @endif
+                                @endif
 
                             </td>
 
                             <td class="d-none d-lg-table-cell">
-                                <a href="account/delete/{{$reservation->id}}">
-                                    <button class="btn btn-danger button__delete">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </a>
+                                @if($reservation->date >= $time )
+                                    @if($reservation->date !== $time or $reservation->time >= $hour)
+                                        <a href="account/delete/{{$reservation->id}}">
+                                            <button class="btn btn-danger button__delete">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </a>
+                                    @endif
+                                @endif
                             </td>
                         </tr>
                     @endforeach
