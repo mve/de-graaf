@@ -2464,7 +2464,7 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           that.messages = false;
         }
-      }); // }
+      });
     },
     getReserved: function getReserved() {
       var _this2 = this;

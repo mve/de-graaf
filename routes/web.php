@@ -67,13 +67,19 @@ Route::get('/reservering', function () {
 Route::post('/reservering',
     'ReservationController@createReservation')->middleware('verified')->middleware('notBlocked');
 
-Route::get('/blocked',[ 'as' => 'blocked', function () {
-    return view('blocked');
-}]);
+Route::get('/blocked', [
+    'as' => 'blocked',
+    function () {
+        return view('blocked');
+    }
+]);
 
-Route::get('/blockedByAdmin',[ 'as' => 'blocked', function () {
-    return view('blockedByAdmin');
-}]);
+Route::get('/blockedByAdmin', [
+    'as' => 'blocked',
+    function () {
+        return view('blockedByAdmin');
+    }
+]);
 Route::get('beheer/reservering/nota/{id}', 'receiptController@getReceipt')->middleware('verified');
 Route::get('/get-tables', 'TableController@getTables')->middleware('verified')->middleware('notBlocked');
 
@@ -88,7 +94,8 @@ Route::get('/beheer', function () {
 Route::get('/beheer/bestellingen',
     'OrderController@getOrders')->middleware('admin')->middleware('notBlocked')->middleware('verified');
 
-Route::get('/beheer/createOrder', 'OrderController@getData')->name('home')->middleware('admin')->middleware('notBlocked');
+Route::get('/beheer/createOrder',
+    'OrderController@getData')->name('home')->middleware('admin')->middleware('notBlocked');
 
 
 Route::get('/beheer/reserveringen',
@@ -117,12 +124,17 @@ Route::patch('/beheer/gebruikers/{user}',
 Route::delete('/beheer/gebruikers/{user}',
     ['as' => 'users.adminDelete', 'uses' => 'UserController@adminDelete'])->middleware('verified')->middleware('admin');
 
-Route::get('beheer/reservering/nota/download/{id}', 'ReceiptController@downloadPDF')->middleware('verified')->middleware('admin');
+Route::get('beheer/reservering/nota/download/{id}',
+    'ReceiptController@downloadPDF')->middleware('verified')->middleware('admin');
 
 Route::get('/beheer/reserveren', function () {
     return view('admin.createReservation');
 })->middleware('admin')->middleware('notBlocked')->middleware('verified');
+
 Route::post('beheer/reserveren', 'ReservationController@adminCreate')->middleware('verified')->middleware('admin');
+
+Route::delete('beheer/reservering/{id}',
+    'ReservationController@adminDelete')->middleware('verified')->middleware('admin');
 
 // API
 

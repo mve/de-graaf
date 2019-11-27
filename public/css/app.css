@@ -82,6 +82,11 @@ h6,
   height: 125px;
 }
 
+.card-content-admin-container--small {
+  padding: 15px 30px;
+  height: 60px;
+}
+
 .card-content-admin {
   display: -webkit-box;
   display: flex;
