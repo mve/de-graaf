@@ -24,11 +24,11 @@ class TableController extends Controller
     {
         $people = $request['people'];
         // if selected people <=4 show tables that have capacity < 5
-        if($people <= 4){
-            $tables = Table::where('max_capacity' ,'<=', 4)->get();
+        if ($people <= 4) {
+            $tables = Table::where('max_capacity', '<=', 4)->get();
 
         }
-        if($people >=5){
+        if ($people >= 5) {
             $tables = Table::where('max_capacity', '>=', 4)->get();
 
         }
@@ -36,26 +36,27 @@ class TableController extends Controller
         return json_encode($tables);
     }
 
-    public function getSingleTable(Request $request)
+    public function getTablesById(Request $request)
     {
-        $table = $request['table_id'];
+        $table_ids = $request['table_id'];
 
-        $table_cap = Table::where('id', '=' , $table)->get();
-        return json_encode($table_cap);
+        $tables = Table::find($table_ids);
+
+        return $tables;
     }
 
     public function getReservedTable(Request $request)
     {
-        $date       = $request['date'];
-        $time       = $request['time'];
+        $date = $request['date'];
+        $time = $request['time'];
 
-        $newTime = explode(":",$time);
-        $timeBefore = $newTime[0] - 2;
-        $timeAfter = $newTime[0] + 2;
-        $timeMinBefore = $newTime[1] - 1;
-        $timeMinAfter = $newTime[1] - 1;
-        $timeBefore = $timeBefore . ":" . $timeMinBefore . ":" . $newTime[2];
-        $timeAfter = $timeAfter . ":" . $timeMinAfter . ":" . $newTime[2];
+        $newTime          = explode(":", $time);
+        $timeBefore       = $newTime[0] - 2;
+        $timeAfter        = $newTime[0] + 2;
+        $timeMinBefore    = $newTime[1] - 1;
+        $timeMinAfter     = $newTime[1] - 1;
+        $timeBefore       = $timeBefore . ":" . $timeMinBefore . ":" . $newTime[2];
+        $timeAfter        = $timeAfter . ":" . $timeMinAfter . ":" . $newTime[2];
         $timeBeforeformat = $timeBefore;
         $timeAfterformat  = $timeAfter;
 
@@ -63,21 +64,22 @@ class TableController extends Controller
                                    ->where('date', '=', $date)
                                    ->whereBetween('time', [$timeBeforeformat, $timeAfterformat])
                                    ->get();
-//        $reservation = $reservations>tables->pluck('tables')->flatten();
-//        foreach($reservations as $res){
+
+//        $reservation = $reservations > tables->pluck('tables')->flatten();
+//        foreach ($reservations as $res) {
 //            return $res->tables->pluck('tables')->flatten();
 //
-////            foreach ($res->tables as $table){
-//////                return $table;
-//////                array_push($tablearray,$table->id);
-////            }
+//            foreach ($res->tables as $table) {
+//                return $table;
+//                array_push($tablearray, $table->id);
+//            }
 //        }
-//        foreach ($reservations as $r){
-////            foreach ($r->tables() as $tabel){
-////                array_push($tablearray,$tabel->id);
-////            }
-////        }
-////        $reservation[] = $reservations;
+//        foreach ($reservations as $r) {
+//            foreach ($r->tables() as $tabel) {
+//                array_push($tablearray, $tabel->id);
+//            }
+//        }
+//        $reservation[] = $reservations;
 
         return json_encode($reservations);
 //        return $table;

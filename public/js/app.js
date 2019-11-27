@@ -2339,42 +2339,38 @@ __webpack_require__.r(__webpack_exports__);
     setSelectorType: function setSelectorType(selector) {
       this.selectorType = selector;
     },
-    log: function log() {// console.log(this.checkedTable);
-      // console.log("testing this");
-    },
     checkAmount: function checkAmount() {
       var that = this;
       /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
 
       that.selectedPeople = 0;
       that.error = false;
-      that.max_capacity = 0;
+      axios.post('/get-tables-by-id', {
+        table_id: JSON.parse(JSON.stringify(that.checkedTable))
+      }).then(function (response) {
+        that.max_capacity = 0;
 
-      for (var i = 0; i < that.checkedTable.length; i++) {
-        // console.log('volgende is goed');
-        // console.log(that.checkedTable);
-        axios.post('/get-single-table', {
-          table_id: that.checkedTable
-        }).then(function (response) {
-          that.max_capacity = that.max_capacity + response.data[0].max_capacity;
-          console.log(that.max_capacity);
+        for (var i = 0; i < response.data.length; i++) {
+          that.max_capacity = that.max_capacity + response.data[i].max_capacity;
+        }
 
-          if (that.max_capacity > 8) {
-            that.error = true;
-            console.log(that.error);
-            that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
-          } else that.messages = false;
-        });
-      }
+        if (that.max_capacity > 8) {
+          that.error = true;
+          that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
+        } else {
+          that.messages = false;
+        }
+      }); // }
     },
     getReserved: function getReserved() {
       var _this2 = this;
 
+      this.checkedTable = [];
       var that = this;
       axios.post('/get-tables-cap', {
         people: this.people
       }).then(function (response) {
-        that.allTablesCap = response.data; // console.log(that.allTablesCap);
+        that.allTablesCap = response.data;
       })["catch"](function (error) {
         console.log(error);
         _this2.errored = true;
@@ -2383,7 +2379,7 @@ __webpack_require__.r(__webpack_exports__);
         time: this.selectorTime
       }).then(function (response) {
         that.reservedTables = [];
-        that.availableTables = that.allTablesCap; // console.log(that.reservedTables);
+        that.availableTables = that.allTablesCap;
 
         for (var i = 0; i < response.data.length; i++) {
           response.data[i].tables.forEach(function (item) {
@@ -38421,7 +38417,6 @@ var render = function() {
               attrs: { type: "date", min: _vm.minDateValue, name: "date" },
               domProps: { value: _vm.datePicker },
               on: {
-                change: _vm.getReserved,
                 input: function($event) {
                   if ($event.target.composing) {
                     return
@@ -38631,22 +38626,20 @@ var render = function() {
                         staticStyle: { width: "100%" },
                         attrs: { name: "selectorTime" },
                         on: {
-                          change: [
-                            function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.selectorTime = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            },
-                            _vm.getReserved
-                          ]
+                          click: _vm.getReserved,
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.selectorTime = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
                         }
                       },
                       [
