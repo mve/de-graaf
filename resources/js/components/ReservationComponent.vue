@@ -107,17 +107,27 @@
             <div class="space space--20"></div>
 
             <div class="tableGrid" v-if="people">
-                <div class="row">
-                    <div class="col-md-3" v-on:change="checkAmount" v-for="table in this.availableTables">
 
-                        <div class="form-check mb-2 mr-sm-2 mb-sm-0">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" :value="table.id"
-                                       name="checkedTable[]"
-                                       v-model="checkedTable">
-                                Tafel {{table.id}}. {{table.max_capacity}} stoelen
-                            </label>
-                        </div>
+                <div class="row no-gutters">
+                    <div :id="table.id" class="col-md-3 card reservation-checkbox text-center" v-on:change="checkAmount"
+                         v-for="table in this.availableTables">
+
+                        <label class="form-check-label" style="width: 100%; height: 100%; padding: 30px;">
+
+                            <input class="form-check-input hide-checkbox" v-on:change="styleCheckbox()"
+                                   type="checkbox" :value="table.id"
+                                   name="checkedTable[]"
+                                   v-model="checkedTable">
+
+                            <span class="h4">
+                                    Tafel {{table.id}}
+                            </span>
+                            <br>
+                            <span class="h5">
+                                    {{table.max_capacity}} stoelen
+                            </span>
+
+                        </label>
 
                     </div>
                 </div>
@@ -201,6 +211,20 @@
             setSelectorType(selector) {
                 this.selectorType = selector;
             },
+            styleCheckbox() {
+
+                let checkboxes = document.getElementsByClassName('reservation-checkbox');
+
+                for (let i = 0; checkboxes.length > i; i++) {
+                    checkboxes[i].classList.remove("reservation-checked");
+                }
+
+                for (let i = 0; this.checkedTable.length > i; i++) {
+                    let checkbox = document.getElementById(this.checkedTable[i]);
+                    checkbox.classList.add("reservation-checked");
+                }
+
+            },
             checkAmount() {
                 const that = this;
 
@@ -232,8 +256,9 @@
                 // }
             },
             getReserved() {
-
+                // reset checkTable and checkbox style.
                 this.checkedTable = [];
+                this.styleCheckbox();
 
                 const that = this;
                 axios

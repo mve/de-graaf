@@ -2406,6 +2406,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
   mounted: function mounted() {
@@ -2442,6 +2452,18 @@ __webpack_require__.r(__webpack_exports__);
     setSelectorType: function setSelectorType(selector) {
       this.selectorType = selector;
     },
+    styleCheckbox: function styleCheckbox() {
+      var checkboxes = document.getElementsByClassName('reservation-checkbox');
+
+      for (var i = 0; checkboxes.length > i; i++) {
+        checkboxes[i].classList.remove("reservation-checked");
+      }
+
+      for (var _i = 0; this.checkedTable.length > _i; _i++) {
+        var checkbox = document.getElementById(this.checkedTable[_i]);
+        checkbox.classList.add("reservation-checked");
+      }
+    },
     checkAmount: function checkAmount() {
       var that = this;
       /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
@@ -2468,7 +2490,9 @@ __webpack_require__.r(__webpack_exports__);
     getReserved: function getReserved() {
       var _this2 = this;
 
+      // reset checkTable and checkbox style.
       this.checkedTable = [];
+      this.styleCheckbox();
       var that = this;
       axios.post('/get-tables-cap', {
         people: this.people
@@ -2490,10 +2514,10 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
 
-        for (var _i = that.availableTables.length - 1; _i >= 0; _i--) {
+        for (var _i2 = that.availableTables.length - 1; _i2 >= 0; _i2--) {
           for (var j = 0; j < that.reservedTables.length; j++) {
-            if (that.availableTables[_i] && that.availableTables[_i].id === that.reservedTables[j].id) {
-              that.availableTables.splice(_i, 1);
+            if (that.availableTables[_i2] && that.availableTables[_i2].id === that.reservedTables[j].id) {
+              that.availableTables.splice(_i2, 1);
             }
           }
         }
@@ -39050,42 +39074,48 @@ var render = function() {
           ? _c("div", { staticClass: "tableGrid" }, [
               _c(
                 "div",
-                { staticClass: "row" },
+                { staticClass: "row no-gutters" },
                 _vm._l(this.availableTables, function(table) {
                   return _c(
                     "div",
                     {
-                      staticClass: "col-md-3",
+                      staticClass:
+                        "col-md-3 card reservation-checkbox text-center",
+                      attrs: { id: table.id },
                       on: { change: _vm.checkAmount }
                     },
                     [
                       _c(
-                        "div",
-                        { staticClass: "form-check mb-2 mr-sm-2 mb-sm-0" },
+                        "label",
+                        {
+                          staticClass: "form-check-label",
+                          staticStyle: {
+                            width: "100%",
+                            height: "100%",
+                            padding: "30px"
+                          }
+                        },
                         [
-                          _c("label", { staticClass: "form-check-label" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.checkedTable,
-                                  expression: "checkedTable"
-                                }
-                              ],
-                              staticClass: "form-check-input",
-                              attrs: {
-                                type: "checkbox",
-                                name: "checkedTable[]"
-                              },
-                              domProps: {
-                                value: table.id,
-                                checked: Array.isArray(_vm.checkedTable)
-                                  ? _vm._i(_vm.checkedTable, table.id) > -1
-                                  : _vm.checkedTable
-                              },
-                              on: {
-                                change: function($event) {
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.checkedTable,
+                                expression: "checkedTable"
+                              }
+                            ],
+                            staticClass: "form-check-input hide-checkbox",
+                            attrs: { type: "checkbox", name: "checkedTable[]" },
+                            domProps: {
+                              value: table.id,
+                              checked: Array.isArray(_vm.checkedTable)
+                                ? _vm._i(_vm.checkedTable, table.id) > -1
+                                : _vm.checkedTable
+                            },
+                            on: {
+                              change: [
+                                function($event) {
                                   var $$a = _vm.checkedTable,
                                     $$el = $event.target,
                                     $$c = $$el.checked ? true : false
@@ -39104,13 +39134,27 @@ var render = function() {
                                   } else {
                                     _vm.checkedTable = $$c
                                   }
+                                },
+                                function($event) {
+                                  return _vm.styleCheckbox()
                                 }
-                              }
-                            }),
+                              ]
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "h4" }, [
                             _vm._v(
-                              "\n                            Tafel " +
+                              "\n                                Tafel " +
                                 _vm._s(table.id) +
-                                ". " +
+                                "\n                        "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "h5" }, [
+                            _vm._v(
+                              "\n                                " +
                                 _vm._s(table.max_capacity) +
                                 " stoelen\n                        "
                             )
@@ -51900,8 +51944,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\de_graaf\de-graaf\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\de_graaf\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Projects\de-graaf\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Projects\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

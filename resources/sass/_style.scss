@@ -50,6 +50,17 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     height: 100px;
 }
 
+/* no-gutters Class Rules */
+.row.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+}
+.row.no-gutters > [class^="col-"],
+.row.no-gutters > [class*=" col-"] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
 .icon-container {
     text-align: center;
     align-self: center;
@@ -68,6 +79,24 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .card-content-admin {
     display: flex;
     align-items: center;
+}
+
+.hide-checkbox {
+    opacity: 0;
+    left: 30px;
+    position: absolute;
+}
+
+.hide-checkbox:checked {
+    background-color: red;
+}
+
+.reservation-checked {
+    background-color: $green !important;
+}
+
+.tableGrid {
+    width: 100%;
 }
 
 .recaptcha-container {
