@@ -2078,21 +2078,21 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
         _this2.errored = true;
       }));
+    },
+    getDayOfWeek: function getDayOfWeek() {
+      var that = this;
+      var d = new Date(that.datePicker);
+      var weekday = new Array(7);
+      weekday[0] = "Sunday";
+      weekday[1] = "Monday";
+      weekday[2] = "Tuesday";
+      weekday[3] = "Wednesday";
+      weekday[4] = "Thursday";
+      weekday[5] = "Friday";
+      weekday[6] = "Saturday";
+      that.dayName = weekday[d.getDay()];
+      console.log(that.dayName);
     }
-  },
-  getDayOfWeek: function getDayOfWeek() {
-    var that = this;
-    var d = new Date(that.datePicker);
-    var weekday = new Array(7);
-    weekday[0] = "Sunday";
-    weekday[1] = "Monday";
-    weekday[2] = "Tuesday";
-    weekday[3] = "Wednesday";
-    weekday[4] = "Thursday";
-    weekday[5] = "Friday";
-    weekday[6] = "Saturday";
-    that.dayName = weekday[d.getDay()];
-    console.log(that.dayName);
   },
   computed: {
     minDateValue: function minDateValue() {
@@ -52151,8 +52151,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Projects\de-graaf\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Projects\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\de-graaf\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

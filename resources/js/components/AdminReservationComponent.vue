@@ -252,23 +252,24 @@
                             this.errored = true
                         })
                 );
+            },
+            getDayOfWeek() {
+                const that = this;
+                let d = new Date(that.datePicker);
+                
+                let weekday = new Array(7);
+                weekday[0] = "Sunday";
+                weekday[1] = "Monday";
+                weekday[2] = "Tuesday";
+                weekday[3] = "Wednesday";
+                weekday[4] = "Thursday";
+                weekday[5] = "Friday";
+                weekday[6] = "Saturday";
+
+                that.dayName = weekday[d.getDay()];
+                console.log(that.dayName);
             }
-        },
-        getDayOfWeek() {
-            const that = this;
-            let d = new Date(that.datePicker);
 
-            let weekday = new Array(7);
-            weekday[0] = "Sunday";
-            weekday[1] = "Monday";
-            weekday[2] = "Tuesday";
-            weekday[3] = "Wednesday";
-            weekday[4] = "Thursday";
-            weekday[5] = "Friday";
-            weekday[6] = "Saturday";
-
-            that.dayName = weekday[d.getDay()];
-            console.log(that.dayName);
         },
 
         computed: {
