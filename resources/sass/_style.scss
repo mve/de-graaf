@@ -86,6 +86,29 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     align-items: center;
 }
 
+.btn-orange {
+    color: #fff !important;
+    background-color: $orange !important;
+    border-color: $orange !important;
+}
+
+.btn-orange:hover {
+    color: #fff !important;
+    background-color: $orange-dark !important;
+    border-color: $orange-dark !important;
+}
+
+.btn-outline-orange {
+    color: $orange !important;
+    border-color: $orange !important;
+}
+
+.btn-outline-orange:hover {
+    color: #fff !important;
+    background-color: $orange !important;
+    border-color: $orange !important;
+}
+
 .hide-checkbox {
     opacity: 0;
     left: 30px;
