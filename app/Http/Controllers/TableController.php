@@ -53,7 +53,7 @@ class TableController extends Controller
         $newTime          = explode(":", $time);
         $timeBefore       = $newTime[0] - 2;
         $timeAfter        = $newTime[0] + 2;
-        $timeMinBefore    = $newTime[1] - 1;
+        $timeMinBefore    = $newTime[1] + 1;
         $timeMinAfter     = $newTime[1] - 1;
         $timeBefore       = $timeBefore . ":" . $timeMinBefore . ":" . $newTime[2];
         $timeAfter        = $timeAfter . ":" . $timeMinAfter . ":" . $newTime[2];

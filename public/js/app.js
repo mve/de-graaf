@@ -1985,6 +1985,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
   mounted: function mounted() {
@@ -2012,6 +2020,7 @@ __webpack_require__.r(__webpack_exports__);
       reservedTables: [],
       max_capacity: 0,
       people: '',
+      dayName: '',
       selectedPeople: '',
       csrf: document.head.querySelector('meta[name="csrf-token"]').content
     };
@@ -2070,6 +2079,20 @@ __webpack_require__.r(__webpack_exports__);
         _this2.errored = true;
       }));
     }
+  },
+  getDayOfWeek: function getDayOfWeek() {
+    var that = this;
+    var d = new Date(that.datePicker);
+    var weekday = new Array(7);
+    weekday[0] = "Sunday";
+    weekday[1] = "Monday";
+    weekday[2] = "Tuesday";
+    weekday[3] = "Wednesday";
+    weekday[4] = "Thursday";
+    weekday[5] = "Friday";
+    weekday[6] = "Saturday";
+    that.dayName = weekday[d.getDay()];
+    console.log(that.dayName);
   },
   computed: {
     minDateValue: function minDateValue() {
@@ -2439,6 +2462,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
   mounted: function mounted() {
@@ -2466,6 +2497,7 @@ __webpack_require__.r(__webpack_exports__);
       reservedTables: [],
       max_capacity: 0,
       people: '',
+      dayName: '',
       selectedPeople: '',
       csrf: document.head.querySelector('meta[name="csrf-token"]').content
     };
@@ -2548,6 +2580,20 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
         _this2.errored = true;
       }));
+    },
+    getDayOfWeek: function getDayOfWeek() {
+      var that = this;
+      var d = new Date(that.datePicker);
+      var weekday = new Array(7);
+      weekday[0] = "Sunday";
+      weekday[1] = "Monday";
+      weekday[2] = "Tuesday";
+      weekday[3] = "Wednesday";
+      weekday[4] = "Thursday";
+      weekday[5] = "Friday";
+      weekday[6] = "Saturday";
+      that.dayName = weekday[d.getDay()];
+      console.log(that.dayName);
     }
   },
   computed: {
@@ -37947,6 +37993,7 @@ var render = function() {
               attrs: { type: "date", min: _vm.minDateValue, name: "date" },
               domProps: { value: _vm.datePicker },
               on: {
+                change: _vm.getDayOfWeek,
                 input: function($event) {
                   if ($event.target.composing) {
                     return
@@ -38223,7 +38270,55 @@ var render = function() {
                         _vm._v(" "),
                         _c("option", { attrs: { value: "20:00:00" } }, [
                           _vm._v("20:00")
-                        ])
+                        ]),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "20:15:00" } }, [
+                              _vm._v("20:15")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "20:30:00" } }, [
+                              _vm._v("20:30")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "20:45:00" } }, [
+                              _vm._v("20:45")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "21:00:00" } }, [
+                              _vm._v("21:00")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "21:15:00" } }, [
+                              _vm._v("21:15")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "21:30:00" } }, [
+                              _vm._v("21:30")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "21:45:00" } }, [
+                              _vm._v("21:45")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "22:00:00" } }, [
+                              _vm._v("22:00")
+                            ])
+                          : _vm._e()
                       ]
                     )
                   : _vm._e()
@@ -38789,6 +38884,7 @@ var render = function() {
               attrs: { type: "date", min: _vm.minDateValue, name: "date" },
               domProps: { value: _vm.datePicker },
               on: {
+                change: _vm.getDayOfWeek,
                 input: function($event) {
                   if ($event.target.composing) {
                     return
@@ -39065,7 +39161,55 @@ var render = function() {
                         _vm._v(" "),
                         _c("option", { attrs: { value: "20:00:00" } }, [
                           _vm._v("20:00")
-                        ])
+                        ]),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "20:15:00" } }, [
+                              _vm._v("20:15")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "20:30:00" } }, [
+                              _vm._v("20:30")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "20:45:00" } }, [
+                              _vm._v("20:45")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "21:00:00" } }, [
+                              _vm._v("21:00")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "21:15:00" } }, [
+                              _vm._v("21:15")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "21:30:00" } }, [
+                              _vm._v("21:30")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "21:45:00" } }, [
+                              _vm._v("21:45")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.dayName === "Friday" || _vm.dayName === "Saturday"
+                          ? _c("option", { attrs: { value: "22:00:00" } }, [
+                              _vm._v("22:00")
+                            ])
+                          : _vm._e()
                       ]
                     )
                   : _vm._e()
