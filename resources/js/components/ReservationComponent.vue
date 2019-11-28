@@ -8,7 +8,7 @@
 
             <div class="datepicker col-md-4">
                 <label style="width: 100%">Datum:
-                    <input class="form-control" type="date" v-model="datePicker"
+                    <input class="form-control" v-on:change="getDayOfWeek" type="date" v-model="datePicker"
                            :min="minDateValue" name="date">
                 </label>
             </div>
@@ -82,6 +82,14 @@
                         <option value="19:30:00">19:30</option>
                         <option value="19:45:00">19:45</option>
                         <option value="20:00:00">20:00</option>
+                        <option v-if="dayName === 'Friday' || dayName === 'Saturday'" value="20:15:00">20:15</option>
+                        <option v-if="dayName === 'Friday' || dayName === 'Saturday'" value="20:30:00">20:30</option>
+                        <option v-if="dayName === 'Friday' || dayName === 'Saturday'" value="20:45:00">20:45</option>
+                        <option v-if="dayName === 'Friday' || dayName === 'Saturday'" value="21:00:00">21:00</option>
+                        <option v-if="dayName === 'Friday' || dayName === 'Saturday'" value="21:15:00">21:15</option>
+                        <option v-if="dayName === 'Friday' || dayName === 'Saturday'" value="21:30:00">21:30</option>
+                        <option v-if="dayName === 'Friday' || dayName === 'Saturday'" value="21:45:00">21:45</option>
+                        <option v-if="dayName === 'Friday' || dayName === 'Saturday'" value="22:00:00">22:00</option>
                     </select>
                 </label>
             </div>
@@ -200,6 +208,7 @@
                 reservedTables: [],
                 max_capacity: 0,
                 people: '',
+                dayName: '',
                 selectedPeople: '',
                 csrf: document.head.querySelector('meta[name="csrf-token"]').content
             }
@@ -299,6 +308,22 @@
                             this.errored = true
                         })
                 );
+            },
+            getDayOfWeek() {
+                const that = this;
+                let d = new Date(that.datePicker);
+
+                let weekday = new Array(7);
+                weekday[0] = "Sunday";
+                weekday[1] = "Monday";
+                weekday[2] = "Tuesday";
+                weekday[3] = "Wednesday";
+                weekday[4] = "Thursday";
+                weekday[5] = "Friday";
+                weekday[6] = "Saturday";
+
+                that.dayName = weekday[d.getDay()];
+                console.log(that.dayName);
             }
         },
         computed: {
