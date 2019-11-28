@@ -14,7 +14,9 @@ class OrderController extends Controller
 {
     public function getOrders()
     {
-        $unsortedorders = Order::with('product', 'receipt.reservation.tables')->paginate(15);
+        $unsortedorders = Order::with('product', 'receipt.reservation.tables');
+
+        $unsortedorders = $unsortedorders->orderBy('created_at', 'desc')->paginate(15);
 
         return view('admin.orders', compact('unsortedorders'));
     }
@@ -30,7 +32,8 @@ class OrderController extends Controller
         $selectedCategory = \request('category');
 
         $subcoursce = SubCourse::with('products')->where("name", 'LIKE', $selectedCategory)->get();
-        $products = Product::all()->where('sub_course_id', '=', $subcoursce[0]->id);
+        $products   = Product::all()->where('sub_course_id', '=', $subcoursce[0]->id);
+
         return json_encode($products);
     }
 
@@ -46,12 +49,12 @@ class OrderController extends Controller
 
     public function createOrder(Request $request)
     {
-        $products = $request['products'];
-        $reservationId = $request['reservationid'];
+        $products       = $request['products'];
+        $reservationId  = $request['reservationid'];
         $productenarray = [];
-        $reservation = Reservation::with('receipt')->find($reservationId);
-        $count = 1;
-        $quantitys = [];
+        $reservation    = Reservation::with('receipt')->find($reservationId);
+        $count          = 1;
+        $quantitys      = [];
         foreach ($products as $item) {
 
             if (in_array($item[0], $productenarray)) {
@@ -72,16 +75,19 @@ class OrderController extends Controller
             $orders = Order::create([
                 'product_id' => $addproduct->id,
                 'receipt_id' => $reservation->receipt->id,
-                'quantity' => $quantitys[$addproduct->name],
+                'quantity'   => $quantitys[$addproduct->name],
 
             ]);
         }
+
         return 'Bestelling geplaatst';
     }
 
-    public function deleteOrder($id){
+    public function deleteOrder($id)
+    {
         $Order = Order::all()->find($id);
         $Order->delete();
+
         return redirect()->back();
     }
 

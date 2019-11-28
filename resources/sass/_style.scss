@@ -86,24 +86,24 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     align-items: center;
 }
 
-.btn-orange {
+.btn-primary {
     color: #fff !important;
     background-color: $orange !important;
     border-color: $orange !important;
 }
 
-.btn-orange:hover {
+.btn-primary:hover {
     color: #fff !important;
     background-color: $orange-dark !important;
     border-color: $orange-dark !important;
 }
 
-.btn-outline-orange {
+.btn-outline-primary {
     color: $orange !important;
     border-color: $orange !important;
 }
 
-.btn-outline-orange:hover {
+.btn-outline-primary:hover {
     color: #fff !important;
     background-color: $orange !important;
     border-color: $orange !important;

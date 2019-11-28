@@ -27,7 +27,7 @@
 
                         <div class="col-md-6">
                             <div class="md-form mb-0">
-                                <label for="email" class="h3">Jouw email</label>
+                                <label for="email" class="h3">Jouw e-mail</label>
                                 <input type="text" id="email" name="email" class="form-control">
 
                             </div>

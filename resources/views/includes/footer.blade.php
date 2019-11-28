@@ -7,8 +7,9 @@
                         <h4>Contact</h4>
                         <ul class="list-unstyled">
                             <li><a href="#"></a></li>
-                            <li>Maastricht, 1234BB,</li>
                             <li>JF-kennedylaan 32</li>
+                            <li>1234 BB</li>
+                            <li>Maastricht</li>
                             <li>+ 01 234 567 89</li>
                             <li>infomaildegraaf@gmail.com</li>
                         </ul>

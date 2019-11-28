@@ -43,62 +43,62 @@
                 @method('patch')
 
                 <div class="form-group">
-                    <label for="name">name</label>
+                    <label for="name">Voornaam</label>
                     <input class="form-control" id="name" name="name" type="text" placeholder="{{$user->name}}">
                 </div>
 
                 <div class="form-group">
-                    <label for="infix">infix</label>
+                    <label for="infix">Tussenvoegsel</label>
                     <input class="form-control" id="infix" name="infix" type="text"
                            placeholder="{{$user->infix}}">
                 </div>
 
                 <div class="form-group">
-                    <label for="surname">surname</label>
+                    <label for="surname">Achternaam</label>
                     <input class="form-control" id="surname" name="surname" type="text"
                            placeholder="{{$user->surname}}">
                 </div>
 
                 <div class="form-group">
-                    <label for="telephone">telephone</label>
+                    <label for="telephone">Telefoon nummer</label>
                     <input class="form-control" id="telephone" name="telephone" type="text"
                            placeholder="{{$user->telephone}}">
                 </div>
 
                 <div class="form-group">
-                    <label for="zipcode">zipcode</label>
+                    <label for="address">Straat + Huisnummer</label>
+                    <input class="form-control" id="address" name="address" type="text"
+                           placeholder="{{$user->address}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="zipcode">Postcode</label>
                     <input class="form-control" id="zipcode" name="zipcode" type="text"
                            placeholder="{{$user->zipcode}}">
                 </div>
 
                 <div class="form-group">
-                    <label for="city">city</label>
+                    <label for="city">Stad</label>
                     <input class="form-control" id="city" name="city" type="text" placeholder="{{$user->city}}">
                 </div>
 
                 <div class="form-group">
-                    <label for="address">address</label>
-                    <input class="form-control" id="address" name="address" type="text"
-                           placeholder="{{$user->address}}">
-
-                </div>
-
-                <div class="form-group">
-                    <label for="email">email</label>
+                    <label for="email">E-mail</label>
                     <input class="form-control" id="email" name="email" type="text" placeholder="{{$user->email}}">
                 </div>
 
                 <div class="form-group">
-                    <label for="isadmin">isadmin</label>
+                    <label for="isadmin">Rol</label>
                     <select class="form-control" id="isadmin" name="isadmin">
 
                         <option value="0" @if($user->isadmin == 0) selected @endif>Gebruiker</option>
-                        <option value="1" @if($user->isadmin == 1) selected @endif>Admin</option>
+                        <option value="1" @if($user->isadmin == 1) selected @endif>Medewerker</option>
+                        <option value="1" @if($user->isadmin == 2) selected @endif>Admin</option>
 
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Opslaan</button>
             </form>
         </div>
 

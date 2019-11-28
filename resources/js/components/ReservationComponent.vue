@@ -20,14 +20,14 @@
                 <div class="row" style="padding: 0 15px;">
                     <div class="col-md-6">
                         <div style="width: 100%" class="btn"
-                             :class="selectorType === 'Lunch' ? 'btn-primary btn-orange' : 'btn-outline-primary btn-outline-orange'"
+                             :class="selectorType === 'Lunch' ? 'btn-primary' : 'btn-outline-primary'"
                              v-on:click="setSelectorType('Lunch')">
                             Lunch
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div style="width: 100%" class="btn"
-                             :class="selectorType === 'Diner' ? 'btn-primary btn-orange' : 'btn-outline-primary btn-outline-orange'"
+                             :class="selectorType === 'Diner' ? 'btn-primary' : 'btn-outline-primary'"
                              v-on:click="setSelectorType('Diner')">
                             Diner
                         </div>

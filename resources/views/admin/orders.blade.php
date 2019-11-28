@@ -3,14 +3,14 @@
 @section('content')
     <div class="container">
         <div class="row w-100 mb-3">
-            <h1 class="float-left">Admin Orders</h1>
+            <h1 class="float-left">Admin Bestellingen</h1>
             <button type="button" onclick="window.location='{{ url("/beheer/createOrder") }}'"
                     class="btn btn-success ml-auto"><i class="fa fa-plus" aria-hidden="true"></i> Bestelling aanmaken
             </button>
         </div>
         <table class="table">
             <tr>
-                <th class="d-lg-none" colspan="2">Orders</th>
+                <th class="d-lg-none" colspan="3">Bestellingen</th>
                 <th class="d-none d-lg-table-cell">Datum</th>
                 <th class="d-none d-lg-table-cell">Product</th>
                 <th class="d-none d-lg-table-cell">Hoeveelheid</th>

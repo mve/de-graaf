@@ -22,7 +22,7 @@
 
                             <div class="row" style="border-bottom: 1px solid #c9c9c9">
 
-                                <div class="col-6">
+                                <div class="col-9">
                                     <span class="float-left">
 
                                     {{ $product->name }}
@@ -30,10 +30,10 @@
                                      </span>
 
                                 </div>
-                                <div class="col-6">
+                                <div class="col-3">
                                     <span class="float-right">
 
-                                    € {{ $product->price }} ,-
+                                    € {{ $product->price }}
 
                                     </span>
 
