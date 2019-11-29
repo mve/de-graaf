@@ -101,22 +101,7 @@ class UserController extends Controller
         return view('admin.editUser', compact('user'));
     }
 
-    public function sendmail(Request $request)
-    {
-        // Check of alles is ingevuld
-        $this->validate(request(), [
 
-            'email' => 'required',
-            'subject' => 'required',
-            'name' => 'required',
-            'message' => 'required',
-        ]);
-        //Verstuur de mail.
-        Mail::send(new contact($request));
-
-        //Stuur user terug met message.
-        return redirect()->back()->with('success', 'Je bericht is verstuurd');
-    }
 
     /**
      * Update for admin, can change role.

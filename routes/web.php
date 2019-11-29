@@ -23,7 +23,7 @@ Route::get('/contact', function () {
     return view('contact');
 })->middleware('notBlocked');
 
-Route::post('/contact', 'UserController@sendmail');
+Route::post('/contact', 'Controller@sendmail');
 
 Route::get('/menu',
     'ProductController@index');
