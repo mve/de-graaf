@@ -46,7 +46,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update for users, can't change role.
+     * Update voor gebruikers. Email moet uniek zijn.
      *
      * @param Request $request
      * @param User $user
