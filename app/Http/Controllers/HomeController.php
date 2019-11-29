@@ -87,7 +87,7 @@ class HomeController extends Controller
 
         $reservation->delete();
 
-        return redirect('/account');
+        return redirect()->back()->with('success', 'Je reservering is succesvol geannuleerd!');
 
     }
 

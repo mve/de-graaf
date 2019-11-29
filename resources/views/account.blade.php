@@ -209,6 +209,13 @@
         <div class="space space--50"></div>
         <h1>Mijn reserveringen</h1>
         <div class="row">
+            @if (\Session::has('success'))
+                <div class="alert alert-success w-100">
+                    <ul>
+                        <li>{!! \Session::get('success') !!}</li>
+                    </ul>
+                </div>
+            @endif
             <div class="col-md-12 mt-3">
                 <table class="table">
                     <tr>
