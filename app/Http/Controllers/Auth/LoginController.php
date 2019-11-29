@@ -17,6 +17,7 @@ class LoginController extends Controller
 
     protected function hasTooManyLoginAttempts(Request $request)
     {
+        //als de user te veel inlogpogingen heeft gedaan en als hij bestaat, dan blokkeer de gebruiker.
         if ($this->limiter()->tooManyAttempts($this->throttleKey($request), $this->maxAttempts())) {
             $user = User::where('email', $request->email)->first();
             if ($user) {
@@ -32,20 +33,22 @@ class LoginController extends Controller
 
     protected function incrementLoginAttempts(Request $request)
     {
+        //Kijkt of de gebruiker bestaat, als hij bestaat tel 1 poging op, zo niet ga terug naar de pagina zonder iets te doen.
+        $user = User::where('email', '=', $request['email'])->first();
+
+        if ($user) {
+            $this->limiter()->hit(
+                $this->throttleKey($request), $this->decayMinutes() * 60
+            );
 
 
-        $this->limiter()->hit(
-            $this->throttleKey($request), $this->decayMinutes() * 60
-        );
-
-
-        throw ValidationException::withMessages([
-            $this->username() => [Lang::get('auth.attempts', [
-                'attempt' => $this->limiter()->attempts($this->throttleKey($request)),
-            ])],
-        ])->status(Response::HTTP_TOO_MANY_REQUESTS);
-
-
+            throw ValidationException::withMessages([
+                $this->username() => [Lang::get('auth.attempts', [
+                    'attempt' => $this->limiter()->attempts($this->throttleKey($request)),
+                ])],
+            ])->status(Response::HTTP_TOO_MANY_REQUESTS);
+        }
+        return redirect()->back();
     }
 
     protected function sendLockoutResponse(Request $request)

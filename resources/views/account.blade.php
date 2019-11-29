@@ -254,8 +254,9 @@
 
                             </td>
                             <td class="d-none d-lg-table-cell">
-                                @if($reservation->date >= $time )
-                                    @if($reservation->date !== $time or $reservation->time <= $hour)
+
+                                @if($reservation->date <= $date )
+                                    @if($reservation->date !== $date or $reservation->time <= $time)
                                         <a href="reservering/nota/{{$reservation->id}}">PDF</a>
                                     @endif
                                 @endif
@@ -263,8 +264,8 @@
                             </td>
 
                             <td class="d-none d-lg-table-cell">
-                                @if($reservation->date >= $time )
-                                    @if($reservation->date !== $time or $reservation->time >= $hour)
+                                @if($reservation->date >= $date )
+                                    @if($reservation->date !== $date or $reservation->time >= $time)
                                         <a href="account/delete/{{$reservation->id}}">
                                             <button class="btn btn-danger button__delete">
                                                 <i class="fa fa-trash"></i>

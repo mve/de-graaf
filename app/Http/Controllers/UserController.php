@@ -103,6 +103,7 @@ class UserController extends Controller
 
     public function sendmail(Request $request)
     {
+        // Check of alles is ingevuld
         $this->validate(request(), [
 
             'email' => 'required',
@@ -110,9 +111,11 @@ class UserController extends Controller
             'name' => 'required',
             'message' => 'required',
         ]);
+        //Verstuur de mail.
         Mail::send(new contact($request));
 
-        return view('home');
+        //Stuur user terug met message.
+        return redirect()->back()->with('success', 'Je bericht is verstuurd');
     }
 
     /**

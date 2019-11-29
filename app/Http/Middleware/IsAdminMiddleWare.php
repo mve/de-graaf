@@ -16,6 +16,7 @@ class IsAdminMiddleWare
      */
     public function handle($request, Closure $next)
     {
+        //Kijkt of de huidige gebruiker een beheerder is
         if (Auth::user() &&  Auth::user()->isadmin == 2) {
             return $next($request);
         }
