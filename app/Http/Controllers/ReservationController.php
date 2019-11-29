@@ -31,7 +31,7 @@ class ReservationController extends Controller
 
     public function adminGetDay()
     {
-        $today     = Carbon::now()->format('Y-m-d');
+        $today = Carbon::now()->format('Y-m-d');
 
         $unsortedreservations = Reservation::with('tables')->where('date', $today);
         $sorted               = $unsortedreservations->orderBy('date', 'desc');
@@ -42,7 +42,7 @@ class ReservationController extends Controller
 
     public function adminGetWeek()
     {
-        $today     = Carbon::now()->format('Y-m-d');
+        $today = Carbon::now()->format('Y-m-d');
 
         $nextweek = Carbon::parse($today)->addWeek();
 
@@ -55,7 +55,7 @@ class ReservationController extends Controller
 
     public function adminGetMonth()
     {
-        $today     = Carbon::now()->format('Y-m-d');
+        $today = Carbon::now()->format('Y-m-d');
 
         $nextMonth = Carbon::parse($today)->addMonth();
 
@@ -168,14 +168,20 @@ class ReservationController extends Controller
         return back();
     }
 
+    /**
+     * @param $id
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function adminDelete($id)
     {
+        // Haal de reservering op op basis van een id.
         $reservation = Reservation::with('receipt', 'tables')->find($id);
-
+        // Zet de reservation_id bij de receipts en tables op null.
         $reservation->receipt()->update(['reservation_id' => null]);
-
         $reservation->tables()->update(['reservation_id' => null]);
-
+        // Verwijder de reservation.
         $reservation->delete();
 
         return back();

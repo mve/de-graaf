@@ -15,8 +15,9 @@
 ## Seeder
 1. php artisan migrate:fresh
 2. composer dump-autoload
-3. php artisan db:seed
-
+3. Ga naar database/seeds/menuSeeder.php
+4. volg de instructies daar (Eerst menuSeeder, dan reservationTableSeeder)
+5. php artisan db:seed
 
 ## Roles
 1. In de web.php moeten routes beveiligd worden

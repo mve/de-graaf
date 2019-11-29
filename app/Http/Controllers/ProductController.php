@@ -15,12 +15,12 @@ class ProductController extends Controller
      */
     public function index()
     {
+        // Haal de products, subcourses en maincourses op.
         $products = Product::with('subCourse.mainCourse')->get();
-
         $subCourses = SubCourse::all();
-
         $mainCourses = MainCourse::all();
 
+        // Stuur de products, subcourses en maincourses door naar de menu kaart pagina.
         return view('/menu', compact('products', 'subCourses', 'mainCourses'));
     }
 

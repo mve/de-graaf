@@ -23,9 +23,15 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * @param array $data
+     *
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
     protected function Validator(array $data)
     {
         return Validator::make($data, [
+            // De captcha is vereist.
             'g-recaptcha-response' => 'required|recaptcha',
             'name'                 => 'required',
             'email'                => 'required',
@@ -104,6 +110,7 @@ class HomeController extends Controller
 
     public function deleteconfirm(Request $request)
     {
+        // De captcha is vereist.
         $validatedData = $request->validate([
             'g-recaptcha-response' => 'required|recaptcha',
         ]);

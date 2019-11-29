@@ -12,6 +12,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
+                    {{-- Verander de styling als dit de huidige pagina is --}}
                     <a class="nav-link @if (\Request::is('/')) nav-link--active @endif" href="{{ url('/') }}">Home</a>
                 </li>
                 <li class="nav-item">

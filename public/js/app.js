@@ -2507,22 +2507,23 @@ __webpack_require__.r(__webpack_exports__);
     setSelectorType: function setSelectorType(selector) {
       this.selectorType = selector;
     },
+    // Verander de style van de checkbox als die is geselecteerd.
     styleCheckbox: function styleCheckbox() {
-      var checkboxes = document.getElementsByClassName('reservation-checkbox');
+      // Haal alle checkboxes op.
+      var checkboxes = document.getElementsByClassName('reservation-checkbox'); // Verwijder de reservation-checked class van alle checkboxes.
 
       for (var i = 0; checkboxes.length > i; i++) {
         checkboxes[i].classList.remove("reservation-checked");
       }
 
       for (var _i = 0; this.checkedTable.length > _i; _i++) {
+        // Zoek alle
         var checkbox = document.getElementById(this.checkedTable[_i]);
         checkbox.classList.add("reservation-checked");
       }
     },
     checkAmount: function checkAmount() {
       var that = this;
-      /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
-
       that.selectedPeople = 0;
       that.error = false;
       axios.post('/get-tables-by-id', {
@@ -52151,8 +52152,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\de-graaf\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Projects\de-graaf\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Projects\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

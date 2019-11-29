@@ -220,15 +220,19 @@
             setSelectorType(selector) {
                 this.selectorType = selector;
             },
+            // Verander de style van de checkbox als die is geselecteerd.
             styleCheckbox() {
 
+                // Haal alle checkboxes op.
                 let checkboxes = document.getElementsByClassName('reservation-checkbox');
 
+                // Verwijder de reservation-checked class van alle checkboxes.
                 for (let i = 0; checkboxes.length > i; i++) {
                     checkboxes[i].classList.remove("reservation-checked");
                 }
 
                 for (let i = 0; this.checkedTable.length > i; i++) {
+                    // Zoek alle
                     let checkbox = document.getElementById(this.checkedTable[i]);
                     checkbox.classList.add("reservation-checked");
                 }
@@ -236,8 +240,6 @@
             },
             checkAmount() {
                 const that = this;
-
-                /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
                 that.selectedPeople = 0;
                 that.error = false;
 

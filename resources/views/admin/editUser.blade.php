@@ -91,6 +91,7 @@
                     <label for="isadmin">Rol</label>
                     <select class="form-control" id="isadmin" name="isadmin">
 
+                        {{-- Verander de default input naar de huidige rol. --}}
                         <option value="0" @if($user->isadmin == 0) selected @endif>Gebruiker</option>
                         <option value="1" @if($user->isadmin == 1) selected @endif>Medewerker</option>
                         <option value="1" @if($user->isadmin == 2) selected @endif>Admin</option>

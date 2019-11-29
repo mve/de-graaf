@@ -26,6 +26,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        // Haal de users op per 10.
         $users = User::paginate(10);
 
         return view('admin.users', compact('users'));
@@ -38,8 +39,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        // Haal de huidige user op.
         $user = Auth::user();
-
+        // Stuur de gebruiker mee naar de account pagina.
         return view('account', compact('user'));
     }
 
@@ -54,7 +56,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-
+        // Valideer de input.
         $this->validate(request(), [
             'name'                 => ['sometimes', 'nullable', 'string', 'max:191'],
             'infix'                => ['sometimes', 'nullable', 'string', 'max:191'],
@@ -63,8 +65,10 @@ class UserController extends Controller
             'zipcode'              => ['sometimes', 'nullable', 'string', 'min:4'],
             'city'                 => ['sometimes', 'nullable', 'string', 'max:191'],
             'address'              => ['sometimes', 'nullable', 'string', 'max:191'],
+            // De captcha moet zijn ingevoerd.
             'g-recaptcha-response' => 'required|recaptcha',
 
+            // Een email moet uniek zijn.
             'email'    => [
                 'sometimes',
                 'nullable',
@@ -76,6 +80,7 @@ class UserController extends Controller
             'password' => ['sometimes', 'nullable', 'string', 'min:8']
         ]);
 
+        // Als de invoer is veranderd, verander de gebruiker naar de invoer, anders hou de oude.
         $user->name      = (isset($request->name) > 0) ? $request->name : $user->name;
         $user->infix     = (isset($request->infix) > 0) ? $request->infix : $user->infix;
         $user->surname   = (isset($request->surname) > 0) ? $request->surname : $user->surname;
@@ -127,6 +132,7 @@ class UserController extends Controller
     public function adminUpdate(Request $request, User $user)
     {
 
+        // Valideer de invoer. Als het niet klopt stuur de gebruiker terug met een error melding.
         $this->validate(request(), [
             'name'      => ['sometimes', 'nullable', 'string', 'max:191'],
             'infix'     => ['sometimes', 'nullable', 'string', 'max:191'],
@@ -136,6 +142,7 @@ class UserController extends Controller
             'city'      => ['sometimes', 'nullable', 'string', 'max:191'],
             'address'   => ['sometimes', 'nullable', 'string', 'max:191'],
 
+            // Het e-mail van de gebruiker moet uniek zijn.
             'email'    => [
                 'sometimes',
                 'nullable',
@@ -148,6 +155,7 @@ class UserController extends Controller
             'idadmin'  => ['sometimes', 'nullable', 'numeric']
         ]);
 
+        // Als de invoer is veranderd, verander de gebruiker naar de invoer, anders hou de oude.
         $user->name      = (isset($request->name) > 0) ? $request->name : $user->name;
         $user->infix     = (isset($request->infix) > 0) ? $request->infix : $user->infix;
         $user->surname   = (isset($request->surname) > 0) ? $request->surname : $user->surname;
@@ -164,11 +172,20 @@ class UserController extends Controller
         return back();
     }
 
+    /**
+     * @param User $user
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function toggleBlock(User $user)
     {
+        // Als een gebruiker niet is geblokkeerd
         if ($user->blocked == 0) {
+
+            // Blokeer de gebruiker
             $user->blocked = 1;
         } else {
+            // Ontblokeer de gebruiker
             $user->blocked = 0;
         }
 
@@ -177,26 +194,19 @@ class UserController extends Controller
         return back();
     }
 
-    public function deleteAccount(User $user)
-    {
-
-        $user = User::with('reservations.tables')->find($user->id);
-        $user->reservations()->update(['user_id' => null]);
-
-        try {
-            $user->delete();
-        } catch (\Exception $e) {
-        }
-
-        return redirect('/login')->withErrors(['Je account is succesvol verwijderd']);
-    }
-
+    /**
+     * @param User $user
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function adminDelete(User $user)
     {
+        // Zoek de reserveringen op die bij de user horen.
         $user = User::with('reservations.tables')->find($user->id);
-
+        // Zet de user_id van de reserveringen op null.
         $user->reservations()->update(['user_id' => null]);
 
+        // probeer de user te verwijderen.
         try {
             $user->delete();
         } catch (\Exception $e) {

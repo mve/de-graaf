@@ -8,7 +8,9 @@
 
         @foreach($mainCourses as $mainCourse)
 
-            <h2>{{$mainCourse->name}}</h2>
+            <h2>
+                {{$mainCourse->name}}
+            </h2>
 
             @foreach($subCourses as $subCourse)
                 @if($subCourse->mainCourse->name === $mainCourse->name)
