@@ -125,6 +125,18 @@ Route::post('beheer/reserveren', 'ReservationController@adminCreate')->middlewar
 Route::delete('beheer/reservering/{id}',
     'ReservationController@adminDelete')->middleware('verified')->middleware('admin');
 
+
+Route::get('/beheer/gerechten',
+    'ProductController@adminindex')->middleware('admin')->middleware('notBlocked')->middleware('verified');
+
+Route::get('/beheer/gerechten/toevoegen',
+    'ProductController@createProduct')->middleware('admin')->middleware('notBlocked')->middleware('verified');
+
+Route::post('/beheer/gerechten/toevoegen',
+    'ProductController@addProduct')->middleware('admin')->middleware('notBlocked')->middleware('verified');
+
+Route::get('/beheer/gerechten/delete/{id}',
+    'ProductController@deleteProduct')->middleware('admin')->middleware('notBlocked')->middleware('verified');
 // API
 
 Route::post('/get-reserved', 'TableController@getReservedTable');
