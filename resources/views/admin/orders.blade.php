@@ -4,10 +4,12 @@
     <div class="container">
         <div class="row w-100 mb-3">
             <h1 class="float-left">Admin Bestellingen</h1>
+            {{-- Doormiddel van de volgende button wordt de gebruiker doorgestuurd naar de order aanmaken pagina --}}
             <button type="button" onclick="window.location='{{ url("/beheer/createOrder") }}'"
                     class="btn btn-success ml-auto"><i class="fa fa-plus" aria-hidden="true"></i> Bestelling aanmaken
             </button>
         </div>
+        {{-- In de volgende tabel loopen we door alle bestellingen die in onze database staan --}}
         <table class="table">
             <tr>
                 <th class="d-lg-none" colspan="3">Bestellingen</th>
@@ -17,6 +19,7 @@
                 <th class="d-none d-lg-table-cell">Bon nummer</th>
                 <th class="d-none d-lg-table-cell">Tafel</th>
                 <th class="d-none d-lg-table-cell">Actie</th>
+            {{-- Doormiddel van deze foreach loopen we alle bestellingen in de database --}}
             @foreach($unsortedorders as $order)
                 <tr>
 
@@ -40,14 +43,13 @@
                         @endforeach
                     </td>
                     <td>
+                        {{-- Hier wordt de deleteOrder functie aangeroepen en wordt de order id meegegeven --}}
                         <a href="{{action('OrderController@deleteOrder', $order->id)}}" >
                             <button class="btn btn-danger button__delete">
                                 <i class="fa fa-trash"></i>
                             </button>
                         </a>
                     </td>
-                    {{--<a href="{{action('YourController@callMeDirectlyFromUrl')}}">Link name/Embedded Button</a>
---}}
                 </tr>
             @endforeach
         </table>
