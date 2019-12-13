@@ -8,6 +8,8 @@
 
             <div class="datepicker col-md-4">
                 <label style="width: 100%">Datum:
+                    // v-on:change wil start the function getDayOfWeek
+                    // :min wil use the function to block the dates that are in the past
                     <input class="form-control" v-on:change="getDayOfWeek" type="date" v-model="datePicker"
                            :min="minDateValue" name="date">
                 </label>
@@ -15,6 +17,7 @@
 
             <div class="space space--20"></div>
 
+            // v-if wil check in value is set with a value and will show the div
             <div class="typepicker col-md-4" v-if="datePicker">
                 Lunch of diner?
                 <div class="row" style="padding: 0 15px;">
@@ -117,6 +120,7 @@
             <div class="tableGrid" v-if="people">
 
                 <div class="row no-gutters">
+                    // v-for will make a foreach loop of all the tables
                     <div :id="table.id" class="col-md-3 card reservation-checkbox text-center" v-on:change="checkAmount"
                          v-for="table in this.availableTables">
 
@@ -141,7 +145,7 @@
                 </div>
 
                 <div class="space space--10"></div>
-
+                // check the length of checkedTable to show this div
                 <div v-if="checkedTable.length > 2" class="alert alert-danger" role="alert">
                     Er zijn te veel tafels geselecteerd.
                     Neem contact met ons op om meer te reserveren.
@@ -156,13 +160,15 @@
 
             <div class="space space--20"></div>
 
+            // check the length of checkedTable to show this div
             <div v-if="checkedTable.length > 0">
                 <label>Heeft u dingen die wij moeten weten. bv: dieet wensen<br>
                     <textarea class="form-control" name="comment" v-model="comment"></textarea>
                 </label>
             </div>
 
-            <div v-if="checkedTable.length > 0">
+            //check the length of checkTable to show a the button
+                <div v-if="checkedTable.length > 0">
                 <div v-if="checkedTable.length < 3 && error === false ">
                     <button type="submit" value="submit" class="btn btn-primary">
                         Reserveren
@@ -171,9 +177,6 @@
             </div>
 
         </form>
-
-        <!--        <p>Message is: Datum:{{datePicker}} Type:{{selectorType}} Time:{{selectorTime}} selected table:-->
-        <!--            {{checkedTable}} er zijn: {{checkedTable.length}} geselecteerd</p>-->
     </div>
 
 </template>
@@ -183,6 +186,7 @@
         name: "ReservationComponent",
         mounted() {
             axios
+                //get all the tables
                 .get('/get-tables')
                 .then(response => {
                     this.allTables = response.data;
@@ -195,6 +199,7 @@
         },
         data() {
             return {
+                // set all the varrables that are used in vue
                 messages: '',
                 error: '',
                 datePicker: '',
@@ -214,6 +219,7 @@
             }
 
         },
+        // create functions
         methods: {
             submit() {
             },
@@ -234,6 +240,7 @@
                 }
 
             },
+            // check the amount of seat of the table
             checkAmount() {
                 const that = this;
 
@@ -263,6 +270,28 @@
                     }
                 });
             },
+            // checkAmount() {
+            //     const that = this;
+            //
+            //     /* todo check hoeveel mensen aan de aantal stoelen aan tafel*/
+            //     that.selectedPeople = 0;
+            //     that.error = false;
+            //
+            //     for (let i = 0; i < that.checkedTable_id.length; i++) {
+            //
+            //         // console.log('volgende is goed');
+            //         // console.log(that.checkedTable);
+            //
+            //         that.selectedPeople += that.checkedTable[i].max_capacity;
+            //         if (that.selectedPeople > 8) {
+            //             that.error = true;
+            //             console.log(that.error);
+            //             that.messages = "u heeft te veel stoelen geselecteerd! neem contact met ons op.";
+            //         } else that.messages = false;
+            //
+            //         console.log(that.selectedPeople);
+            //     }
+            // },
             getReserved() {
                 // reset checkTable and checkbox style.
                 this.checkedTable = [];

@@ -12,14 +12,14 @@ class TableController extends Controller
     {
         $this->middleware('auth');
     }
-
+    // Get all the tables
     public function getTables()
     {
         $tables = Table::all();
-
         return json_encode($tables);
     }
-
+    // Get specific tables whit the capacity above 4 of under 4 capacity
+    /* Tables with a capacity of 2 and 4 are visible for  */
     public function getTablesCapacity(Request $request)
     {
         $people = $request['people'];
@@ -45,41 +45,37 @@ class TableController extends Controller
         return $tables;
     }
 
+    // get reserved table by date and time
     public function getReservedTable(Request $request)
     {
         $date = $request['date'];
         $time = $request['time'];
 
+        /* split the time like
+         $newtime[0] hour
+         $newtime[1] min
+         $newtime[2] sec */
         $newTime          = explode(":", $time);
+
+        // subtract 2 hours of the time
         $timeBefore       = $newTime[0] - 2;
+        // add 2 hours to the time
         $timeAfter        = $newTime[0] + 2;
+        // add 1 min to the time
         $timeMinBefore    = $newTime[1] + 1;
+        // subtract 1 min of the time
         $timeMinAfter     = $newTime[1] - 1;
+
+        // put the split times together
         $timeBefore       = $timeBefore . ":" . $timeMinBefore . ":" . $newTime[2];
         $timeAfter        = $timeAfter . ":" . $timeMinAfter . ":" . $newTime[2];
         $timeBeforeformat = $timeBefore;
         $timeAfterformat  = $timeAfter;
-
+        // check which have date and between the time
         $reservations = Reservation::with('tables')
                                    ->where('date', '=', $date)
                                    ->whereBetween('time', [$timeBeforeformat, $timeAfterformat])
                                    ->get();
-
-//        $reservation = $reservations > tables->pluck('tables')->flatten();
-//        foreach ($reservations as $res) {
-//            return $res->tables->pluck('tables')->flatten();
-//
-//            foreach ($res->tables as $table) {
-//                return $table;
-//                array_push($tablearray, $table->id);
-//            }
-//        }
-//        foreach ($reservations as $r) {
-//            foreach ($r->tables() as $tabel) {
-//                array_push($tablearray, $tabel->id);
-//            }
-//        }
-//        $reservation[] = $reservations;
 
         return json_encode($reservations);
 //        return $table;

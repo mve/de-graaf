@@ -20,47 +20,63 @@ class ReservationController extends Controller
         $this->middleware('auth');
     }
 
+    // Get all the reservations
     public function adminGet()
     {
+        // Get resercations with the tables
         $unsortedreservations = Reservation::with('tables')->where('people', '>', 0);
+        // sort
         $sorted               = $unsortedreservations->orderBy('date', 'desc');
+        // pagination
         $reservations         = $sorted->paginate(6);
 
         return view('admin.reservations', compact('reservations'));
     }
 
+    // Get the reservations of day
     public function adminGetDay()
     {
         $today     = Carbon::now()->format('Y-m-d');
 
+        // Get resercations with the tables of the date
         $unsortedreservations = Reservation::with('tables')->where('date', $today);
+        // sort
         $sorted               = $unsortedreservations->orderBy('date', 'desc');
+        // pagination
         $reservations         = $sorted->paginate(6);
 
         return view('admin.reservations', compact('reservations'));
     }
 
+    // Get the reservations of week
     public function adminGetWeek()
     {
         $today     = Carbon::now()->format('Y-m-d');
 
         $nextweek = Carbon::parse($today)->addWeek();
 
+        // Get resercations with the tables of the week
         $unsortedreservations = Reservation::with('tables')->whereBetween('date', [$today, $nextweek]);
+        // sort
         $sorted               = $unsortedreservations->orderBy('date', 'desc');
+        // pagination
         $reservations         = $sorted->paginate(6);
 
         return view('admin.reservations', compact('reservations'));
     }
 
+    // Get the reservations of month
     public function adminGetMonth()
     {
         $today     = Carbon::now()->format('Y-m-d');
 
         $nextMonth = Carbon::parse($today)->addMonth();
 
+        // Get resercations with the tables of the month
         $unsortedreservations = Reservation::with('tables')->whereBetween('date', [$today, $nextMonth]);
+        // sort
         $sorted               = $unsortedreservations->orderBy('date', 'desc');
+        // pagination
         $reservations         = $sorted->paginate(6);
 
         return view('admin.reservations', compact('reservations'));
@@ -76,9 +92,10 @@ class ReservationController extends Controller
         return view('reservations', compact('user'));
 
     }
-
+    //create a reservation as user
     public function createReservation(Request $request)
     {
+        // get the user that is logedin
         $user  = Auth::user();
         $table = Table::find($request['checkedTable']);
 
@@ -91,12 +108,12 @@ class ReservationController extends Controller
             'reservation_typ' => $request['selectorType']
 
         ]);
-
+        // create a receipt when a reservation is created
         $receipt = Receipt::create([
             'reservation_id' => $reservation->id
         ]);
 //        $reservation->tables()->attach($table->id);
-
+        // attach the tables on a reservation
         foreach ($table as $t) {
             $reservation->tables()->attach($t->id);
         }
@@ -108,12 +125,11 @@ class ReservationController extends Controller
     {
 
     }
-
+    //create a reservation as admin
     public function adminCreate(Request $request)
     {
         /*todo when a user is selected*/
 //        $user = $request['userid'];
-
 
         $table = Table::find($request['checkedTable']);
 
@@ -146,6 +162,7 @@ class ReservationController extends Controller
         return view('reservation.adminEdit', compact('reservation'));
     }
 
+    /*todo in the future possibility to update a reservation*/
     public function adminUpdate(Request $request, Reservation $reservation)
     {
 
@@ -167,7 +184,7 @@ class ReservationController extends Controller
 
         return back();
     }
-
+    // delete a reservation
     public function adminDelete($id)
     {
         $reservation = Reservation::with('receipt', 'tables')->find($id);

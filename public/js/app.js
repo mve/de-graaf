@@ -1993,11 +1993,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ReservationComponent",
   mounted: function mounted() {
     var _this = this;
 
+    // this will get all the tables from the DB
     axios.get('/get-tables').then(function (response) {
       _this.allTables = response.data;
     })["catch"](function (error) {
@@ -2006,6 +2008,7 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   data: function data() {
+    // set all variables that will be used over the page
     return {
       messages: '',
       error: '',
@@ -2022,14 +2025,11 @@ __webpack_require__.r(__webpack_exports__);
       people: '',
       dayName: '',
       selectedPeople: '',
+      // csrf id needed to sent data with a post trough laravel
       csrf: document.head.querySelector('meta[name="csrf-token"]').content
     };
   },
   methods: {
-    submit: function submit() {},
-    setSelectorType: function setSelectorType(selector) {
-      this.selectorType = selector;
-    },
     styleCheckbox: function styleCheckbox() {
       var checkboxes = document.getElementsByClassName('reservation-checkbox');
 
@@ -2080,8 +2080,8 @@ __webpack_require__.r(__webpack_exports__);
       }));
     },
     getDayOfWeek: function getDayOfWeek() {
-      var that = this;
-      var d = new Date(that.datePicker);
+      // will get the day of the week
+      var d = new Date(this.datePicker);
       var weekday = new Array(7);
       weekday[0] = "Sunday";
       weekday[1] = "Monday";
@@ -2096,6 +2096,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     minDateValue: function minDateValue() {
+      // get the day of today
       var today = new Date().toISOString();
       return today.substr(0, today.indexOf('T'));
     }
@@ -2290,6 +2291,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -37979,7 +37983,9 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "datepicker col-md-4" }, [
           _c("label", { staticStyle: { width: "100%" } }, [
-            _vm._v("Datum:\n                "),
+            _vm._v(
+              "Datum:\n                // v-on:change wil start the function getDayOfWeek\n                // :min wil use the function to block the dates that are in the past\n                "
+            ),
             _c("input", {
               directives: [
                 {
@@ -38006,7 +38012,9 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "space space--20" }),
-        _vm._v(" "),
+        _vm._v(
+          "\n\n        // v-if wil check in value is set with a value and will show the div\n        "
+        ),
         _vm.datePicker
           ? _c("div", { staticClass: "typepicker col-md-4" }, [
               _vm._v("\n            Lunch of diner?\n            "),
@@ -38371,95 +38379,103 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "row no-gutters" },
-                _vm._l(this.availableTables, function(table) {
-                  return _c(
-                    "div",
-                    {
-                      staticClass:
-                        "col-md-3 card reservation-checkbox text-center",
-                      attrs: { id: table.id }
-                    },
-                    [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "form-check-label",
-                          staticStyle: {
-                            width: "100%",
-                            height: "100%",
-                            padding: "30px"
-                          }
-                        },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkedTable,
-                                expression: "checkedTable"
-                              }
-                            ],
-                            staticClass: "form-check-input hide-checkbox",
-                            attrs: { type: "checkbox", name: "checkedTable[]" },
-                            domProps: {
-                              value: table.id,
-                              checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, table.id) > -1
-                                : _vm.checkedTable
-                            },
-                            on: {
-                              change: [
-                                function($event) {
-                                  var $$a = _vm.checkedTable,
-                                    $$el = $event.target,
-                                    $$c = $$el.checked ? true : false
-                                  if (Array.isArray($$a)) {
-                                    var $$v = table.id,
-                                      $$i = _vm._i($$a, $$v)
-                                    if ($$el.checked) {
-                                      $$i < 0 &&
-                                        (_vm.checkedTable = $$a.concat([$$v]))
-                                    } else {
-                                      $$i > -1 &&
-                                        (_vm.checkedTable = $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1)))
-                                    }
-                                  } else {
-                                    _vm.checkedTable = $$c
-                                  }
-                                },
-                                function($event) {
-                                  return _vm.styleCheckbox()
-                                }
-                              ]
+                [
+                  _vm._v(
+                    "\n                // v-for will make a foreach loop of all the tables\n                "
+                  ),
+                  _vm._l(this.availableTables, function(table) {
+                    return _c(
+                      "div",
+                      {
+                        staticClass:
+                          "col-md-3 card reservation-checkbox text-center",
+                        attrs: { id: table.id }
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "form-check-label",
+                            staticStyle: {
+                              width: "100%",
+                              height: "100%",
+                              padding: "30px"
                             }
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "h4" }, [
-                            _vm._v(
-                              "\n                                Tafel " +
-                                _vm._s(table.id) +
-                                "\n                        "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "h5" }, [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(table.max_capacity) +
-                                " stoelen\n                        "
-                            )
-                          ])
-                        ]
-                      )
-                    ]
-                  )
-                }),
-                0
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.checkedTable,
+                                  expression: "checkedTable"
+                                }
+                              ],
+                              staticClass: "form-check-input hide-checkbox",
+                              attrs: {
+                                type: "checkbox",
+                                name: "checkedTable[]"
+                              },
+                              domProps: {
+                                value: table.id,
+                                checked: Array.isArray(_vm.checkedTable)
+                                  ? _vm._i(_vm.checkedTable, table.id) > -1
+                                  : _vm.checkedTable
+                              },
+                              on: {
+                                change: [
+                                  function($event) {
+                                    var $$a = _vm.checkedTable,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = table.id,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          (_vm.checkedTable = $$a.concat([$$v]))
+                                      } else {
+                                        $$i > -1 &&
+                                          (_vm.checkedTable = $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1)))
+                                      }
+                                    } else {
+                                      _vm.checkedTable = $$c
+                                    }
+                                  },
+                                  function($event) {
+                                    return _vm.styleCheckbox()
+                                  }
+                                ]
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "h4" }, [
+                              _vm._v(
+                                "\n                                Tafel " +
+                                  _vm._s(table.id) +
+                                  "\n                        "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "h5" }, [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(table.max_capacity) +
+                                  " stoelen\n                        "
+                              )
+                            ])
+                          ]
+                        )
+                      ]
+                    )
+                  })
+                ],
+                2
               )
             ])
           : _vm._e(),
@@ -38870,7 +38886,9 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "datepicker col-md-4" }, [
           _c("label", { staticStyle: { width: "100%" } }, [
-            _vm._v("Datum:\n                "),
+            _vm._v(
+              "Datum:\n                // v-on:change wil start the function getDayOfWeek\n                // :min wil use the function to block the dates that are in the past\n                "
+            ),
             _c("input", {
               directives: [
                 {
@@ -38897,7 +38915,9 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "space space--20" }),
-        _vm._v(" "),
+        _vm._v(
+          "\n\n        // v-if wil check in value is set with a value and will show the div\n        "
+        ),
         _vm.datePicker
           ? _c("div", { staticClass: "typepicker col-md-4" }, [
               _vm._v("\n            Lunch of diner?\n            "),
@@ -39282,100 +39302,110 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "row no-gutters" },
-                _vm._l(this.availableTables, function(table) {
-                  return _c(
-                    "div",
-                    {
-                      staticClass:
-                        "col-md-3 card reservation-checkbox text-center",
-                      attrs: { id: table.id },
-                      on: { change: _vm.checkAmount }
-                    },
-                    [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "form-check-label",
-                          staticStyle: {
-                            width: "100%",
-                            height: "100%",
-                            padding: "30px"
-                          }
-                        },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkedTable,
-                                expression: "checkedTable"
-                              }
-                            ],
-                            staticClass: "form-check-input hide-checkbox",
-                            attrs: { type: "checkbox", name: "checkedTable[]" },
-                            domProps: {
-                              value: table.id,
-                              checked: Array.isArray(_vm.checkedTable)
-                                ? _vm._i(_vm.checkedTable, table.id) > -1
-                                : _vm.checkedTable
-                            },
-                            on: {
-                              change: [
-                                function($event) {
-                                  var $$a = _vm.checkedTable,
-                                    $$el = $event.target,
-                                    $$c = $$el.checked ? true : false
-                                  if (Array.isArray($$a)) {
-                                    var $$v = table.id,
-                                      $$i = _vm._i($$a, $$v)
-                                    if ($$el.checked) {
-                                      $$i < 0 &&
-                                        (_vm.checkedTable = $$a.concat([$$v]))
-                                    } else {
-                                      $$i > -1 &&
-                                        (_vm.checkedTable = $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1)))
-                                    }
-                                  } else {
-                                    _vm.checkedTable = $$c
-                                  }
-                                },
-                                function($event) {
-                                  return _vm.styleCheckbox()
-                                }
-                              ]
+                [
+                  _vm._v(
+                    "\n                // v-for will make a foreach loop of all the tables\n                "
+                  ),
+                  _vm._l(this.availableTables, function(table) {
+                    return _c(
+                      "div",
+                      {
+                        staticClass:
+                          "col-md-3 card reservation-checkbox text-center",
+                        attrs: { id: table.id },
+                        on: { change: _vm.checkAmount }
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "form-check-label",
+                            staticStyle: {
+                              width: "100%",
+                              height: "100%",
+                              padding: "30px"
                             }
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "h4" }, [
-                            _vm._v(
-                              "\n                                Tafel " +
-                                _vm._s(table.id) +
-                                "\n                        "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "h5" }, [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(table.max_capacity) +
-                                " stoelen\n                        "
-                            )
-                          ])
-                        ]
-                      )
-                    ]
-                  )
-                }),
-                0
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.checkedTable,
+                                  expression: "checkedTable"
+                                }
+                              ],
+                              staticClass: "form-check-input hide-checkbox",
+                              attrs: {
+                                type: "checkbox",
+                                name: "checkedTable[]"
+                              },
+                              domProps: {
+                                value: table.id,
+                                checked: Array.isArray(_vm.checkedTable)
+                                  ? _vm._i(_vm.checkedTable, table.id) > -1
+                                  : _vm.checkedTable
+                              },
+                              on: {
+                                change: [
+                                  function($event) {
+                                    var $$a = _vm.checkedTable,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = table.id,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          (_vm.checkedTable = $$a.concat([$$v]))
+                                      } else {
+                                        $$i > -1 &&
+                                          (_vm.checkedTable = $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1)))
+                                      }
+                                    } else {
+                                      _vm.checkedTable = $$c
+                                    }
+                                  },
+                                  function($event) {
+                                    return _vm.styleCheckbox()
+                                  }
+                                ]
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "h4" }, [
+                              _vm._v(
+                                "\n                                Tafel " +
+                                  _vm._s(table.id) +
+                                  "\n                        "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "h5" }, [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(table.max_capacity) +
+                                  " stoelen\n                        "
+                              )
+                            ])
+                          ]
+                        )
+                      ]
+                    )
+                  })
+                ],
+                2
               ),
               _vm._v(" "),
               _c("div", { staticClass: "space space--10" }),
-              _vm._v(" "),
+              _vm._v(
+                "\n            // check the length of checkedTable to show this div\n            "
+              ),
               _vm.checkedTable.length > 2
                 ? _c(
                     "div",
@@ -39411,7 +39441,9 @@ var render = function() {
           : _vm._e(),
         _vm._v(" "),
         _c("div", { staticClass: "space space--20" }),
-        _vm._v(" "),
+        _vm._v(
+          "\n\n        // check the length of checkedTable to show this div\n        "
+        ),
         _vm.checkedTable.length > 0
           ? _c("div", [
               _c("label", [
@@ -39442,7 +39474,9 @@ var render = function() {
               ])
             ])
           : _vm._e(),
-        _vm._v(" "),
+        _vm._v(
+          "\n\n        //check the length of checkTable to show a the button\n            "
+        ),
         _vm.checkedTable.length > 0
           ? _c("div", [
               _vm.checkedTable.length < 3 && _vm.error === false

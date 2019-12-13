@@ -8,6 +8,8 @@
 
             <div class="datepicker col-md-4">
                 <label style="width: 100%">Datum:
+                    // v-on:change wil start the function getDayOfWeek
+                    // :min wil use the function to block the dates that are in the past
                     <input class="form-control"  v-on:change="getDayOfWeek" type="date" v-model="datePicker"
                            :min="minDateValue" name="date">
                 </label>
@@ -15,6 +17,7 @@
 
             <div class="space space--20"></div>
 
+            // v-if wil check in value is set with a value and will show the div
             <div class="typepicker col-md-4" v-if="datePicker">
                 Lunch of diner?
                 <div class="row" style="padding: 0 15px;">
@@ -107,6 +110,7 @@
             <div class="tableGrid" v-if="people">
 
                 <div class="row no-gutters">
+                    // v-for will make a foreach loop of all the tables
                     <div :id="table.id" class="col-md-3 card reservation-checkbox text-center"
                          v-for="table in this.availableTables">
 
@@ -146,9 +150,6 @@
             </div>
 
         </form>
-
-        <!--        <p>Message is: Datum:{{datePicker}} Type:{{selectorType}} Time:{{selectorTime}} selected table:-->
-        <!--            {{checkedTable}} er zijn: {{checkedTable.length}} geselecteerd</p>-->
     </div>
 
 </template>
@@ -157,6 +158,7 @@
     export default {
         name: "ReservationComponent",
         mounted() {
+            // this will get all the tables from the DB
             axios
                 .get('/get-tables')
                 .then(response => {
@@ -169,6 +171,7 @@
 
         },
         data() {
+            // set all variables that will be used over the page
             return {
                 messages: '',
                 error: '',
@@ -185,16 +188,12 @@
                 people: '',
                 dayName: '',
                 selectedPeople: '',
+                // csrf id needed to sent data with a post trough laravel
                 csrf: document.head.querySelector('meta[name="csrf-token"]').content
             }
 
         },
         methods: {
-            submit() {
-            },
-            setSelectorType(selector) {
-                this.selectorType = selector;
-            },
             styleCheckbox() {
 
                 let checkboxes = document.getElementsByClassName('reservation-checkbox');
@@ -254,9 +253,9 @@
                 );
             },
             getDayOfWeek() {
-                const that = this;
-                let d = new Date(that.datePicker);
-                
+                // will get the day of the week
+                let d = new Date(this.datePicker);
+
                 let weekday = new Array(7);
                 weekday[0] = "Sunday";
                 weekday[1] = "Monday";
@@ -274,6 +273,7 @@
 
         computed: {
             minDateValue() {
+                // get the day of today
                 const today = new Date().toISOString();
                 return today.substr(0, today.indexOf('T'));
             }

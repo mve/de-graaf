@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-between">
             <h1>Admin reserveringen</h1>
-
+            // calls function adminCreate
             <a href="{{ url('/beheer/reserveren') }}">
             <button class="btn btn-success">
                     reservering plaatsen
@@ -18,6 +18,7 @@
         <div class="row">
 
             <div class="col-lg-3 card-container scale-animation">
+                // calls function adminGet
                 <a href="{{ url('/beheer/reserveringen')  }}" class="card pointer border-top">
                     <div class="card-content-admin-container--small">
                         <div class="ard-content-admin">
@@ -28,6 +29,7 @@
             </div>
 
             <div class="col-lg-3 card-container scale-animation">
+                // calls function adminGetDay
                 <a href="{{ url('/beheer/reserveringen/dag')  }}" class="card pointer border-top">
                     <div class="card-content-admin-container--small">
                         <div class="ard-content-admin">
@@ -38,6 +40,7 @@
             </div>
 
             <div class="col-lg-3 card-container scale-animation">
+                // calls function adminGetWeek
                 <a href="{{ url('/beheer/reserveringen/week') }}" class="card pointer border-top">
                     <div class="card-content-admin-container--small">
                         <div class="card-content-admin">
@@ -48,6 +51,7 @@
             </div>
 
             <div class="col-lg-3 card-container scale-animation">
+                // calls function adminGetMonth
                 <a href="{{ url('/beheer/reserveringen/maand')  }}" class="card pointer border-top">
                     <div class="card-content-admin-container--small">
                         <div class="card-content-admin">
@@ -82,7 +86,7 @@
                 <th class="d-none d-lg-table-cell">Nota</th>
                 <th class="d-none d-lg-table-cell">Acties</th>
             </tr>
-
+            // looping results
             @foreach($reservations as $reservation)
                 <tr>
                     <td class="d-none d-lg-table-cell">
