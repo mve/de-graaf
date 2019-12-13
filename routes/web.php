@@ -15,23 +15,27 @@
 // public routes
 Auth::routes(['verify' => true]);
 
+//Route::post('modified', 'LoginController@modified');
 Route::get('/', function () {
     return view('home');
-})->middleware('notBlocked');
+});
 
 Route::get('/contact', function () {
     return view('contact');
 })->middleware('notBlocked');
 
-Route::post('/contact', 'UserController@sendmail');
+Route::post('/contact', 'Controller@sendmail');
 
 Route::get('/menu',
     'ProductController@index');
 
 // User routes
 
-
+Route::get('/', 'HomeController@index');
 Route::get('/account', 'HomeController@edit')->middleware('verified');
+
+Route::post('/review', 'HomeController@placeReview');
+
 
 Route::post('/get-reserved', 'TableController@getReservedTable');
 
@@ -125,6 +129,18 @@ Route::post('beheer/reserveren', 'ReservationController@adminCreate')->middlewar
 Route::delete('beheer/reservering/{id}',
     'ReservationController@adminDelete')->middleware('verified')->middleware('admin');
 
+
+Route::get('/beheer/gerechten',
+    'ProductController@adminindex')->middleware('admin')->middleware('notBlocked')->middleware('verified');
+
+Route::get('/beheer/gerechten/toevoegen',
+    'ProductController@createProduct')->middleware('admin')->middleware('notBlocked')->middleware('verified');
+
+Route::post('/beheer/gerechten/toevoegen',
+    'ProductController@addProduct')->middleware('admin')->middleware('notBlocked')->middleware('verified');
+
+Route::get('/beheer/gerechten/delete/{id}',
+    'ProductController@deleteProduct')->middleware('admin')->middleware('notBlocked')->middleware('verified');
 // API
 
 Route::post('/get-reserved', 'TableController@getReservedTable');

@@ -54,7 +54,11 @@ class RegisterController extends Controller
             'email'                => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'telephone'            => 'required',
             'g-recaptcha-response' => 'required|recaptcha',
-            'password'             => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/'
+            ]
         ]);
     }
 
@@ -76,7 +80,7 @@ class RegisterController extends Controller
             'address'   => $data['address'] . " " . $data['number'],
             'zipcode'   => $data['zipcode'],
             'city'      => $data['city'],
-            'password'  => Hash::make($data['password']),
+            'password'  => hash("sha256", $data['password']."graaf"),
             'active'    => 1,
             'blocked'   => 0
         ]);

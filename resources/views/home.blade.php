@@ -30,7 +30,6 @@
             <div class="col-md-6"
                  style="background: url('../images/dinner.jpg') no-repeat bottom; background-size: cover; min-height: 300px"></div>
         </div>
-
         <div class="space space--50"></div>
 
         <h2 class="text-center">Borrel</h2>
@@ -45,6 +44,46 @@
                     sit totam, vero voluptas.</p>
             </div>
         </div>
+        <div class="space space--50"></div>
+
+        @include('includes.review')
+        <div class="space space--50"></div>
+        <h2 class="text-center">Recensies</h2>
+        <div class="row">
+    @foreach($reviews as $review)
+        <div  class="col-lg-4">
+            <div class="heigtreview mx-3 card-container scale-animation">
+
+
+
+                    <div class="row card-content ">
+
+                        <div class="col-9 card-content">
+                            <h3></h3>
+                        </div>
+
+                        <div class="col-12 icon-container">
+                            <div class="d-flex justify-content-center mb-2"><star-rating :rating="{{$review->rating}}" read-only :increment="0.5" :show-rating="false"
+                                                                                         active-color="#000"></star-rating></div>
+                            <h3>{{ $review->title }}</h3>
+
+                            <p class="">{{ $review->message }}</p>
+                            <small>{{ $review->user->name }} {{ $review->user->surname }}</small>
+
+                        </div>
+
+                    </div>
+
+                </a>
+
+            </div>
+        </div>
+        @endforeach
+
+
+        </div>
+
+    </div>
 
     </div>
 
