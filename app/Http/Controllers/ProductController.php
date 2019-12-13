@@ -46,6 +46,7 @@ class ProductController extends Controller
 
     public function addProduct(Request $request)
     {
+        //Voeg product toe met naam prijs en een subgang
         $product = new Product();
         $product->name= $request->name;
         $product->price = $request->price;
@@ -57,6 +58,7 @@ class ProductController extends Controller
 
     public function deleteProduct($id)
     {
+        //Verwijder gekozen product
         $product = Product::find($id);
 
         $product->delete();

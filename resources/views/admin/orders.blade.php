@@ -19,7 +19,6 @@
                 <th class="d-none d-lg-table-cell">Actie</th>
             @foreach($unsortedorders as $order)
                 <tr>
-
                     <td class="d-none d-lg-table-cell">{{$order->created_at}}</td>
                     <td class="d-none d-lg-table-cell">
                         {{$order->product->name}}

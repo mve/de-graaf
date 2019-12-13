@@ -15,9 +15,10 @@
 // public routes
 Auth::routes(['verify' => true]);
 
+//Route::post('modified', 'LoginController@modified');
 Route::get('/', function () {
     return view('home');
-})->middleware('notBlocked');
+});
 
 Route::get('/contact', function () {
     return view('contact');
@@ -30,8 +31,11 @@ Route::get('/menu',
 
 // User routes
 
-
+Route::get('/', 'HomeController@index');
 Route::get('/account', 'HomeController@edit')->middleware('verified');
+
+Route::post('/review', 'HomeController@placeReview');
+
 
 Route::post('/get-reserved', 'TableController@getReservedTable');
 

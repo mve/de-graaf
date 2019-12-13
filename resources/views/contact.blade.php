@@ -102,4 +102,28 @@
         @endif
 
     </div>
+    <div class="space space--20"></div>
+
+    <div class="contact-location">
+        <div class="row">
+            <div class="col-sm-6 no-space">
+                <div class="google-map">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2458.1675579046205!2d6.2967344841905994!3d51.96736998586081!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c784c716ae2ee7%3A0xe3665d8a07166e2a!2sGraafschap%20College!5e0!3m2!1sen!2snl!4v1575975408442!5m2!1sen!2snl" width="100%" height="350" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="col-sm-6 no-space">
+                <div class="contact-social-title">
+                    <h4>Openingstijden </h4>
+                    <ul class="my-5">
+                        <li> Maandag: 12:00 - 22:00</li>
+                        <li> Dinsdag: 12:00 - 22:00</li>
+                        <li> Woensdag: 12:00 - 22:00</li>
+                        <li> Donderdag: 12:00 - 22:00</li>
+                        <li> Vrijdag: 12:00 - 22:00</li>
+                        <li> Zaterdag: 12:00 - 22:00</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

@@ -232,6 +232,8 @@
     <div class="container">
         <div class="row">
             <div class="equalHWrap eqWrap top">
+
+{{--                Als het geen pdf is toon dan de terugknop.--}}
                 @if(!$isPdf)
                     <a href="/beheer/reserveringen"><button class="btn"> back</button></a>
                 <a href="/beheer/reservering/nota/download/{{$receipt->id}}"><button class="btn"> Download</button></a>
@@ -264,19 +266,17 @@
                         <th>Totaal</th>
                     </tr>
                     @php $total= 0 @endphp
+{{--                     Loop door de orders, haal hiervij de product details op--}}
+
                     @foreach($receipt->orders as $order)
                     <tr class="item">
                         <td><span id="ProuductName">{{$order->quantity}}<span></span></span></td>
                         <td><span id="ProductNumUnits"><span>{{$order->product->name}}</span></span></td>
                         <td><span id="ProductUnit"><span>€{{$order->product->price}}</span></span></td>
                         <td><span id="ProductUnitPrice">€{{$order->quantity*$order->product->price}}</span></td>
-                                @php $total+=$order->quantity*$order->product->price @endphp
-
+                        @php $total+=$order->quantity*$order->product->price @endphp
                     </tr>
                         @endforeach
-
-
-
                 </table>
             </div>
             <div class="row">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Reservation;
+use App\Review;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     protected function Validator(array $data)
@@ -40,8 +41,10 @@ class HomeController extends Controller
     public function index()
     {
         $users = User::all();
+        $reviews = Review::get()->shuffle()->take(3);
 
-        return view('home', compact('users'));
+
+        return view('home', compact('users', 'reviews'));
     }
 
     public function edit(User $user)
@@ -127,5 +130,24 @@ class HomeController extends Controller
         $user->delete();
 
         return redirect('/login')->withErrors(['Je account is succesvol verwijderd']);
+    }
+
+    public function placeReview(Request $request)
+    {
+        $this->validate(request(), [
+            'subject' => 'required',
+            'message' => 'required',
+
+        ]);
+
+        $review = new Review();
+        $review->title= $request->subject;
+        $review->message = $request->message;
+        $review->rating = $request->rating;
+        $review->user_id = Auth::user()->id;
+
+        $review->save();
+
+        return redirect()->back()->withErrors(['Je recensie is geplaats']);
     }
 }
