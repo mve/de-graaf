@@ -20,6 +20,13 @@ Route::get('/', function () {
     return view('home');
 });
 
+
+//Route::get('/menupdf', function () {
+//    return view('admin.menupdf');
+//});
+
+Route::get('/menupdf', 'ProductController@downloadMenu');
+
 Route::get('/contact', function () {
     return view('contact');
 })->middleware('notBlocked');

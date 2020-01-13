@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\MainCourse;
 use App\Product;
 use App\SubCourse;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -65,6 +66,20 @@ class ProductController extends Controller
 
 
         return redirect('beheer/gerechten');
+    }
+
+    public function downloadMenu()
+    {
+        $products = Product::with('subCourse.mainCourse')->get();
+
+        $subCourses = SubCourse::all();
+
+        $mainCourses = MainCourse::all();
+        $pdf = PDF::loadView('admin.menupdf', compact('products', 'subCourses', 'mainCourses'));
+        return $pdf->download('menu.pdf');
+
+//        return view('admin.menupdf', compact('products', 'subCourses', 'mainCourses'));
+
     }
 
 

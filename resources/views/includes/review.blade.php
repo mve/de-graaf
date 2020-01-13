@@ -3,8 +3,7 @@
     <h2 class="h1-responsive font-weight-bold text-center my-4">Plaats een recensie</h2>
 
     <p class="text-center w-responsive mx-auto mb-5">
-        Heb je een vraag? Twijfel niet en neem contact met ons op.
-        Ons team reageert meestal binnen een paar uur.
+        Heb je genoten bij restaurant De Graaf en wilt u dat laten weten, plaats dan hier een recensie!
     </p>
 
     <div class="row">

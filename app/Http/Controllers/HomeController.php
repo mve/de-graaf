@@ -41,7 +41,7 @@ class HomeController extends Controller
     public function index()
     {
         $users = User::all();
-        $reviews = Review::get()->shuffle()->take(3);
+        $reviews = Review::get()->where('completed', 1)->shuffle()->take(3);
 
 
         return view('home', compact('users', 'reviews'));
@@ -144,7 +144,12 @@ class HomeController extends Controller
         $review->title= $request->subject;
         $review->message = $request->message;
         $review->rating = $request->rating;
-        $review->user_id = Auth::user()->id;
+        if(Auth::user()) {
+            $review->user_id = Auth::user()->id;
+        }
+        else{
+            return redirect('login');
+        }
 
         $review->save();
 
