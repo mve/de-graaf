@@ -121,8 +121,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update for admin, can change role.
-     *
+     * Admin update, een admin kan de rol veranderen.
      * @param Request $request
      * @param User $user
      *

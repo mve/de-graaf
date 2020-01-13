@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         // Haal de products, subcourses en maincourses op.
-        $products = Product::with('subCourse.mainCourse')->get();
+        $products = Product::all();
         $subCourses = SubCourse::all();
         $mainCourses = MainCourse::all();
 
