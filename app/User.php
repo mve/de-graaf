@@ -5,14 +5,17 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+// MustVerifyEmail zorgt ervoor dat de verificatie email gebruikt kan worden.
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
-
+    // Een user heeft meerdere reserveringen
     public function reservations(){
-
         return $this->hasMany(Reservation::class, 'user_id', 'id');
+    }
+
+    public function reviews(){
+        return $this->hasMany(Review::class, 'user_id', 'id');
     }
 
     /**

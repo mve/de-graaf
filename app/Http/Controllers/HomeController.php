@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Reservation;
+use App\Review;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,15 +21,15 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     protected function Validator(array $data)
     {
         return Validator::make($data, [
             'g-recaptcha-response' => 'required|recaptcha',
-            'name'                 => 'required',
-            'email'                => 'required',
+            'name' => 'required',
+            'email' => 'required',
         ]);
     }
 
@@ -40,54 +41,68 @@ class HomeController extends Controller
     public function index()
     {
         $users = User::all();
+        $reviews = Review::get()->where('completed', 1)->shuffle()->take(3);
 
-        return view('home', compact('users'));
+
+        return view('home', compact('users', 'reviews'));
     }
 
     public function edit(User $user)
     {
-        $usercur = Auth::user();
-        $user    = User::with('reservations.tables')->find($usercur->id);
+        // Huidige gebruiker ophalen
+        $user = Auth::user();
 
-        $time    = Carbon::now()->format('Y-m-d');
-        $hourNow = Carbon::now()->format('H:i:s');
-        $hour    = Carbon::parse($hourNow)->addHours(3);
-
-        return view('account', compact('user', 'time', 'hour'));
+        //Huidige dag in formaat
+        $date = Carbon::now()->format('Y-m-d');
+        // Tijd plus 3 uur zodat je niet binnen 3 uur kan annuleren
+        $timeNow = Carbon::now()->addHours(3);
+        //Formateren van tijd
+        $time = $timeNow->format('H:i:s');
+        return view('account', compact('user', 'date', 'time'));
     }
 
     public function deleteReservation($id)
     {
-        $mytimeh = Carbon::now()->format('H:i:s');
-        $mytime  = Carbon::now()->format('Y-m-d');
+        // huidige tijd in 2 formaten
+        $hourNow = Carbon::now()->format('H:i:s');
+        $dateNow = Carbon::now()->format('Y-m-d');
 
-        $time = Carbon::parse($mytimeh)->addHours(3);
-
+        //Huidige tijd + 3 uur
+        $time = Carbon::parse($hourNow)->addHours(3);
+        //reservering met nota en tafels ophalen
         $reservation = Reservation::with('receipt', 'tables')->find($id);
-        if ($reservation->date <= $mytime) {
+
+/**
+            Kijkt eerst of de reserveringsdatum kleiner of gelijk is aan de huidige datum
+            Kijkt daarna of huidige tijd + 3 uur groter is dan de reserverings tijd
+            Als dit zo is stuurt hij je terug met een error
+ */
+        if ($reservation->date <= $dateNow) {
             if ($time->format('H:i:s') > $reservation->time) {
                 return Redirect::back()->withErrors(['Je mag niet meer annuleren']);
             }
         }
 
+        // Ontkoppelt Nota en tafels van de desbetreffende reservering en verwijderd vervolgens de reservering.
         $reservation->receipt()->update(['reservation_id' => null]);
 
         $reservation->tables()->update(['reservation_id' => null]);
+
         $reservation->delete();
 
-        return redirect('/account');
+        return redirect()->back()->with('success', 'Je reservering is succesvol geannuleerd!');
 
     }
 
     public function update(User $user)
     {
         $this->validate(request(), [
-            'name'  => 'required',
+            'name' => 'required',
             'email' => 'required',
 
         ]);
 
-        $user->name  = request('name');
+        $user->name = request('name');
         $user->email = request('email');
         if (request('password') != '') {
             $user->password = bcrypt(request('password'));
@@ -104,17 +119,40 @@ class HomeController extends Controller
 
     public function deleteconfirm(Request $request)
     {
+        // Kijkt of de RECAPTCHA is voltooid
         $validatedData = $request->validate([
             'g-recaptcha-response' => 'required|recaptcha',
         ]);
 
-        $usercur = Auth::user();
-        $user    = User::with('reservations.tables')->find($usercur->id);
+        // Haalt de huidige user op en verwijderd koppeling met reservering om vervolgens de gebruiker te verwijderen.
+        $user = Auth::user();
         $user->reservations()->update(['user_id' => null]);
-
         $user->delete();
 
         return redirect('/login')->withErrors(['Je account is succesvol verwijderd']);
+    }
 
+    public function placeReview(Request $request)
+    {
+        $this->validate(request(), [
+            'subject' => 'required',
+            'message' => 'required',
+
+        ]);
+
+        $review = new Review();
+        $review->title= $request->subject;
+        $review->message = $request->message;
+        $review->rating = $request->rating;
+        if(Auth::user()) {
+            $review->user_id = Auth::user()->id;
+        }
+        else{
+            return redirect('login');
+        }
+
+        $review->save();
+
+        return redirect()->back()->withErrors(['Je recensie is geplaats']);
     }
 }

@@ -11,13 +11,12 @@
             </div>
 
             <div class="col-md-4">
+{{--                Doet een request naar de route  delete-account --}}
                 <a href="{{url('/delete-account')}}">
-
                     <button type="submit" class="btn btn-danger float-right">Verwijder account</button>
                 </a>
             </div>
         </div>
-
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -44,7 +43,7 @@
 
                             @error('name')
                             <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{  ucfirst($message) }}</strong>
                                     </span>
                             @enderror
                         </div>
@@ -55,7 +54,7 @@
                                class="col-md-4 col-form-label text-md-right">{{ __('Tussenvoegsel') }}</label>
 
                         <div class="col-md-3">
-                            <input id="infix" type="text" value="{{ $user->infix }}" class="form-control" name="infix"
+                             <input id="infix" type="text" value="{{ $user->infix }}" class="form-control" name="infix"
                                    value="{{ old('infix') }}" autocomplete="infix" autofocus>
                         </div>
                     </div>
@@ -71,8 +70,8 @@
 
                             @error('surname')
                             <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <strong>{{  ucfirst($message) }}</strong>
+                            </span>
                             @enderror
                         </div>
                     </div>
@@ -89,8 +88,8 @@
 
                             @error('email')
                             <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <strong>{{  ucfirst($message) }}</strong>
+                            </span>
                             @enderror
                         </div>
                     </div>
@@ -106,8 +105,8 @@
 
                             @error('password')
                             <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <strong>{{  ucfirst($message) }}</strong>
+                            </span>
                             @enderror
                         </div>
                     </div>
@@ -134,7 +133,7 @@
                                    value="{{ old('telephone') }}" required autocomplete="telephone" autofocus>
                             @error('telephone')
                             <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{  ucfirst($message) }}</strong>
                                     </span>
                             @enderror
 
@@ -150,7 +149,7 @@
                                    placeholder="Straat" autocomplete="address" autofocus>
                             @error('address')
                             <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{  ucfirst($message) }}</strong>
                                     </span>
                             @enderror
 
@@ -168,7 +167,7 @@
 
                             @error('zipcode')
                             <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{  ucfirst($message) }}</strong>
                                     </span>
                             @enderror
                         </div>
@@ -180,7 +179,7 @@
 
                             @error('city')
                             <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{  ucfirst($message) }}</strong>
                                     </span>
                             @enderror
                         </div>
@@ -209,6 +208,13 @@
         <div class="space space--50"></div>
         <h1>Mijn reserveringen</h1>
         <div class="row">
+            @if (\Session::has('success'))
+                <div class="alert alert-success w-100">
+                    <ul>
+                        <li>{!! \Session::get('success') !!}</li>
+                    </ul>
+                </div>
+            @endif
             <div class="col-md-12 mt-3">
                 <table class="table">
                     <tr>
@@ -219,11 +225,10 @@
                         <th class="d-none d-lg-table-cell">Opmerking</th>
                         <th class="d-none d-lg-table-cell">Tafel</th>
                         <th class="d-none d-lg-table-cell">Nota</th>
-
                         <th class="d-none d-lg-table-cell">Annuleren</th>
+{{-- Haalt alle reserveringen op gesorteerd en vult hierbij een rij met data van de reservering --}}
                     @foreach($user->reservations->sortByDesc('date') as $reservation)
                         <tr>
-
                             <td class="d-none d-lg-table-cell">{{$reservation->date}}</td>
                             <td class="d-none d-lg-table-cell">
                                 {{$reservation->time}}
@@ -239,8 +244,6 @@
 
                                 <button class="btn-primary">Annuleren</button>
                             </td>
-
-
                             <td class="d-none d-lg-table-cell">
                                 {{$reservation->people}}
                             </td>
@@ -248,23 +251,22 @@
                                 {{$reservation->comment}}
                             </td>
                             <td class="d-none d-lg-table-cell">
+{{--                                Haalt de tafelnummers op en zet in tabel kolom--}}
                                 @foreach($reservation->tables as $table)
                                     {{$table->id}}<br>
                                 @endforeach
-
                             </td>
                             <td class="d-none d-lg-table-cell">
-                                @if($reservation->date >= $time )
-                                    @if($reservation->date !== $time or $reservation->time <= $hour)
+                                @if($reservation->date <= $date )
+                                    @if($reservation->date !== $date or $reservation->time <= $time)
                                         <a href="reservering/nota/{{$reservation->id}}">PDF</a>
                                     @endif
                                 @endif
-
                             </td>
-
                             <td class="d-none d-lg-table-cell">
-                                @if($reservation->date >= $time )
-                                    @if($reservation->date !== $time or $reservation->time >= $hour)
+{{--                                Laat alleen de delete knop zien wanneer je hem mag annuleren--}}
+                                @if($reservation->date >= $date )
+                                    @if($reservation->date !== $date or $reservation->time >= $time)
                                         <a href="account/delete/{{$reservation->id}}">
                                             <button class="btn btn-danger button__delete">
                                                 <i class="fa fa-trash"></i>
@@ -280,5 +282,4 @@
             </div>
         </div>
     </div>
-
 @endsection

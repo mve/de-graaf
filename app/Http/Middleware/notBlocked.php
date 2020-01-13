@@ -14,6 +14,7 @@ class notBlocked
      * @param  \Closure  $next
      * @return mixed
      */
+    // Kijkt of de ingelogde gebruiker  bestaat vervolgens kijkt hij of de ingelogde gebruiker niet geblokkeerd is. Als hij niet geblokkeerd is dan loguit.
     public function handle($request, Closure $next)
     {
         if (Auth::user()) {

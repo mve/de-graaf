@@ -22,72 +22,54 @@ class ReservationController extends Controller
 
     public function adminGet()
     {
-        $unsortedreservations = Reservation::with('tables')->where('people', '>', 0);
-        $sorted               = $unsortedreservations->orderBy('date', 'desc');
-        $reservations         = $sorted->paginate(6);
-
+        // Haal alle reserveringen op en voeg pagination toe.
+        $reservations = Reservation::orderBy('date', 'desc')->paginate(6);
         return view('admin.reservations', compact('reservations'));
     }
 
     public function adminGetDay()
     {
-        $today     = Carbon::now()->format('Y-m-d');
-
-        $unsortedreservations = Reservation::with('tables')->where('date', $today);
-        $sorted               = $unsortedreservations->orderBy('date', 'desc');
-        $reservations         = $sorted->paginate(6);
+        //Haal vandaag op en voer een query uit waarbij dag vandaag is.
+        $today = Carbon::now()->format('Y-m-d');
+        $reservations = Reservation::where('date', $today)->orderBy('date', 'desc')->paginate(6);
 
         return view('admin.reservations', compact('reservations'));
     }
 
     public function adminGetWeek()
     {
-        $today     = Carbon::now()->format('Y-m-d');
 
+        $today = Carbon::now()->format('Y-m-d');
         $nextweek = Carbon::parse($today)->addWeek();
-
-        $unsortedreservations = Reservation::with('tables')->whereBetween('date', [$today, $nextweek]);
-        $sorted               = $unsortedreservations->orderBy('date', 'desc');
-        $reservations         = $sorted->paginate(6);
+        $reservations = Reservation::whereBetween('date', [$today, $nextweek])->orderBy('date', 'desc')->paginate(6);
 
         return view('admin.reservations', compact('reservations'));
     }
 
     public function adminGetMonth()
     {
-        $today     = Carbon::now()->format('Y-m-d');
+        $today = Carbon::now()->format('Y-m-d');
 
         $nextMonth = Carbon::parse($today)->addMonth();
 
-        $unsortedreservations = Reservation::with('tables')->whereBetween('date', [$today, $nextMonth]);
-        $sorted               = $unsortedreservations->orderBy('date', 'desc');
-        $reservations         = $sorted->paginate(6);
+        $reservations = Reservation::whereBetween('date', [$today, $nextMonth])->orderBy('date', 'desc')->paginate(6);
+
 
         return view('admin.reservations', compact('reservations'));
     }
 
 
-    public function userGet()
-    {
-        $usercur = Auth::user();
-        $user    = User::with('reservations.tables')->find($usercur->id);
-
-
-        return view('reservations', compact('user'));
-
-    }
-
     public function createReservation(Request $request)
     {
-        $user  = Auth::user();
+        $user = Auth::user();
         $table = Table::find($request['checkedTable']);
 
         $reservation = Reservation::create([
-            'user_id'         => $user->id,
-            'people'          => $request['people'],
-            'date'            => $request['date'],
-            'time'            => $request['selectorTime'],
-            'comment'         => $request['comment'],
+            'user_id' => $user->id,
+            'people' => $request['people'],
+            'date' => $request['date'],
+            'time' => $request['selectorTime'],
+            'comment' => $request['comment'],
             'reservation_typ' => $request['selectorType']
 
         ]);
@@ -120,10 +102,10 @@ class ReservationController extends Controller
         /*todo if admin selected a user set userid else make reservation without userid*/
         $reservation = Reservation::create([
 //            'user_id' => $user->id,
-            'people'          => $request['people'],
-            'date'            => $request['date'],
-            'time'            => $request['selectorTime'],
-            'comment'         => $request['comment'],
+            'people' => $request['people'],
+            'date' => $request['date'],
+            'time' => $request['selectorTime'],
+            'comment' => $request['comment'],
             'reservation_typ' => $request['selectorType']
 
         ]);
@@ -150,17 +132,17 @@ class ReservationController extends Controller
     {
 
         $this->validate(request(), [
-            'people'          => ['sometimes', 'string', 'max:191'],
-            'date'            => ['sometimes', 'string', 'max:191'],
-            'time'            => ['sometimes', 'string', 'max:191'],
-            'comment'         => ['sometimes', 'nullable', 'string', 'max:191'],
+            'people' => ['sometimes', 'string', 'max:191'],
+            'date' => ['sometimes', 'string', 'max:191'],
+            'time' => ['sometimes', 'string', 'max:191'],
+            'comment' => ['sometimes', 'nullable', 'string', 'max:191'],
             'reservation_typ' => ['sometimes', 'string', 'max:191'],
         ]);
 
-        $reservation->people          = (isset($request->people) > 0) ? $request->people : $reservation->people;
-        $reservation->date            = (isset($request->date) > 0) ? $request->date : $reservation->date;
-        $reservation->time            = (isset($request->time) > 0) ? $request->time : $reservation->time;
-        $reservation->comment         = (isset($request->comment) > 0) ? $request->comment : $reservation->comment;
+        $reservation->people = (isset($request->people) > 0) ? $request->people : $reservation->people;
+        $reservation->date = (isset($request->date) > 0) ? $request->date : $reservation->date;
+        $reservation->time = (isset($request->time) > 0) ? $request->time : $reservation->time;
+        $reservation->comment = (isset($request->comment) > 0) ? $request->comment : $reservation->comment;
         $reservation->reservation_typ = (isset($request->reservation_typ) > 0) ? $request->reservation_typ : $reservation->reservation_typ;
         /* TODO gereserveerde tafels bewerken bij een reservering*/
         $reservation->save();

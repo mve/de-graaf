@@ -33,7 +33,7 @@
                     @endif
                     @if(\Illuminate\Support\Facades\Auth::user()->isadmin >= 1)
                         <li class="nav-item">
-                            <a class="nav-link  @if (\Request::is('bestellingen')) nav-link--active @endif" href="{{ url('/bestellingen') }}">Bestellingen</a>
+                            <a class="nav-link  @if (\Request::is('bestellingen')) nav-link--active @endif" href="{{ url('/beheer/bestellingen') }}">Bestellingen</a>
                         </li>
                     @endif
                 @endauth

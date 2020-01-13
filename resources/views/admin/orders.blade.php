@@ -22,7 +22,6 @@
             {{-- Doormiddel van deze foreach loopen we alle bestellingen in de database --}}
             @foreach($unsortedorders as $order)
                 <tr>
-
                     <td class="d-none d-lg-table-cell">{{$order->created_at}}</td>
                     <td class="d-none d-lg-table-cell">
                         {{$order->product->name}}

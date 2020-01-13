@@ -4,7 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 import Toasted from 'vue-toasted';
-
+import StarRating from 'vue-star-rating'
 
 require('./bootstrap');
 
@@ -21,7 +21,11 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('star-rating', StarRating);
+Vue.component('review', require('./components/ReviewComponent.vue').default);
+
 Vue.component('test-component', require('./components/TestComponent.vue').default);
 Vue.component('reservation-component', require('./components/ReservationComponent.vue').default);
 Vue.component('admin-reservation-component', require('./components/AdminReservationComponent.vue').default);

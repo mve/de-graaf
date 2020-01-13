@@ -23,7 +23,7 @@
 
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{  ucfirst($message) }}</strong>
                                     </span>
                                     @enderror
                                 </div>
@@ -50,7 +50,7 @@
 
                                     @error('surname')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{  ucfirst($message) }}</strong>
                                     </span>
                                     @enderror
                                 </div>
@@ -68,7 +68,7 @@
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{  ucfirst($message) }}</strong>
                                     </span>
                                     @enderror
                                 </div>
@@ -85,7 +85,7 @@
 
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{  ucfirst($message) }}</strong>
                                     </span>
                                     @enderror
                                 </div>
@@ -114,7 +114,7 @@
                                            autocomplete="telephone" autofocus>
                                     @error('telephone')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ ucfirst($message) }}</strong>
                                     </span>
                                     @enderror
 
@@ -132,7 +132,7 @@
                                            autofocus>
                                     @error('address')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ ucfirst($message) }}</strong>
                                     </span>
                                     @enderror
 
@@ -144,7 +144,7 @@
                                            autofocus>
                                     @error('number')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ ucfirst($message) }}</strong>
                                     </span>
                                     @enderror
 
@@ -162,7 +162,7 @@
 
                                     @error('zipcode')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ ucfirst($message) }}</strong>
                                     </span>
                                     @enderror
                                 </div>
@@ -173,7 +173,7 @@
 
                                     @error('city')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>{{ ucfirst($message) }}</strong>
                                     </span>
                                     @enderror
                                 </div>
@@ -184,7 +184,7 @@
                                 <div class="g-recaptcha col-md-8"
                                      data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}">
                                 </div>
-                                <span class="text-danger">{{ $errors->first('g-recaptcha-response') }}</span>
+                                <span class="text-danger">{{ ucfirst($errors->first('g-recaptcha-response')) }}</span>
                             @endif
                             </div>
                             <div class="form-group row mb-0">
