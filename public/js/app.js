@@ -2175,6 +2175,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['unsortedreservations'],
   mounted: function mounted() {
@@ -2198,6 +2200,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    // In deze methode wordt de geselecteerde categorie gestuurd zodat we alle producten van de geselecteerde categorie kunnen ophalen
     sendCategory: function sendCategory() {
       var _this = this;
 
@@ -38634,7 +38637,7 @@ var render = function() {
           },
           [
             _c("option", { attrs: { disabled: "", selected: "" } }, [
-              _vm._v(" -- Selecteer een tafel -- ")
+              _vm._v(" -- Selecteer een tafel --")
             ]),
             _vm._v(" "),
             _vm._l(this.unsortedreservations, function(res) {
@@ -38644,7 +38647,7 @@ var render = function() {
                 [
                   _vm._v(
                     _vm._s(res.time) +
-                      " - Reservering van: " +
+                      " - Reservering van:\n                    " +
                       _vm._s(res.user.name) +
                       " Tafel(s): "
                   ),
@@ -52472,8 +52475,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\de_graaf\de-graaf\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\de_graaf\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Projects\de-graaf\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Projects\de-graaf\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
