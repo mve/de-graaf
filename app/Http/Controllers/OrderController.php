@@ -21,6 +21,24 @@ class OrderController extends Controller
         return view('admin.orders', compact('unsortedorders'));
     }
 
+    public function getBarOrders()
+    {
+        $unsortedorders = Order::with('product', 'receipt.reservation.tables');
+
+        $unsortedorders = $unsortedorders->orderBy('created_at', 'desc')->paginate(15);
+
+        return view('admin.barOrders', compact('unsortedorders'));
+    }
+
+    public function getKitchenOrders()
+    {
+        $unsortedorders = Order::with('product', 'receipt.reservation.tables');
+
+        $unsortedorders = $unsortedorders->orderBy('created_at', 'desc')->paginate(15);
+
+        return view('admin.kitchenOrders', compact('unsortedorders'));
+    }
+
     public function removeOrder($id)
     {
         dd($id);

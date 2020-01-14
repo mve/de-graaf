@@ -3,18 +3,8 @@
 @section('content')
     <div class="container">
 
-        <div>
-            <a class="nav-link" href="{{ url('/beheer/bestellingen/bar') }}">Bar</a>
-
-            <a class="nav-link" href="{{ url('/beheer/bestellingen/keuken') }}">Keuken</a>
-        </div>
-
         <div class="row w-100 mb-3">
-            <h1 class="float-left">Admin Bestellingen</h1>
-            {{-- Doormiddel van de volgende button wordt de gebruiker doorgestuurd naar de order aanmaken pagina --}}
-            <button type="button" onclick="window.location='{{ url("/beheer/createOrder") }}'"
-                    class="btn btn-success ml-auto"><i class="fa fa-plus" aria-hidden="true"></i> Bestelling aanmaken
-            </button>
+            <h1 class="float-left">Bar</h1>
         </div>
         {{-- In de volgende tabel loopen we door alle bestellingen die in onze database staan --}}
         <table class="table">
@@ -59,8 +49,10 @@
                 </tr>
             @endforeach
         </table>
+
         <div class="row d-flex justify-content-center">
             <div class="col-md-6">{!! $unsortedorders->links()!!}</div>
         </div>
+
     </div>
 @endsection
