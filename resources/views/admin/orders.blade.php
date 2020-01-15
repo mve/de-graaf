@@ -3,11 +3,34 @@
 @section('content')
     <div class="container">
 
-        <div>
-            <a class="nav-link" href="{{ url('/beheer/bestellingen/bar') }}">Bar</a>
-
-            <a class="nav-link" href="{{ url('/beheer/bestellingen/keuken') }}">Keuken</a>
+        <div class="row">
+            <div class="col-lg-6 card-container scale-animation">
+                <a href="{{ url('/beheer/bestellingen/bar') }}" class="card pointer border-top">
+                    <div class="row card-content-admin-container">
+                        <div class="col-9 card-content-admin">
+                            <h3>Bar</h3>
+                        </div>
+                        <div class="col-3 icon-container">
+                            <h1 class="icon-large"><i class="fas fa-glass-martini-alt"></i></h1>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-6 card-container scale-animation">
+                <a href="{{ url('/beheer/bestellingen/keuken') }}" class="card pointer border-top">
+                    <div class="row card-content-admin-container">
+                        <div class="col-9 card-content-admin">
+                            <h3>Keuken</h3>
+                        </div>
+                        <div class="col-3 icon-container">
+                            <h1 class="icon-large"><i class="fas fa-utensils"></i></h1>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
+
+        <div class="space space--60"></div>
 
         <div class="row w-100 mb-3">
             <h1 class="float-left">Admin Bestellingen</h1>

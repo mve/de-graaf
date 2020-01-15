@@ -23,9 +23,9 @@ class OrderController extends Controller
 
     public function getBarOrders()
     {
-        $unsortedorders = Order::with('product', 'receipt.reservation.tables');
+        $unsortedorders = Order::with('receipt.reservation.tables', 'product.subcourse.maincourse');
 
-        $unsortedorders = $unsortedorders->orderBy('created_at', 'desc')->paginate(15);
+        $unsortedorders = $unsortedorders->orderBy('created_at', 'desc')->get();
 
         return view('admin.barOrders', compact('unsortedorders'));
     }
@@ -34,7 +34,7 @@ class OrderController extends Controller
     {
         $unsortedorders = Order::with('product', 'receipt.reservation.tables');
 
-        $unsortedorders = $unsortedorders->orderBy('created_at', 'desc')->paginate(15);
+        $unsortedorders = $unsortedorders->orderBy('created_at', 'desc')->get();
 
         return view('admin.kitchenOrders', compact('unsortedorders'));
     }
@@ -108,5 +108,16 @@ class OrderController extends Controller
 
         return redirect()->back();
     }
+
+    public function preparedOrder($id)
+    {
+        $Order = Order::all()->find($id);
+
+        $Order->prepared = 1;
+        $Order->save();
+
+        return redirect()->back();
+    }
+
 
 }
