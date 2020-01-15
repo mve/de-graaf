@@ -94,6 +94,12 @@ Route::get('/beheer', function () {
 Route::get('/beheer/bestellingen',
     'OrderController@getOrders')->middleware('admin')->middleware('notBlocked')->middleware('verified');
 
+Route::get('/beheer/bestellingen/bar',
+    'OrderController@getBarOrders')->middleware('admin')->middleware('notBlocked')->middleware('verified');
+
+Route::get('/beheer/bestellingen/keuken',
+    'OrderController@getKitchenOrders')->middleware('admin')->middleware('notBlocked')->middleware('verified');
+
 Route::get('/beheer/createOrder',
     'OrderController@getData')->name('home')->middleware('admin')->middleware('notBlocked');
 
@@ -162,5 +168,7 @@ Route::post('/beheer/getProducts', 'OrderController@getDishes');
 Route::post('/beheer/createOrder', 'OrderController@createOrder');
 
 Route::get('beheer/deleteOrder/{id}', 'OrderController@deleteOrder');
+
+Route::get('beheer/preparedorder/{id}', 'OrderController@preparedOrder');
 
 
